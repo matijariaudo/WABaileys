@@ -1,0 +1,10 @@
+/auth_wp/*
+/auth_wp
+auth_wp/
+/cache_wp/*
+/cache_wp
+cache_wp/
+node_modules
+/node_modules/*
+/node_modules
+.env

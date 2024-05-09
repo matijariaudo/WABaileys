@@ -1,0 +1,196 @@
+body{
+    --width-latmenu:calc(100vw / 12 * 2);
+    --background-navBar:#FFF;
+    font-family:'Arial';
+    background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.1)), /* Color blanco semitransparente */
+                url('https://i.pinimg.com/736x/8c/98/99/8c98994518b575bfd8c949e91d20548b.jpg'); /* Ruta de la imagen de fondo */
+    background-repeat: repeat-x; /* Repetir solo horizontalmente */
+    background-size: auto 100%; /* Ajustar la imagen para cubrir la altura completa */
+    background-position: center; /* Centrar la imagen horizontalmente */
+    padding: 20px; /* Añadir espacio interno para mostrar el efecto */
+    box-sizing: border-box; /* Incluir el padding en el tamaño total */
+            
+}
+
+.avatar{
+    width: 30px;
+}
+
+.containerPrincipal{
+    height: 100vh;
+    overflow-y: auto;
+    padding: 0px;
+    padding-top: 0px;
+}
+
+.capaBase{
+    margin:0px;
+    padding:0px;
+    padding-top:100px;
+    margin-top: 0px;
+}
+
+
+.navbar_sup{
+    background-color: var(--background-navBar);
+    border: 1px solid #e9e9e9;
+    border-width: 0px 0px 1px 0px;
+}
+
+/* Estilos para el sidebar */
+.menu_lat {
+  position: fixed;
+  top: 0;
+  left: -2000;
+  background-color: var(--background-navBar);
+  height: 100vh;
+  padding-top: 100px;
+  width: var(--width-latmenu);
+  border: 1px solid #eaeaea;
+  z-index: 101;
+  transition: left 0.3s ease; /* Transición suave al mostrar/ocultar el sidebar */
+}
+
+/* Estilos para la capa oscura (oculta en PC y tablet) */
+#sidebarOverlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente */
+  z-index: 100;
+}
+
+
+.placa{
+    box-shadow: 3px 3px 6px rgb(0,0,0,.04), 
+            -3px -3px 6px rgb(0,0,0,.04);
+    padding: 15px 30px;
+    border-radius: 10px;
+    
+    background-color: #FFF;
+}
+.placa:hover{
+    box-shadow: 3px 3px 6px #dedede, 
+    -3px -3px 6px #dedede;
+
+}
+
+.btn{
+    box-shadow: 3px 3px 6px rgb(0,0,0,.04), 
+            -3px -3px 6px rgb(0,0,0,.04);
+    background: #FFF;
+    font-family: 'Logo';
+}
+.sombra{
+  box-shadow: 3px 3px 6px rgb(0,0,0,.04), 
+  -3px -3px 6px rgb(0,0,0,.04);
+}
+
+.btn3{
+  border: 1px solid #e9e9e9;
+}
+
+.btn-green{
+    background-color: #25D366;
+    color:#fff;
+
+}
+
+li{
+  margin-bottom: 20px;
+  font-weight: 100;
+  cursor: pointer;
+  padding-left: 20px;
+}
+li img {
+    filter:grayscale(10);
+    width: 17px;
+}
+
+input,textarea,select{
+    margin:0px 0px 10px 0px;
+    width: 100%;
+    padding:5px 20px;
+    border:1px solid rgba(181, 145, 145, 0);
+    background-color: rgba(35, 35, 35, 0.113);
+    border-radius:5px
+  }
+  input::placeholder,textarea::placeholder{
+    color:rgb(179, 177, 177);
+    font-style: oblique;
+  }
+  .modal-content{
+    color:#676767;
+    background: linear-gradient(180deg,#ffffff 0%, #ededed 100%);
+    border: 0px;
+  }
+  .modal-content input{
+    color:#000
+  }
+
+  .modal-footer{
+    border: 0px;
+  }
+  .modal-title{
+    color: #000;
+  }
+
+.lds-ring {
+    display: inline-block;
+    position: relative;
+    width: 15vh;
+    height: 15vh;
+  }
+  .lds-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 15vh;
+    height: 15vh;
+    margin: 1px;
+    border: 10px solid #25D366;
+    border-radius: 50%;
+    animation: lds-ring 1.6s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #25D366 transparent transparent transparent;
+  }
+  .lds-ring div:nth-child(1) {
+    animation-delay: -0.45s;
+  }
+  .lds-ring div:nth-child(2) {
+    animation-delay: -0.3s;
+  }
+  .lds-ring div:nth-child(3) {
+    animation-delay: -0.15s;
+  }
+  @keyframes lds-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @font-face {
+    font-family: 'Sans';
+    src: url('./assets/fonts/Product\ Sans\ Regular.ttf') format('opentype');
+    /* También puedes proporcionar otras fuentes como fallback si es necesario */
+  }
+  @font-face {
+    font-family: 'Logo';
+    src: url('./assets/fonts/GD\ Sherpa\ Regular.ttf') format('opentype');
+    /* También puedes proporcionar otras fuentes como fallback si es necesario */
+  }
+  @media only screen and (max-width: 768px) {
+        .menu_lat {
+        width: 80%; /* Ejemplo: ancho del sidebar ajustado para dispositivos móviles */
+
+    }
+
+    /* Otros estilos específicos para dispositivos móviles */
+}
+

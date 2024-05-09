@@ -1,0 +1,633 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script type="text/javascript" src="jquery.qrcode.min.js"></script>
+    <link rel="stylesheet" href="style.css?id=2">
+  </head>
+  <body>
+    <nav class="navbar fixed-top p-0 capa capa_2 capa_3 capa_4 capa_5 capa_0 sombra_nav">
+        <div class="container-fluid p-0">
+            <div class="row col-12 p-0">
+            <div class="col-xs-12 col-sm-3 p-2s" style="padding: 5px 0px 5px 30px;">
+                <img src="img/logo.png" style="width: 40px;margin-top: -8px;margin-right: -5px;">
+                <a style="font-size:1.4em;margin-top: 20px;"><b style="color:#000">WSP</b><b style="color:#ffffff;font-weight: 100;">PLUS</b></a>
+            </div>
+            <div class="col-4 offset-2 d-none d-sm-block p-0" style="text-align: center;">
+                <div class="row h-100" style="padding: 10px 0px 0px 0px;margin: 0px;">
+                <div onclick="capa(2)" class="col p-0 menu menu_2">Instances</div>
+                <div onclick="capa(4)" class="col p-0 menu menu_4">Plans</div>
+                <div onclick="capa(5)" class="col p-0 menu menu_5">Docs</div>
+                </div>
+            </div>
+            <div class="col-3" style="padding: 7px;">
+                <img src="https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg" class="avatar">
+                <a style="margin-left:10px;"></a>Matías Ariaudo</a>
+                
+            </div>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid p-0 m-0 containerPrincipal">
+        <div class="col row p-0 m-0">
+            <div class="col-2 sombra_nav" style="background-color: rgb(227, 227, 227);height: 100vh; padding-top: 100px;">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="#">Active</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                    </li>
+                  </ul>
+            </div>
+            <div class="col-10" style="background-color: rgb(212, 177, 177);height: 100vh;padding: 0px;">
+                <div class="  row capaBase capa capa_0">
+                    <center><div class="lds-ring"><div></div><div></div><div></div><div></div></div></center>
+                </div>
+                <div class="  row capaBase capa capa_2">
+                    <div class="col-10 offset-1">
+                        <button class="btn sombra d-none d-sm-block" id="btn_new_intance" onclick="mostrar('create',2);$('#phoneModal').modal('show');$('.nuevo_wsp').val('')" style="float:right;font-size:.8em">NEW INSTANCE</button>
+                        <button class="btn sombra d-block d-sm-none" id="btn_new_intance_xs" onclick="mostrar('create',2);$('#phoneModal').modal('show');$('.nuevo_wsp').val('')" style="float:right;font-size:.8em">+</button>
+                        <button class="btn sombra" onclick="buscar_phones()" style="float:right;font-size:.8em;margin-right: 3px;"> 
+                        <i class="zmdi zmdi-refresh" style="font-size:1.5em;"></i> </button>
+                        <h2>YOUR INSTANCES</h2>
+                        <div class="col-12 p-0" id="div_phones">
+                        </div>
+                    </div>
+                </div>
+                <div class="  row capaBase capa capa_3">
+                    <div class="col-10 offset-1">
+                        <div class="row">
+                            <div class="col-sm-3 col-xs-12" style="text-align: center;padding: 20px;">
+                                <div class="col-12" style="background-color: #ffffff0b;padding: 10px;border-radius: 10px;">
+                                    <img src="https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png" style="width:50%;border-radius: 1000px;">
+                                    <p id="account_name" style="width: 100%;margin: 0px;margin-bottom: 10px;"></p>
+                                    <button class="btn" onclick="localStorage.clear();location.reload()">Close Session</button>
+                                </div>
+                            </div>
+                            <div class="col-sm-9 col-xs-12" style="padding: 20px;">
+                                <div class="col-12" style="background-color: #ffffff0b;padding: 10px;border-radius: 10px;">
+                                <h3>Your personal data</h3>
+                                Name:
+                                <input class="inputCapa" id="name_form_user" type="text">
+                                Email:
+                                <input class="inputCapa" id="email_form_user" type="text">
+                                Plan: 
+                                <input class="inputCapa" id="plan_form_user" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <br>
+                        
+                    </div>
+                    
+                </div>
+                <div class="capa capa_4 capaBase">
+                    <div class="col-10 offset-1">
+                        <div class="row">
+                    <div class="container">
+                        <div class="card-deck row mb-3 text-center">
+                            <div class="col-4">
+                            <div class="card col-12 h-100" style="background:none;border-color:#25D366 ;">
+                                <div class="card-header" style="background-color: #25D366;">
+                                <h4 class="my-0 font-weight-normal" >Free</h4>
+                                </div>
+                                <div class="card-body" style="background:rgba(0, 0, 0, 0);">
+                                <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1>
+                                <ul class="list-unstyled mt-3 mb-4">
+                                    <li>1 Intance allowed</li>
+                                    <li>3 hs per intance</li>
+                                    <li>Unlimited API Use</li>
+                                    <li>Help center access</li>
+                                </ul>
+                                <button type="button" class="btn btn-lg btn-block btn-outline-primary">Choose</button>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="card col-12 h-100" style="background:none;border-color:#c425d3;">
+                                    <div class="card-header" style="background-color: #c425d3;">
+                                    <h4 class="my-0 font-weight-normal" >Pro</h4>
+                                    </div>
+                                    <div class="card-body" style="background:rgba(0, 0, 0, 0);">
+                                    <h1 class="card-title pricing-card-title">$4.90 <small class="text-muted">/ mo</small></h1>
+                                    <ul class="list-unstyled mt-3 mb-4">
+                                        <li>10 users included</li>
+                                        <li>2 GB of storage</li>
+                                        <li>Email support</li>
+                                        <li>Help center access</li>
+                                    </ul>
+                                    <button type="button" class="btn btn-lg btn-block btn-outline-primary" style="background-color: #c425d3;border:0px">Choose now!</button>
+                                    </div>
+                            </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="card col-12 h-100" style="background:none;border-color:#25D366 ;">
+                                    <div class="card-header" style="background-color: #25D366;">
+                                    <h4 class="my-0 font-weight-normal" >Medium</h4>
+                                    </div>
+                                    <div class="card-body" style="background:rgba(0, 0, 0, 0);">
+                                    <h1 class="card-title pricing-card-title">$3.9 <small class="text-muted">/ mo</small></h1>
+                                    <p style="margin: 0px;">*Per intance</p>
+                                    <ul class="list-unstyled mt-3 mb-4">
+                                        <li>10 users included</li>
+                                        <li>2 GB of storage</li>
+                                        <li>Email support</li>
+                                        <li>Help center access</li>
+                                    </ul>
+                                    <button type="button" class="btn btn-lg btn-block btn-outline-primary">Choose</button>
+                                    </div>
+                                </div>
+                                </div>
+                                    
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 p-2 m-0 row capaBase login capa capa_1" style="height: 100vh;">
+                <div class="col-12 col-sm-4 offset-sm-4 p-4 sombra" style="background:#ffffff1f;border-radius:10px;margin-top:10%;height:300px;">
+                <center style="margin: 10px 0px;">
+                <img src="img/logo.png" style="width: 40px;margin-top: -8px;margin-right: -5px;">
+                <a style="font-size:1.4em;margin-top: 20px;"><b style="color:#ffffff">WSP</b><b style="color:#25D366;font-weight: 500;">PLUS</b></a>
+                </center>
+                <input type="text" placeholder="Email" id="login_correo">
+                <input type="password" placeholder="Password" id="login_clave">
+                <button class="btn" id="btn_login" style="width:100%">Send</button>
+                <button class="btn" id="btn_login" style="width:100%;margin-top: 10px;background-color: #000;">Connect With Google <img src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png" alt="" style="width: 24px;"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="exampleModal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header" style="border:0px">
+              <h5 class="modal-title">Campañas</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Crear nueva campaña:</p>
+              <textarea rows="3" id="msgForm"></textarea>
+              <input type="text" placeholder="Numero" id="nro" style="width:80%">
+              <button onclick="add_nro()" class="btn btn2" style="margin-top:-5px;margin-left:5px;font-size:.8em">+</button>
+              <div class="col-12" id="div_nro" style="max-height:100px;overflow-y:auto;">
+
+              </div>  
+            </div>
+            <div class="modal-footer" style="border:0px">
+              <button type="button" class="btn btn-primary" onclick="nuevo_mensaje()">Agregar</button>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="modal" id="phoneModal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header" style="border:0px">
+              <h5 class="modal-title">INSTANCE</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body create create_1">
+                <center><div class="lds-ring"><div></div><div></div><div></div><div></div></div></center>
+            </div>
+            <div class="modal-body create create_2">
+                <input class="nuevo_wsp" type="hidden" placeholder="Choose a name for your intance.." id="nuevo_id_wsp"> 
+                <p>Instance name:</p>
+                <input class="nuevo_wsp" type="text" placeholder="Choose a name for your intance.." id="nuevo_nro_wsp"> 
+                <p>Webhooks URL:</p>
+                <input class="nuevo_wsp" type="text" placeholder="Ej: https://mysite.com" id="nuevo_webhook_wsp"> 
+                <p style="font-size:.8em;margin: 0px;color:rgb(107, 107, 107);font-style: oblique;">*Optional: Each time you'll receive a text we sent a notification to this url in a POST request.</p>
+            </div>
+            <div class="modal-body create create_3">
+                <p>Activar ahora:</p>
+                <input type="text"id="form_create_success"> 
+            </div>
+            <div class="modal-footer create create_2 style="border:0px">
+              <button type="button" class="btn btn-primary" onclick="$('#nuevo_id_wsp').val()==''?agregar_numero_tel():editar_numero_tel()">Send</button>
+            </div>
+            <div class="modal-footer create create_3 style="border:0px">
+                <button type="button" class="btn btn-primary" onclick="solicitar_qr_init()">Scan QR now!</button>
+              </div>
+          </div>
+        </div>
+    </div>
+    <div class="modal" id="vincularModal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header" style="border:0px">
+              <h5 class="modal-title">Vincular dispositivo</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body vincular vincular_1" style="font-weight:100;font-size:0.8em;">
+                <center><div class="lds-ring"><div></div><div></div><div></div><div></div></div></center>
+            </div>
+            <div class="modal-body vincular vincular_2" style="height:240px;font-weight:100;font-size:0.8em;display: none;">
+                <input type="hidden" id="qr_nro">
+                <center><div id="qr_wsp" style="text-align:center;width: 180px;border: 8px solid #25D366;border-radius: 5px;"></div>  </center>
+            </div>
+            <div class="modal-body vincular vincular_3" style="font-weight:100;font-size:0.8em;">
+                <center><div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+                <p>Connecting with your account...</p>
+                </center>
+
+            </div>
+            <div class="modal-footer" style="border:0px">
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="modal" id="textModal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header" style="border:0px">
+              <h5 class="modal-title">Test your intance</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body textSend textSend_1" style="font-weight:100;font-size:0.8em;">
+                <center><div class="lds-ring"><div></div><div></div><div></div><div></div></div></center>
+            </div>
+            <div class="modal-body textSend textSend_2" style="font-weight:100;font-size:0.8em;display: none;">
+                <input type="hidden" id="id_textSend">
+                <input type="text" placeholder="Phone number ej: +549....." id="to_textSend">
+                <textarea cols="30" rows="4" placeholder="Input your text here" id="text_textSend"></textarea>
+                <p id="succ_msg"></p>
+            </div>
+            <div class="modal-footer" style="border:0px">
+                <button class="btn" onclick="sendTextWsp()">Send text</button>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="modal" id="eliminarModal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header" style="border:0px">
+              <h5 class="modal-title">DELETE</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body eliminar eliminar_1" style="font-weight:100;font-size:0.8em;">
+                <center><div class="lds-ring"><div></div><div></div><div></div><div></div></div></center>
+            </div>
+            <div class="modal-body eliminar eliminar_2" style="font-size:0.8em;display: none">
+                <input type="hidden" id="eliminar_id">
+                Are you sure about delete this instance?
+            </div>
+            <div class="modal-footer eliminar eliminar_2" style="border:0px">
+                <button type="button" class="btn btn-primary" onclick="eliminar_numero()">Delete</button>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="modal" id="campainModal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header" style="border:0px">
+              <h5 class="modal-title">Datos de envios</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="font-weight:100;font-size:0.8em">
+                <input type="hidden" id="campain_buscar_id" value="">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width:30px"></th>
+                            <th>Destinatario</th>
+                            <th>Estado</th>
+                            <th>Enviado desde</th>
+                            <th>Fecha Envio</th>
+                        </tr>
+                    </thead>
+                    <tbody id="campainMensaje_tabla">
+                        
+                    </tbody>
+                </table>   
+            </div>
+            <div class="modal-footer" style="border:0px">
+              <button type="button" class="btn btn-primary" style="display:none">Solicitar QR <i class="zmdi zmdi-arrow-right"></i></button>
+            </div>
+          </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script>
+        instancias=[]
+        
+        
+        function capa(i){
+        $(".capa").hide();
+        $('.menu').css("font-weight","100").css("color","#000").css("border-width","0px");
+        $('.menu_'+i).css("font-weight","500").css("color","#25d365").css("border-width","0px 0px 4px 0px");;
+        
+        $(".capa_"+i).show()
+        }
+       
+        $("#btn_login").on('click',()=>{
+        iniciar_sesion();
+        })
+        
+        let eventQr=false;
+        function checkQr(idI) {
+            console.log("Check QR")
+            console.log("checking")
+            env={};
+            env["token"]=user.token;
+            env["instanceId"]=idI;
+            ajax("/api/instance/get",env,(e)=>{
+                if(e.instances[0].session=="connected"){
+                    $("#vincularModal").modal('hide');
+                    buscar_phones();
+                }else{
+                    console.log(e.instances[0].session)
+                    if(e.instances[0].session=='connecting'){mostrar('vincular',3);}
+                    console.log("buscando", eventQr,e.instances[0].session)
+                    if(eventQr){
+                       console.log("No se encontro conexion",e.instances[0].session)
+                       setTimeout(()=>{checkQr(idI);},1000); 
+                    }
+                }
+            });
+        }
+
+        $("#vincularModal").on("hidden.bs.modal", function () {
+           eventQr=false;
+        });
+        $("#vincularModal").on("shown.bs.modal", function () {
+           eventQr=true;
+        });
+
+        function sendTextWsp(){
+            env={};
+            env["token"]=user.token;
+            env["instanceId"]=$("#id_textSend").val();
+            env["to"]=$("#to_textSend").val();
+            env["message"]=$("#text_textSend").val();
+            mostrar('textSend',1);
+            ajax("/api/instance/send",env,(e)=>{
+                console.log(e)
+                mostrar('textSend',2);
+                $("#text_textSend").val("");
+                $('#succ_msg').append('<i class="zmdi zmdi-check-all" style="color:#25D366"></i>Message succesful.');
+                setTimeout(()=>{$("#succ_msg").html("")},1500)
+            })
+        }
+        
+        
+        const buscar_phones=(spiner=true)=>{
+            if(spiner){
+            capa(0)
+            }
+            env={};
+            env["token"]=user.token;
+            ajax("/api/instance/get",env,(e)=>{
+                $("#div_phones").html("")
+                if(e.errors){capa(1);return false;}
+                capa(2)
+                console.log(e)
+                if(e.length==0){
+                    $("#div_phones").html(`
+                    <center>
+                    <p style='font-size:1.7em;text-align:center;margin-top:50px'><i class='zmdi zmdi-mood-bad' style='color:#25D366'></i> You don't have intances!</p>
+                    <button class='btn btn-sm' onclick='$("#btn_new_intance").click()'>Create your first intance</button>
+                    </center>`);
+                return true}
+                init=false
+                instancias=e;
+                e.instances.forEach((b,i) => {
+                    $nros="";
+                    console.log(b)
+                    b.session=='initializing'?init=true:false;
+                    $("#div_phones").append(`<div class="col-12">
+                        <div class="col-12 placa" style="cursor:default">
+                            <button class="btn btn3 sombra" data="${b.uid}" onclick="eliminar_numero_modal($(this).attr('data'),'eliminado')" style="padding:2px 7px;float:right"><i class="zmdi zmdi-delete"></i></button>
+                            <button class="btn btn3 sombra" data="${b.uid}" onclick="editar_numero($(this).attr('data'))" style="padding:2px 7px;float:right;margin-right:2px"><i class="zmdi zmdi-edit"></i></button>
+                            <button class="btn btn3 sombra" data="${b.uid}" onclick="$('#textModal').modal('show');mostrar('textSend',2);$('#id_textSend').val($(this).attr('data'));checkContacts()" style="padding:2px 7px;float:right;margin-right:2px"><i class="zmdi zmdi-mail-send"></i></button>
+                            
+                            <h3 style="margin:0px;font-size:.8em">${b.name}</h3>
+                            <h5 style='margin:0px 0px 0px 0px;font-weight:100'><i class="zmdi zmdi-smartphone-android" style="font-size:.8em"></i> ${b.number||"-"}</h5>
+                            <div style="font-size:.8em;display:${b.session=='close' || b.session=='qr'?'block':'none'}"">
+                            <i class="zmdi zmdi-alert-triangle" style="color:#FFCC00"></i> You must to allow the Whatsapp connection by QR 
+                            <button class="btn" onclick="solicitar_qr('${b.uid}')" style="margin-top:-3px;font-size:.8em">SCAN QR</button>
+                            </div>
+                            <div style="font-size:.8em;display:${b.session=='connected'?'block':'none'}"">
+                                <i class="zmdi zmdi-shield-check" style="color:#25D366"></i> Connected
+                            </div>
+                            <div style="font-size:.8em;display:${b.session=='initializing'?'block':'none'}"">
+                                <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div> Starting instance
+                            </div>
+                            <div id="connection_${b.nro}"></div>
+                        </div>
+                    </div>`);
+                    actualizar_connection(b.nro,b.connection)  
+                });
+                if(init){
+                    setTimeout(()=>{console.log("buscando");buscar_phones(false);},1000)
+                    
+                }
+            })
+        }
+
+        function checkContacts(){
+            env={};
+            env["token"]=user.token;env["instanceId"]= $('#id_textSend').val();
+            ajax("/api/instance/contacts",env,(e)=>{
+                Object.keys(e.contacts).forEach(x => {
+                    const c=e.contacts[x]
+                    console.log("+"+c.id.split("@")[0],c.name||"No name")
+                });
+            })
+        }
+
+        function actualizar_connection(nro,connection){
+            $("#connection_"+nro).html(`
+            
+            <p style="font-size:.7em;margin:0px;display:${connection=='online'?'block':'none'}"><img src="img/active.png" width="20">CONECTADO</p>
+            <p style="font-size:.7em;margin:0px;display:${connection=='inicializando'?'block':'none'}"><img src="img/init.gif" style="width:15;margin:0px 4px">CONECTANDO..</p>
+            <p style="font-size:.7em;margin:0px;display:${connection=='stop'?'block':'none'}"><img src="img/desactive.png" style="width:15px;margin:0px 4px">DESCONECTADO</p>
+            <p style="font-size:.7em;margin:0px;display:${connection=='qr'?'block':'none'}"><img src="img/qr.png" style="width:15px;margin:0px 4px">DESVINCULADO <button class="btn sombra"  onclick="$('#qr_nro').val('${nro}');mostrar('vincular',1);$('#vincularModal').modal('show')" style="background:#FFF;padding:3px 5px;font-size:.8em;margin:0px;margin-top:0px"> Vincular</button></p>
+            `)
+        }
+
+        function mostrar(capa,i){
+            $("."+capa).hide();
+            $("."+capa+"_"+i).show();
+        }
+        
+        
+
+        function solicitar_codigo(nro){
+            env={}
+            env.nro=nro;env.token=user.token;
+            ajax("/api/phone/codigo",env,(e)=>{
+                if(e.error){alert("No se pudo modificar");return false;}
+                console.log(e);
+                alert("código enviado")
+            })
+        }
+
+        function verificar_codigo(nro){
+            env={}
+            env.nro=nro;env.token=user.token;env.cod=$("#codigo_phone").val()
+            ajax("/api/phone/validar",env,(e)=>{
+                console.log(e);
+                if(e.error){alert(e.error);return false;}
+                buscar_phones();
+            })
+        }
+
+        function editar_numero(id) {
+            $("#phoneModal").modal('show');
+            mostrar('create',2);
+            instancia=instancias.find(a=>a.uid==id)
+            console.log(instancia.name,instancia)
+            $("#nuevo_nro_wsp").val(instancia.name);
+            $("#nuevo_id_wsp").val(instancia.uid);
+            $("#nuevo_webhook_wsp").val(instancia.webhook)
+        }
+
+        function editar_numero_tel(){
+            env={}
+            env.name=$("#nuevo_nro_wsp").val();
+            env.webhook=$("#nuevo_webhook_wsp").val();
+            env.instanceId=$("#nuevo_id_wsp").val();
+            env.token=user.token;
+            mostrar('create',1)
+            ajax("/api/instance/edit",env,(e)=>{
+                console.log(e);
+                if(e.error){alert(e.error);return false;}
+                $("#phoneModal").modal('hide');
+                buscar_phones(true);
+            })
+        }
+
+        function agregar_numero_tel(){
+            nro=$("#nuevo_nro_wsp").val()
+            env={}
+            env.name=nro;env.token=user.token;
+            mostrar('create',1)
+            ajax("/api/instance/create",env,(e)=>{
+                console.log(e);
+                if(e.error){alert(e.error);return false;}
+                $('#form_create_success').val(e.uid);
+                mostrar('create',3)
+                buscar_phones();
+            })
+        }
+
+        function solicitar_qr_init(){
+            solicitar_qr($("#form_create_success").val());
+            $('#phoneModal').modal('hide');
+        }
+
+        function solicitar_qr(idI){
+            mostrar('vincular',1)
+            $('#vincularModal').modal('show');
+            env={}
+            env.instanceId=idI;env.token=user.token;
+            ajax("/api/instance/init",env,(e)=>{
+                console.log(e);
+                if(e.error){alert(e.error);return false;}
+                if(e.instance.qr!=""){
+                    mostrar('vincular',2)
+                    $('#qr_wsp').html("")
+                    $('#qr_wsp').qrcode({width: 164,height: 164,text: e.instance.qr,background: "#25D366",fill: "#FFF"});
+                    checkQr(idI)
+                }else{
+                    setTimeout(()=>{solicitar_qr(idI);},1400)
+                }
+            })
+        }
+        
+
+        function eliminar_numero(){
+            env={}
+            env.instanceId=$("#eliminar_id").val();env.token=user.token;
+            mostrar('eliminar',1)
+            ajax("/api/instance/delete",env,(e)=>{
+                if(e.error){alert("No se pudo modificar");return false;}
+                console.log(e);
+                $("#eliminarModal").modal('hide');
+                buscar_phones()            
+            })
+        }
+        function eliminar_numero_modal(idI){
+            $("#eliminarModal").modal('show');
+            mostrar('eliminar',2)  
+            $("#eliminar_id").val(idI)
+        }
+
+        const iniciar_sesion=()=>{
+            env={};
+            env["correo"]= $("#login_correo").val();
+            env["clave"] = $("#login_clave").val();
+            ajax("/api/users/login",env,(e)=>{
+                localStorage.setItem("user",JSON.stringify(e))
+                control_sesion();
+            })
+        }
+
+        function ajax(url,json_dat,callback,error){
+            $.ajax({url,type:"POST",headers: {"Content-Type": "application/json"},dataType : 'json',data: JSON.stringify(json_dat),success: function(data, textStatus, jqXHR){callback(data)},error: function( jqXHR, textStatus, errorThrown ) {error();}});
+        }
+
+        $("#nro").on('keyup',(e)=>{
+            if(e.keyCode==13){add_nro();}
+        })
+
+        function add_nro(){
+            nros=$("#nro").val().split(";");
+            nros.forEach(nro => {
+                if(nro==""){return}
+                $("#div_nro").append(`
+                <b class="btn nroSaved" data="${nro}" style="margin-top:4px;border:1px solid grey;padding:1px 5px">${nro} <a onclick="$(this).parent().remove()" style="font-weight:100;font-size:1.2em"><i class="zmdi zmdi-close-circle-o"></i></a></b>
+                `);
+            });
+            $("#nro").val("")
+        }
+
+        
+
+        $(window).on('load',()=>{
+        })
+        
+
+        function fecha(fc,seg){
+            fc=new Date(fc);
+            ms=fc.getMonth()+1;ms<10?ms="0"+ms:true;
+            d=fc.getDate();d<10?d="0"+d:true;
+            h=fc.getHours();h<10?h="0"+h:true;
+            m=fc.getMinutes();m<10?m="0"+m:true;
+            s="";if(seg){s=fc.getSeconds();s<10?s="0"+s:true;s=":"+s;}
+            return h+":"+m+s+" "+d+"/"+ms+"/"+fc.getFullYear();
+        }
+
+        capa(1)
+        control_sesion();
+        function control_sesion(){
+            user=JSON.parse(localStorage.getItem("user"))
+            console.log(user)
+            if(user){capa(2);buscar_phones();
+                $("#account_name").html(user.user.nombre);
+                $("#name_form_user").val(user.user.nombre)
+                $("#email_form_user").val(user.user.correo)
+                $("#plan_form_user").val(user.user.plan)
+            }
+        }
+
+
+    </script>
+  </body>
+</html>
