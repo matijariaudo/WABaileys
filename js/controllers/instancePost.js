@@ -61,7 +61,7 @@ const instanceDelete=async(req,res)=>{
     try {
         const instance=await Instance.findOne({_id:instanceId,user:req.body.user_jwt,status:"active"});
         if(!instance){
-            return res.status(200).json(await jsonAnswer(400,`Incorrect instance ID","We have not found an active instance with the instance ID: ${instanceId}.`,null));
+            return res.status(200).json(await jsonAnswer(200,`Incorrect instance ID","We have not found an active instance with the instance ID: ${instanceId}.`,null));
         }const wsp=new Wsp();
         const instanceStart=await wsp.getInstance(instanceId);
         if(instanceStart){await wsp.deleteIntance(instanceId);}

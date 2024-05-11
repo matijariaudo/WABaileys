@@ -65,7 +65,7 @@ class Instances{
     admConnection=async(update)=>{
         const {qr,connection,lastDisconnect}=update||{}
         if(lastDisconnect){
-            console.log(`Account ${this.id}-->`,lastDisconnect?.error)
+            console.log(`Account ${this.id}-->`,lastDisconnect?.error,"AAAAAAAAAAAAAAAAAAAAA")
             if(lastDisconnect?.error){
                 const code=lastDisconnect?.error?.output?.statusCode;
                 const {message}=lastDisconnect?.error?.output?.payload;

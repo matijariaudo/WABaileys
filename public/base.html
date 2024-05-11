@@ -253,16 +253,17 @@
                 <input class="nuevo_wsp" type="text" placeholder="Ej: https://mysite.com" id="nuevo_webhook_wsp"> 
                 <p style="font-size:.8em;margin: 0px;color:rgb(107, 107, 107);font-style: oblique;">*Optional: Each time you'll receive a text we sent a notification to this url in a POST request.</p>
             </div>
-            <div class="modal-body create create_3">
-                <p>Activar ahora:</p>
-                <input type="text"id="form_create_success"> 
+            <div class="modal-body create create_3" style="text-align: center;">
+                <img src="assets/img/success_instance.png" style="width:70%;">
+                <br><b>Your instance was created.</b>
+                <input type="hidden"id="form_create_success"> 
+                <p style="font-size: .8em;">The next step is to connect your instance with your WhatsApp account. 
+                    To do this you must go to your <b>WhatsApp > Settings > Linked devices > Link</b> new and scan the QR that we will show you.</p>
+                <button class="btn btn-green" onclick="solicitar_qr_init()">Connect now</button>
             </div>
             <div class="modal-footer create create_2 style="border:0px">
               <button type="button" class="btn" onclick="$('#nuevo_id_wsp').val()==''?agregar_numero_tel():editar_numero_tel()">Send</button>
             </div>
-            <div class="modal-footer create create_3 style="border:0px">
-                <button type="button" class="btn" onclick="solicitar_qr_init()">Scan QR now!</button>
-              </div>
           </div>
         </div>
     </div>
@@ -302,7 +303,7 @@
             <div class="modal-body" id="alertModal_body" style="font-weight:100;">
                 
             </div>
-            <div class="modal-footer" style="border:0px">
+            <div class="modal-footer" style="border:0px" id="alertModal_btn_div">
                 <button class="btn" id="alertModal_btn" onclick=""></button>
             </div>
           </div>
@@ -448,19 +449,36 @@
             env["instanceId"]=idI;
             ajax("/api/instance/get",env,(d)=>{
                 const e=d.data;
-                if(e.instances[0].session=="connected"){
-                    $("#vincularModal").modal('hide');
-                    buscar_phones();
-                }else{
-                    if(e.instances[0].session=='connecting'){mostrar('vincular',3);}
-                    if(e.instances[0].session=='close'){eventQr=false;$("#vincularModal").modal('hide');}
-                    console.log("buscando", eventQr,e.instances[0].session)
-                    if(eventQr && e.instances[0].session=='qr'){
-                       if(e.data[0].qr!=$("#qr_value").val()){
-                        crearQR(e.data[0].qr,"qr_wsp");
-                       }
-                       setTimeout(()=>{checkQr(idI);},1000); 
-                    }
+                console.log("buscando", eventQr,e.instances[0].session,e)
+                const newStatus=e.instances[0].session;
+                switch (newStatus) {
+                    case 'connected':
+                        $("#vincularModal").modal('hide');
+                        buscar_phones();
+                        break;
+                    case 'close':
+                        eventQr=false;$("#vincularModal").modal('hide');
+                        alertFun({text:"The Qr has expired. Try generating a new qr again",btn:"Ok"})
+                        break;
+                    case 'connecting':
+                        mostrar('vincular',3);
+                        setTimeout(()=>{checkQr(idI);},1000); 
+                        break;
+                    default:
+                        console.log("buscando", eventQr,e.instances[0].session,e)
+                        if(eventQr && newStatus=='qr')
+                        {
+                            newQr=e.instances[0].sessionStatus.qr;
+                            if(newQr!=$("#qr_value").val()){
+                                mostrar('vincular',1);
+                                setTimeout(() => {
+                                    mostrar('vincular',2);
+                                    crearQR(newQr,"qr_wsp");
+                                }, 1000);
+                            }
+                            setTimeout(()=>{checkQr(idI);},1000); 
+                        }
+                    break;
                 }
             });
         }
@@ -714,7 +732,7 @@
                 const e=d.data;
                 console.log(e);
                 if(e.error){alert(e.error);return false;}
-                $('#form_create_success').val(e.uid);
+                $('#form_create_success').val(e.instance.uid);
                 mostrar('create',3)
                 buscar_phones();
             })
@@ -855,11 +873,16 @@
             return decodeURIComponent(results[2].replace(/\+/g, ' '));
         }
 
-        function alertFun({text,btn,functionModal}) {
+        function alertFun({text,btn,functionModal=()=>{$("#alertModal").modal('hide');}}) {
             $("#alertModal").modal('show')
             $("#alertModal_body").html(text);
-            $("#alertModal_btn").html(btn);
-            $("#alertModal_btn").on('click',functionModal)
+            if(btn){
+                $("#alertModal_btn_div").show();
+                $("#alertModal_btn").html(btn);
+                $("#alertModal_btn").on('click',functionModal)
+            }else{
+                $("#alertModal_btn_div").hide();
+            }
         }
 
 

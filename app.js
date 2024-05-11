@@ -14,6 +14,7 @@ const init=async()=>{
             const i1 =await wsp.createInstance(e.id);
             //await i1.getContacts();
         }else{
+            console.log(1)
             await eliminarCarpetaAsync(e.id);
         }
     });
