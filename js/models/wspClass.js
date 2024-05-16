@@ -1,12 +1,10 @@
 const { makeWASocket, useMultiFileAuthState, fetchLatestBaileysVersion,makeInMemoryStore} = require("@whiskeysockets/baileys");
-const path = require('path');
 const EventEmitter = require('events');
 const { eliminarCarpetaAsync } = require("../helpers/deleteFolder");
-const axios = require('axios');
-const fs = require('fs');
 const {Instance} = require("../database/models");
 const { msgFormat } = require("../helpers/msgFormat");
 const { checkMedia } = require("../helpers/checkMedia");
+const { checkFolder } = require("../helpers/checkFolder");
 
 
 class Instances{
@@ -15,9 +13,12 @@ class Instances{
         this.data={qr:"",me:{}};
         this.path = `auth_wp/session_${this.id}`;
         this.status="initializing"; 
+        this.restart=0;
+        this.QrBlock=false;
         checkFolder('./media_wp/'+this.id)
     }
-    async init(){
+    async init({QrBlock}){
+        this.QrBlock=QrBlock?QrBlock:false;
         const { state, saveCreds } = await useMultiFileAuthState(this.path);
         const { version, isLatest } = await fetchLatestBaileysVersion()
         return new Promise(async(resolve, reject) => {
@@ -28,7 +29,13 @@ class Instances{
                     setInterval(() => {
                         this.store.writeToFile(memory);
                     }, 10_000);
-                this.sock = await makeWASocket({ auth: state ,version,qrTimeout:10000,retryRequestDelayMs: 10000,browser:["WspPlus","Chrome",null]});
+                    this.sock = await makeWASocket({ 
+                        auth: state ,
+                        version,
+                        qrTimeout:this.QrBlock?"100":60000,
+                        retryRequestDelayMs:this.QrBlock?"100":60000,
+                        browser:["WspPlus","Ubuntu",null]
+                    });
             } catch (error) {
                     reject("It has happend an issue while sock was inizializing",error);
             }
@@ -65,16 +72,27 @@ class Instances{
     admConnection=async(update)=>{
         const {qr,connection,lastDisconnect}=update||{}
         if(lastDisconnect){
-            console.log(`Account ${this.id}-->`,lastDisconnect?.error,"AAAAAAAAAAAAAAAAAAAAA")
+            console.log(`Account ${this.id}-->`,lastDisconnect?.error)
             if(lastDisconnect?.error){
                 const code=lastDisconnect?.error?.output?.statusCode;
                 const {message}=lastDisconnect?.error?.output?.payload;
-
                 const db=await Instance.findById(this.id)
-                //console.log(`Error ${this.id} (Code:${code})-->`,lastDisconnect?.error?.message)
-                if(code==401){this.deleteInstance();db.session='close';}//408:Qr expired | 401: User close session from mobile
-                if(code==408 && message=='QR refs attempts ended'){this.deleteInstance();db.session='close';}//408:Qr expired | 401: User close session from mobile
-                if(code==515){db.session='connecting';this.init();}//515: Scan / Restart needing
+                console.log(`Error ${this.id} (Code:${code})-->`,lastDisconnect?.error?.message)
+                let accError=false;
+                if(code==401 || (code==408 && message=='QR refs attempts ended')){  //408:Qr expired | 401: User close session from mobile
+                    console.log(code==408?"Client QR die":"Client ends session");
+                    accError=true;db.session='close';this.deleteInstance();
+                }
+                //if(code==515){db.session='connecting';this.init();accError=true;}   //515: Scan / Restart needing
+                if(!accError){
+                    this.restart++;
+                    if(this.restart<3){
+                        db.session='connecting';this.init({QrBlock:true});
+                    }else{
+                        db.session='close';this.deleteInstance();
+                    }
+                }
+                this.setStatus(db.session)
                 db.save();
             }
         }
@@ -93,6 +111,7 @@ class Instances{
                 console.log(`Account data ${this.id}-->`,this.data.me)
                 this.data.qr="";
                 this.setStatus('connected')
+                this.restart=0;
                 const db=await Instance.findById(this.id)
                 db.session='connected';
                 db.number=this.data.me.id.split(":")[0];
@@ -113,7 +132,7 @@ class Instances{
 
     deleteInstance=async()=>{
         console.log("Instance delete",this.id)
-        await eliminarCarpetaAsync(this.id);
+        //await eliminarCarpetaAsync(this.id);
         const wsp=new Wsp();
         await wsp.deleteIntance(this.id);
     }
@@ -177,11 +196,11 @@ class Wsp {
       return this;
     }
   
-    async createInstance(id) {
+    async createInstance(id,options={}) {
       if (!this.instancias[id]) {
         console.log("New instance ",id)
-        this.instancias[id] =new Instances(id);
-        await this.instancias[id].init()
+        this.instancias[id] =new Instances(id,options);
+        await this.instancias[id].init(options)
       }
       return this.instancias[id];
     }
@@ -213,20 +232,4 @@ module.exports = { Wsp };
 
 
 
-async function checkFolder(ruta) {
-    try {
-        // Verificar si la carpeta existe
-        const existeCarpeta = await fs.promises.stat(ruta).then(stats => stats.isDirectory()).catch(() => false);
-
-        if (!existeCarpeta) {
-            // Si la carpeta no existe, crearla
-            await fs.promises.mkdir(ruta, { recursive: true });
-            console.log(`Carpeta "${ruta}" creada correctamente.`);
-        } else {
-            console.log(`La carpeta "${ruta}" ya existe.`);
-        }
-    } catch (error) {
-        console.error(`Error al verificar o crear la carpeta "${ruta}":`, error);
-    }
-}
 

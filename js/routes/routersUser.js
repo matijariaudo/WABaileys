@@ -12,7 +12,7 @@ require('dotenv').config()
 //Users administration
 UserRouter.post('/users',checkUserCreate,userCreate);
 UserRouter.post('/users/login',checkUserLogin,userLogin);
-UserRouter.post('/users/validar',checkUserJWT,loginJWT);
+UserRouter.post('/users/check',checkUserJWT,loginJWT);
 UserRouter.post('/users/sendvalidation',checkUserJWT,sendMailValidation);
 UserRouter.post('/users/edit',checkUserUpdate,userUpdate);
 UserRouter.get( '/users/validar/:token',checkUserJWTParam,loginJWTCheckemail);

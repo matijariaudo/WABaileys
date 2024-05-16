@@ -18,7 +18,7 @@ const userCreate=async(req,res)=>{
         const newuser=new User({nombre:name,correo:email,clave:claveEncrypt,rol:"USER_ROLE"});
         await newuser.save()
         const tokenE=jwt.sign({ uid: newuser.id,email:newuser.correo}, process.env.SEED,{expiresIn:'12h'})
-        sendEmail({email:newuser.correo,subject:"Verify your email",typeNro:2,button:{frase:"Verify email",link:`${process.env.URL}/login/users/validar/${tokenE}`}})
+        sendEmail({email:newuser.correo,subject:"Verify your email",typeNro:2,button:{frase:"Verify email",link:`http://${req.headers.host}/login/users/validar/${tokenE}`}})
         return res.status(200).json(await jsonAnswer(200,null,`The user has been created`,{user:newuser}));
     } catch (error) {
         return res.status(200).json(await jsonAnswer(400,"The operation has failed","Your chat has not correctly found.",null));
@@ -70,9 +70,10 @@ const loginJWT=async(req,res)=>{
 }
 
 const sendMailValidation=async(req,res)=>{
+    console.log(req.headers.host)
     const user=req.body.user_jwt;
     const token=jwt.sign({ uid: user.id,email:user.correo}, process.env.SEED,{expiresIn:'12h'})
-    sendEmail({email:user.correo,subject:"Verify your email",typeNro:2,button:{frase:"Verify email",link:`${process.env.URL}/login/users/validar/${token}`}})
+    sendEmail({email:user.correo,subject:"Verify your email",typeNro:2,button:{frase:"Verify email",link:`http://${req.headers.host}/login/users/validar/${token}`}})
     return res.status(200).json(await jsonAnswer(200,`Sending success`,`We have sent an email to validate your direction`,{user,token}));
 }
 

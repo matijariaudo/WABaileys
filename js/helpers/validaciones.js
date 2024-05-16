@@ -1,5 +1,5 @@
 const User=require('../database/models/user.js')
-const { validationResult,body,param } = require('express-validator');
+const { validationResult,body,param, header } = require('express-validator');
 var jwt = require('jsonwebtoken');
 const { jsonAnswer } = require('./apiFormat.js');
 require('dotenv').config()
@@ -29,19 +29,19 @@ const checkValidation=async(req,res,next)=>{
     next()
 }
 
-const JWTValidation=async(token,{req})=>{
-    //verify genera error solo si no hay resultado
+const JWTValidation=async(tokenBase,{req})=>{
     try {
+        const token=tokenBase.split(" ")[1];
         const rta=jwt.verify(token, process.env.SEED);
         const usuario_jwt=await User.findById(rta.uid);
         if(usuario_jwt){
             req.body.user_jwt=usuario_jwt;
             req.body.data_jwt=rta;
         }else{
-            throw new Error(); 
+            throw new Error("Invalid User Token"); 
         }
     } catch (error) {
-        throw new Error();        
+        throw new Error("Invalid token");        
     }
 }
 
@@ -56,7 +56,7 @@ const checkUserUpdate=[
     body('email','El formato del correo es inválido').if(body('correo').notEmpty()).isEmail(),
     body('state','El formato del estado es inválido').if(body('estado').notEmpty()).isBoolean(),
     body('password','El formato de la clave es incorrecto').if(body('clave').notEmpty()).isLength({min:6}),
-    body('token','El token no es válido').custom(JWTValidation),
+    header('authorization').notEmpty().custom(JWTValidation),
     body('uid','El id no tiene formato adecuado.').isMongoId(),
     checkValidation
 ];
@@ -68,7 +68,7 @@ const checkUserLogin=[
 ];
 
 const checkUserJWT=[
-    body('token','El token no es válido').custom(JWTValidation),
+    header('authorization').notEmpty().custom(JWTValidation),
     checkValidation
 ]
 
@@ -80,33 +80,33 @@ const checkUserJWTParam=[
 const checkInstanceCreate=[
     body('name','You must enter a name').notEmpty(),
     body('webhook','webhook must to be an URL').if(body('webhook').notEmpty()).isURL(),
-    body('token','El token no es válido').custom(JWTValidation),
+    header('authorization').notEmpty().custom(JWTValidation),
     checkValidation
 ]
 
 const checkInstanceID=[
     body('instanceId','You must to enter a valid ID').custom(checkID),
-    body('token','El token no es válido').custom(JWTValidation),
+    header('authorization').notEmpty().custom(JWTValidation),
     checkValidation
 ];
 
 const checkInstanceEdit=[
     body('instanceId','You must to enter a valid ID').custom(checkID),
     body('webhook','webhook must to be an URL').if(body('webhook').notEmpty()).isURL(),
-    body('token','El token no es válido').custom(JWTValidation),
+    header('authorization').notEmpty().custom(JWTValidation),
     checkValidation
 ]
 
 const checkInstanceGet=[
     body('instanceId','You must to enter a valid ID').if(body('instanceId').notEmpty()).custom(checkID),
-    body('token','El token no es válido').custom(JWTValidation),
+    header('authorization').notEmpty().custom(JWTValidation),
     checkValidation
 ];
 
 const checkInstanceChat=[
     body('instanceId','You must to enter a valid ID').custom(checkID),
     body('remoteJid','You must to enter a valid ID').custom(checkRemoteJID),
-    body('token','El token no es válido').custom(JWTValidation),
+    header('authorization').notEmpty().custom(JWTValidation),
     checkValidation
 ];
 
@@ -114,7 +114,7 @@ const checkInstanceMessage=[
     body('instanceId','You must to enter a valid ID').custom(checkID),
     body('remoteJid','You must to enter a valid ID').custom(checkRemoteJID),
     body('messageId','You must enter a messageId').notEmpty(),
-    body('token','El token no es válido').custom(JWTValidation),
+    header('authorization').notEmpty().custom(JWTValidation),
     checkValidation
 ];
 
@@ -122,7 +122,7 @@ const checkInstanceSendMessage=[
     body('instanceId','You must to enter a valid ID').custom(checkID),
     body('remoteJid','You must to enter a valid ID').custom(checkRemoteJID),
     body('message','You must enter a message').notEmpty(),
-    body('token','El token no es válido').custom(JWTValidation),
+    header('authorization').notEmpty().custom(JWTValidation),
     checkValidation
 ];
 
