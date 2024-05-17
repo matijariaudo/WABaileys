@@ -56,7 +56,7 @@ const userLogin=async(req,res)=>{
     if(!rta){error=true;}
     if(!error){
         const token=jwt.sign({ uid: user.id }, process.env.SEED,{expiresIn:'12h'})
-        return res.status(200).json(await jsonAnswer(200,`Login success`,`The user has been correctly loged in`,{user,token}));
+        return res.status(200).json(await jsonAnswer(200,null,`Login success: The user has been correctly loged in`,{user,token}));
     }else{
         return res.status(200).json(await jsonAnswer(400,"The operation has failed","The email or password are incorrect.",null));
     }
@@ -66,7 +66,7 @@ const userLogin=async(req,res)=>{
 const loginJWT=async(req,res)=>{
     const user=req.body.user_jwt;
     const token=jwt.sign({ uid: user.id }, process.env.SEED,{expiresIn:'12h'})
-    return res.status(200).json(await jsonAnswer(200,`Login success`,`The user has been correctly loged in`,{user,token}));
+    return res.status(200).json(await jsonAnswer(200,null,`Login success: The user has been correctly loged in`,{user,token}));
 }
 
 const sendMailValidation=async(req,res)=>{

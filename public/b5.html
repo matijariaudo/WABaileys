@@ -853,6 +853,7 @@
         env["clave"] = $("#login_clave").val();
         ajax("/login/users/login",env,(d)=>{
             const e=d.data;
+            console.log(d)
             if(d.error){
                 mostrar('log',2)
                 analisis_error(d)
