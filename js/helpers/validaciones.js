@@ -25,7 +25,8 @@ function validarJID(jid) {
 
 const checkValidation=async(req,res,next)=>{
     const error=validationResult(req)
-    if(error.errors.length>0){return res.status(200).json(await jsonAnswer(400,"Body params issues","It has happend and issue with the body params",{errors:error.errors}));}
+    console.log(error)
+    if(error.errors.length>0){return res.status(200).json(await jsonAnswer(400,"Body params issues","An error has occurred with the parameters received, please check and try again",{errors:error.errors}));}
     next()
 }
 
@@ -33,6 +34,7 @@ const JWTValidation=async(tokenBase,{req})=>{
     try {
         const token=tokenBase.split(" ")[1];
         const rta=jwt.verify(token, process.env.SEED);
+        console.log(rta)
         const usuario_jwt=await User.findById(rta.uid);
         if(usuario_jwt){
             req.body.user_jwt=usuario_jwt;

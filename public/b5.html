@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Chatter+</title>
     <!-- Bootstrap CSS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
@@ -115,11 +115,12 @@
   
   <div class="user user_2 container-fluid p-0 m-0">
     <div class="fixed-top p-0 capa capa_2 capa_3 capa_4 capa_5 capa_0 sombra" style="z-index: 1;background-color: #FFF;border:1px solid #ffffff;border-width: 0px 0px 1px 0px;">
-        <div class="container-fluid p-0">
-            <div class="row col-12 p-0">
-            <div class="col-xs-12 col-sm-3 p-2s" style="padding: 5px 0px 5px 50px;font-family: Logo;letter-spacing: 0.2em;">
+        <div class="container-fluid p-0 m-0">
+            <div class="row col-12 p-0  m-0">
+            <div class="col-9 col-lg-12 p-2s" style="padding: 5px 0px 5px 50px;font-family: Logo;letter-spacing: 0.2em;">
                 <a style="font-size:1.9em;margin-top: 10px;"><b style="color:#555555">Chatter</b><b style="color: #26D367;">+</b></a>
             </div>
+            <div class="col-3 d-lg-none d-block" style="text-align: center;"><img class="menu-toggle" src="assets/img/menu.png" style="width: 40px;margin-top:13px;margin-right: 5px;"></div>
             </div>
         </div>
     </div>
@@ -197,32 +198,59 @@
                 <div class="  row  capa capa_5 " style="padding:0px 15px;">
                     <div class="col-lg-10 col-md-10 col-12 offset-lg-1 offset-md-1" style="padding: 0px;">
                         <h1>API Documentation</h1>
-                        <div class="col-12" style="color:#25D366;background-color: #000;padding:10px;border-radius: 10px;">
-    <button class="btn btnCodeOp">copy</button>
-    <button class="btn btnCodeOp">copy</button>
-    <button class="btn btnCode">copy</button>
-    <pre style="margin: 0px;padding: 0px;white-space: pre-wrap;">
-                        <code style="color:#25D366;">
-                            var settings = {
-                                "url": "http://localhost:3000/api/instance/chat",
-                                "method": "POST",
-                                "timeout": 0,
-                                "headers": {
-                                        "Content-Type": "application/json"
-                                },
-                                "data": '{
-                                "instanceId":"661a0903df86fba29a9a7aec",
-                                "senderId":"120363285709819764@g.us",
-                                "qty":20,
-                                "token":{{token}}}',
-                        };
-                        
-                        $.ajax(settings).done(function (response) {
-                                console.log(response);
-                        });</code>
-                        </pre>
+                        <div class="code_show">
+                            <div data="JSON">
+                                var settings = {
+                                    "url": "http://localhost:3000/api/instance/chat",
+                                    "method": "POST",
+                                    "timeout": 0,
+                                    "headers": {
+                                            "Content-Type": "application/json"
+                                    },
+                                    "data": '{
+                                    "instanceId":"661a0903df86fba29a9a7aec",
+                                    "senderId":"120363285709819764@g.us",
+                                    "qty":20,
+                                    "token":{{token}}}',
+                                };
+                            
+                                $.ajax(settings).done(function (response) {
+                                        console.log(response);
+                                })
+                            </div>
+                            <div data="PHP">
+                                asaws
+                            </div>
                         </div>
                         <script>
+                            $('.code_show').each(function() {
+                                a=[]
+                                $(this).find('div').each(function() {
+                                    a.push({titulo:$(this).attr('data'),code:$(this).html()});
+                                });
+                                const x=showCode(a);
+                                $(this).html(x)
+                            });
+
+                            function generarAleatorio(longitud) {
+                            const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                            let resultado = '';
+                            for (let i = 0; i < longitud; i++) {
+                                resultado += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+                            }
+                            return resultado;
+                            }
+                              function showCode(codes){
+                                btn="";codShow="";id=generarAleatorio(5)
+                                codes.forEach((e,i) => {
+                                    btn+=`<button class="btn btnCodeOp" style='background:${i>0?'#43485d':'#2F8A62'}' onclick="$('.code_${id}').hide();$('.code_${id}_${i}').show();$('.btnCodeOp').css('background','#43485d');$(this).css('background','#2F8A62');">${e.titulo}</button>`
+                                    codShow+=`<pre class="code_${id} code_${id}_${i}" style="margin: 10px 0px 0px;padding: 0px;white-space: pre-wrap;display:${i>0?'none':'block'}"><code style="color:#25D366;">${e.code}</code></pre>`
+                                });
+                                return `<div class="col-12" style="color:#25D366;background-color: #000;padding:10px;border-radius: 10px;">
+                                            ${btn}
+                                            ${codShow}
+                                        </div>`;
+                              }
                               $(document).ready(function() {
                                 $('code').each(function() {
                                 var html = $(this).html();
@@ -232,7 +260,7 @@
                                 html = html.replace(/\n\s+/g, '\n');
                                 $(this).html(html);
                                 });
-                            });
+                               });
                         </script>
                         <h2>Description</h2>
                         <p>This API provides functionalities for managing users and controlling messaging service instances (WhatsApp). It allows creating, modifying, and deleting users, as well as managing instances for sending messages.</p>
@@ -459,7 +487,7 @@
             console.log(d)
             if(d.error){
                 mostrar('log',3)
-                $("#new_txt").html(d.message);
+                analisis_error(d)
                 return;
             }
             const e=d.data;
@@ -578,7 +606,12 @@
         env["token"]=user.token;
         ajax("/api/instance/get",env,(d)=>{
             $("#div_phones").html("")
-            if(d.error){capa(1);return false;}
+            capa(2);
+            if(d.error){
+                analisis_error(d);
+                capa(2);
+                return true;
+            }
             const e=d.data
             capa(2)
             if(e.length==0)
@@ -820,7 +853,11 @@
         env["clave"] = $("#login_clave").val();
         ajax("/login/users/login",env,(d)=>{
             const e=d.data;
-            console.log(e)
+            if(d.error){
+                mostrar('log',2)
+                analisis_error(d)
+                return;
+            }
             localStorage.setItem("user",JSON.stringify(e))
             control_sesion();
         })
@@ -864,7 +901,10 @@
         env={token};
         ajax("/login/users/check",env,(d)=>{
             const e=d.data;
-            console.log(e)
+            if(d.error){
+                analisis_error(d)
+                return;
+            }
             localStorage.setItem("user",JSON.stringify(e))
             const accion=getParameterByName("accion")
             if(accion){alertFun({text:'Your email has been successfully validated',btn:"Go to my account",functionModal:()=>{location.href=window.location.pathname;}});setTimeout(()=>{location.href=window.location.pathname},2000);return;}
@@ -925,6 +965,19 @@
         }
     }
 
+    const analisis_error=(d)=>{
+        text=d.message;
+        if(d?.data?.errors){
+            //if(d.data.errors[0]?.msg=="Invalid token"){localStorage.clear();location.href=window.location.pathname;}
+            console.log(d.data.errors)
+            text+=`<br>`;
+            d.data.errors.forEach(a=>{
+                text+=`<br>${a.msg}.`
+            })
+        }
+        alertFun({text});
+        return false;
+    }
 
 
 </script>
