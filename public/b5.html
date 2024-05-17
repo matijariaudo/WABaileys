@@ -968,7 +968,7 @@
     const analisis_error=(d)=>{
         text=d.message;
         if(d?.data?.errors){
-            //if(d.data.errors[0]?.msg=="Invalid token"){localStorage.clear();location.href=window.location.pathname;}
+            if(d.data.errors[0]?.msg=="Invalid token"){localStorage.clear();location.href=window.location.pathname;}
             console.log(d.data.errors)
             text+=`<br>`;
             d.data.errors.forEach(a=>{
