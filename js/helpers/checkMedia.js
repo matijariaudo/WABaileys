@@ -14,10 +14,10 @@ const checkMedia=async(m,t)=>{
     };
     if(!m?.message){return {};}
     const messageTypeArray = Object.keys (m.message);
-    const messageType=messageTypeArray.find(a=> a === 'imageMessage' || a==='audioMessage' || a==='stickerMessage') || 0;
+    const messageType=messageTypeArray.find(a=> a === 'imageMessage' || a==='audioMessage' || a==='stickerMessage') || null;
+    if(!messageType){ throw new Error('We can not find media files in the message.')}
     const messageCont=m.message[messageType];
     const {mimetype}=messageCont
-    console.log(messageType,mimetype)
     if (messageType === 'imageMessage' || messageType==='audioMessage' || messageType==='stickerMessage') {
         const buffer = await downloadMediaMessage(m,'buffer',{ },{logger,reuploadRequest: t.sock.updateMediaMessage})
         //await writeFile('./media_wp/'+t.id+'/my-download.'+mimetype.split("/")[1], buffer)

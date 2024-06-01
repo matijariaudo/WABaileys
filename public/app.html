@@ -11,75 +11,13 @@
     <script src="assets/js/jquery.mtr-panel.js"></script>
     <script type="text/javascript" src="./assets/js/qr-code-styling.js"></script> 
     <link rel="stylesheet" href="base.css">
-    <style>
-        .navbar-panel-overlay {
-            position: fixed;
-            display: block;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            z-index: 100;
-            background-color: rgba(0, 0, 0, 0.3);
-            opacity: 0;
-            visibility: hidden;
-            -webkit-transition-delay: 0s, 0s;
-            transition-delay: 0s, 0s;
-            -webkit-transition-duration: 0.38s, 0.38s;
-            transition-duration: 0.38s, 0.38s;
-            -webkit-transition-property: opacity, visibility;
-            transition-property: opacity, visibility;
-            -webkit-transition-timing-function: ease-in-out, ease-in-out;
-            transition-timing-function: ease-in-out, ease-in-out; 
-        }
-        .navbar-panel-overlay.visible {
-            opacity: 1;
-            visibility: visible; 
-        }
-        .navbar-panel {
-            position: fixed;
-            z-index: 101;
-            width: 256px;
-            height: 100%;
-            background-color: whitesmoke;
-            box-sizing: border-box;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.23), 0 3px 12px rgba(0, 0, 0, 0.16);
-            border: none;
-            -webkit-transform: translateX(-300px);
-            -ms-transform: translateX(-300px);
-            transform: translateX(-300px); 
-        }
-        .navbar-panel.animated {
-            -webkit-transition: 0.38s ease-in-out -webkit-transform;
-            transition: 0.38s ease-in-out transform; 
-        }
-        .navbar-panel.visible {
-            -webkit-transform: translateX(0);
-            -ms-transform: translateX(0);
-            transform: translateX(0); 
-        }
-
-
-        ::-webkit-scrollbar {
-        width: 10px;
-        height: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-        background: linear-gradient(to bottom right, #61e9b9 0%, #61e9b9 100%);
-        border-radius: 5px;
-        }
-
-        ::-webkit-scrollbar-track {
-        background-color: #ddd;
-        border: 1px solid #ccc;
-        }
-
-    </style> 
 </head>
-<body style="background-color: wheat;padding: 0px;">
+<style>
+    input{
+        color:#FFF
+    }
+</style>
+<body style="padding: 0px;background-color: #353535;color:#FFF">
 
   <div class="user user_1 container-fluid m-0" style="height: 100vh;overflow-y: auto;padding: 0px 20px;">
         <div class="col-12 col-sm-4 offset-sm-4 p-4 sombra" style="background:#ffffff;border-radius:10px;margin-top:25vh;height:auto;">
@@ -114,43 +52,55 @@
   </div>  
   
   <div class="user user_2 container-fluid p-0 m-0">
-    <div class="fixed-top p-0 capa capa_2 capa_3 capa_4 capa_5 capa_0 sombra" style="z-index: 1;background-color: #FFF;border:1px solid #ffffff;border-width: 0px 0px 1px 0px;">
+    <div class="fixed-top p-0 capa capa_2 capa_3 capa_4 capa_5 capa_0 sombra" style="z-index:4;background:#FFF;border: 0px">
         <div class="container-fluid p-0 m-0">
-            <div class="row col-12 p-0  m-0">
-            <div class="col-9 col-lg-12 p-2s" style="padding: 5px 0px 5px 50px;font-family: Logo;letter-spacing: 0.2em;">
-                <a style="font-size:1.9em;margin-top: 10px;"><b style="color:#555555">Chatter</b><b style="color: #26D367;">+</b></a>
+            <div class="row col-12 p-0  m-0 sombra" style="background-color: #333333;">
+            <div class="col-8 col-lg-2 offset-lg-0 p-2s" style="padding: 10px 0px 5px 15px;font-family: Logo;letter-spacing: 0.2em;">
+                <a class="nav-link" style="font-size:1.9em;margin-top: 0px;font-family: Square;">
+                    <b style="color:#e4e4e4">chAtter</b><b style="color: #5AE4A8">+</b></a>
             </div>
-            <div class="col-3 d-lg-none d-block" style="text-align: center;"><img class="menu-toggle" src="assets/img/menu.png" style="width: 40px;margin-top:13px;margin-right: 5px;"></div>
+            <div class="col-lg-5 offset-lg-2 d-lg-block d-none p-2s " style="padding: 25px 0px;font-family: Logo;letter-spacing: 0.1em;font-weight:600;">
+                     
+            </div>
+            <div class="col-lg-3 offset-lg-0 d-lg-block d-none p-2s " style="padding: 10px 0px;font-family: Logo;letter-spacing: 0.1em;">
+                         
+            </div>
+
+            <div class="col-4 d-lg-none d-block" style="text-align: right;padding-top: 1px;">
+                <img class="menu-toggle" src="https://icons.veryicon.com/png/o/miscellaneous/linear-icon-45/hamburger-menu-5.png" alt="Open Menu icon" style="float:right;width: 40px;margin-top:12px;margin-right: 2px;filter: invert(.8);">
+            </div>
             </div>
         </div>
     </div>
     <div class="row m-0 p-0 " >
+            <!-- Menu Tablet phone -->
             <nav class="navbar-panel" style="padding: 10px;z-index: 999;background-color: #FFF;">
-                <div class="col-12 p-0">
-                    <ul class="nav nav-pills flex-column mb-auto p-0">
+                <a style="font-size:1.9em;margin-top: 10px;font-family: Square;"><b style="color:#555555">Chatter</b><b style="color: #26D367;">+</b></a>
+                <div class="col-12" id="navbar_container" style="padding:10px 0px;">
+                    <ul  class="nav nav-pills flex-column mb-auto p-0  " style="margin-top: 10px;">
                     <li class="nav-item p-0" onclick="capa(2)" >
-                        <b href="#" class="menu menu_2">
-                            <img src="assets/icons/whatsapp.png"> Instances
+                        <b href="#" class="menu menu_2 ">
+                            Instances
                         </b>
                     </li>
                     <li class="p-0" style="display: none;" onclick="capa(4)">
-                        <b href="#" class="menu menu_4"  >
-                            <img src="assets/icons/conversation.png"> Get Started
+                        <b href="#" class="menu menu_4 "  >
+                            Get Started
                         </b>
                     </li>
-                    <li class="p-0"  onclick="capa(5)">
-                        <b href="#" class="menu menu_5">
-                            <img src="assets/icons/folder.png"> Documentation
+                    <li onclick="capa(5)" class="p-0"  >
+                        <b href="#" class="menu menu_5"  >
+                            Documentation
                         </b>
                     </li>
                     <li class="p-0" onclick="capa(3)">
                         <b href="#" class="menu menu_3" >
-                            <img src="assets/icons/user.png"> Your account
+                            Your account
                         </b>
                     </li>
                     <li class="p-0">
-                        <b href="#" class="menu"  onclick="alertFun({text:`Are you sure to close your session?`,btn:`Close session`,functionModal:()=>{localStorage.clear();location.href=window.location.pathname}})"  style="color:red">
-                            <img src="assets/icons/power-on.png"> Close Session
+                        <b href="#" class="menu"  onclick="alertFun({text:`Are you sure to close your session?`,btn:`Close session`,functionModal:()=>{localStorage.clear();location.href='index.html'}})"  style="color:red">
+                            Close Session
                         </b>
                     </li>
                     </ul>
@@ -158,28 +108,28 @@
                 </div>
             </nav>
             <!-- Menu BigScreen -->
-            <div class="col-2 d-none d-lg-block" style="height: 100vh;border-width: 0px 1px 0px 0px;padding: 90px 20px 0px 20px;background-color: #fff">
-                <div id="nav_lat" class="co-12 p-0"></div>
+            <div class="col-2 d-none d-lg-block sombra" style="font-family: Logo;height: 100vh;border:0px solid #f5f5f5;border-width: 0px 0px 0px 0px;padding: 90px 20px 0px 20px;background-color: #3e3e3e;">
+                <div id="nav_lat" class="co-12 p-0" style="color:#FFF"></div>
             </div> 
             <!-- Main Container -->
-            <div class="col-lg-10 offset-lg-0 col-md-12" style="padding-top: 90px;height: 100vh;overflow-y: auto;">
-                <div class="  row  capa capa_0">
+            <div class="col-lg-10 col-md-12 m-0" style="padding: 60px 0px 0px 0px;height: 100vh;overflow-y: auto;">
+                <div class="  row  capa capa_0 m-0" style="padding-top: 25vh;">
                     <center><div class="lds-ring"><div></div><div></div><div></div><div></div></div></center>
                 </div>
-                <div class="  row  capa capa_2 " style="padding: 0px 15px;">
+                <div class="  row  capa capa_2 m-0" style="padding: 30px 15px 0px 15px;">
                     <div class="col-lg-10 col-md-10 col-12 offset-lg-1 offset-md-1" style="padding: 0px;">
-                        <button class="btn sombra d-none d-sm-block" id="btn_new_intance" onclick="mostrar('create',2);$('#phoneModal').modal('show');$('.nuevo_wsp').val('')" style="float:right;font-size:.8em">NEW INSTANCE</button>
-                        <button class="btn sombra d-block d-sm-none" id="btn_new_intance_xs" onclick="mostrar('create',2);$('#phoneModal').modal('show');$('.nuevo_wsp').val('')" style="float:right;font-size:.8em">+</button>
-                        <button class="btn sombra" onclick="buscar_phones()" style="float:right;font-size:.8em;margin-right: 3px;"> 
-                            <img src="assets/img/refresh.png" style="width: 20px;"> </button>
-                        <h2>YOUR INSTANCES</h2>
+                        <button class="btn btn-green d-none d-sm-block" id="btn_new_intance" onclick="mostrar('create',2);$('#phoneModal').modal('show');$('.nuevo_wsp').val('')" style="float:right;font-size:.8em">NEW INSTANCE</button>
+                        <button class="btn btn-green d-block d-sm-none" id="btn_new_intance_xs" onclick="mostrar('create',2);$('#phoneModal').modal('show');$('.nuevo_wsp').val('')" style="float:right;font-size:.8em">+</button>
+                        <button class="btn btn-green" onclick="buscar_phones()" style="float:right;font-size:.8em;margin-right: 3px;"> 
+                            <img src="assets/img/refresh.png" style="width: 16px;"> </button>
+                        <h2>Instances</h2>
                         <button id="toggleSidebarBtn" style="display: none;">Toggle Sidebar</button>
-                        <div class="col-12 p-0" id="div_phones" style="padding: 10px;">
+                        <div class="col-12 p-0" id="div_phones" style="padding: 10px 0px;">
                         </div>
                     </div>
                 </div>
-                <div class="  row  capa capa_3">
-                            <div class="col-sm-9  col-xs-12" style="padding: 0px 20px;">
+                <div class="  row  capa capa_3 m-0 p-0">
+                            <div class="col-sm-10  col-xs-12 offset-sm-1" style="padding: 30px 20px;">
                                 <div class="col-12" style="background-color: #ffffff0b;padding: 10px;border-radius: 10px;">
                                 <h3>Your personal data</h3>
                                 Name:
@@ -195,99 +145,9 @@
                                 </div>
                             </div>
                 </div>
-                <div class="  row  capa capa_5 " style="padding:0px 15px;">
-                    <div class="col-lg-10 col-md-10 col-12 offset-lg-1 offset-md-1" style="padding: 0px;">
-                        <h1>API Documentation</h1>
-                        <div class="code_show">
-                            <div data="JSON">
-                                var settings = {
-                                    "url": "http://localhost:3000/api/instance/chat",
-                                    "method": "POST",
-                                    "timeout": 0,
-                                    "headers": {
-                                            "Content-Type": "application/json"
-                                    },
-                                    "data": '{
-                                    "instanceId":"661a0903df86fba29a9a7aec",
-                                    "senderId":"120363285709819764@g.us",
-                                    "qty":20,
-                                    "token":{{token}}}',
-                                };
-                            
-                                $.ajax(settings).done(function (response) {
-                                        console.log(response);
-                                })
-                            </div>
-                            <div data="PHP">
-                                asaws
-                            </div>
-                        </div>
-                        <script>
-                            $('.code_show').each(function() {
-                                a=[]
-                                $(this).find('div').each(function() {
-                                    a.push({titulo:$(this).attr('data'),code:$(this).html()});
-                                });
-                                const x=showCode(a);
-                                $(this).html(x)
-                            });
-
-                            function generarAleatorio(longitud) {
-                            const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-                            let resultado = '';
-                            for (let i = 0; i < longitud; i++) {
-                                resultado += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
-                            }
-                            return resultado;
-                            }
-                              function showCode(codes){
-                                btn="";codShow="";id=generarAleatorio(5)
-                                codes.forEach((e,i) => {
-                                    btn+=`<button class="btn btnCodeOp" style='background:${i>0?'#43485d':'#2F8A62'}' onclick="$('.code_${id}').hide();$('.code_${id}_${i}').show();$('.btnCodeOp').css('background','#43485d');$(this).css('background','#2F8A62');">${e.titulo}</button>`
-                                    codShow+=`<pre class="code_${id} code_${id}_${i}" style="margin: 10px 0px 0px;padding: 0px;white-space: pre-wrap;display:${i>0?'none':'block'}"><code style="color:#25D366;">${e.code}</code></pre>`
-                                });
-                                return `<div class="col-12" style="color:#25D366;background-color: #000;padding:10px;border-radius: 10px;">
-                                            ${btn}
-                                            ${codShow}
-                                        </div>`;
-                              }
-                              $(document).ready(function() {
-                                $('code').each(function() {
-                                var html = $(this).html();
-                                html = html.replace(/"([^"]+)"/g, '<span style="color:#f869de">"$1"</span>'); // Resalta el texto entre comillas
-                                html = html.replace(/&lt;span class="highlight"&gt;/g, '<span class="highlight">&lt;'); // Corrige el HTML escapado
-                                html = html.replace(/&lt;\/span&gt;/g, '&lt;/span&gt;'); // Corrige el HTML escapado
-                                html = html.replace(/\n\s+/g, '\n');
-                                $(this).html(html);
-                                });
-                               });
-                        </script>
-                        <h2>Description</h2>
-                        <p>This API provides functionalities for managing users and controlling messaging service instances (WhatsApp). It allows creating, modifying, and deleting users, as well as managing instances for sending messages.</p>
-                    
-                        <h2>Endpoints</h2>
-                        <h3>Users</h3>
-                        <h4>User Login</h4>
-                        <pre><code>POST /login/users/login</code></pre>
-                        <p>Logs in a user with existing credentials.</p>
-                        <h5>Parameters:</h5>
-                        <ul>
-                            <li><code>email</code> (string): User's email address.</li>
-                            <li><code>password</code> (string): User's password.</li>
-                        </ul>
-                    
-                        <h4>Update User</h4>
-                        <pre><code>POST /login/users/:uid</code></pre>
-                        <p>Updates details of an existing user.</p>
-                        <h5>Parameters:</h5>
-                        <ul>
-                            <li><code>uid</code> (string): Unique ID of the user to update in the database.</li>
-                            <li><code>name</code> (string): New name of the user (optional).</li>
-                            <li><code>email</code> (string): New email address of the user (optional).</li>
-                            <li><code>password</code> (string): New password of the user (minimum 6 characters, optional).</li>
-                            <li><code>status</code> (boolean): New status of the user (for admins only, optional).</li>
-                        <li><code>token</code> (string): Valid JWT token, you must to login before.</li>
-                        </ul>
+                <div class="  row  capa capa_5 m-0 p-0 " style="padding:0px;">
+                    <div class="col-lg-12 col-md-12 col-12 offset-md-1 p-0 m-0" style="padding: 0px;">
+                        <iframe src="documentation.html?hideLogo=true" frameborder="0" style="width: 100%;height: 88vh;"></iframe>
                     </div>
                 </div>
             </div>
@@ -379,16 +239,45 @@
             </div>
             <div class="modal-body textSend textSend_2" style="font-weight:100;font-size:0.8em;display: none;">
                 <input type="hidden" id="id_textSend">
-                <select placeholder="Phone number ej: +549....." id="tipo_textSend" onchange="if($(this).val()=='Group' || $(this).val()=='Contact'){$('#to_textSend').show();$('#to_textSend').val('');$('#to1_textSend').hide();}else{$('#to1_textSend').show();$('#to_textSend').hide();};if($(this).val()=='NO'){$('#to1_textSend').hide();$('#to_textSend').hide();}; if($(this).val()=='Group'){$('.contact_contact').hide();$('.contact_group').show();};if($(this).val()=='Contact'){$('.contact_contact').show();$('.contact_group').hide();};">
+                Send to: <br>
+                <div style="margin-top: 10px;">
+                <a class="btn btn_s_t" id="btn_contact" style="border-radius: 4px 0px 0px 4px;margin: 0px;" data="Contact">Contact</a><a class="btn btn_s_t" style="border-radius: 0px 0px 0px 0px;" data="Group">Group</a><a class="btn btn_s_t" style="border-radius: 0px 4px 4px 0px;" data="New">Other</a>
+                </div>
+                <select style="display: none;" placeholder="Phone number ej: +549....." id="tipo_textSend" onchange="if($(this).val()=='Group' || $(this).val()=='Contact'){$('#to_textSend').show();$('#to_textSend').val('');$('.to1_textSend').hide();}else{$('.to1_textSend').show();$('#to_textSend').hide();};if($(this).val()=='NO'){$('.to1_textSend').hide();$('.to_textSend').hide();}; if($(this).val()=='Group'){$('.contact_contact').hide();$('.contact_group').show();};if($(this).val()=='Contact'){$('.contact_contact').show();$('.contact_group').hide();};">
                     <option value="NO" style="color:#d4d4d4" disabled>Choose one</option>
                     <option value="Group">Group</option>
                     <option value="Contact">Contact</option>
                     <option value="New">Other</option>
                 </select>
-                <select placeholder="Phone number ej: +549....." id="to_textSend">
+                <select placeholder="Phone number ej: +549....." id="to_textSend" style="margin-top: 10px;">
                 </select>
-                <input type="text" placeholder="Phone number ej: +549....." id="to1_textSend">
+                <div class="col-12 row to1_textSend" style="margin-top: 10px;">
+                    <div class="col-5 ">
+                        <select id="to1_textSend_country"></select>
+                    </div>
+                    <div class="col-7 p-0"><input type="text" placeholder="Phone number ej: +549....." id="to1_textSend"></div>
+                </div>
                 <textarea cols="30" rows="4" placeholder="Input your text here" id="text_textSend"></textarea>
+                Add media: <br>
+                <div style="margin-top: 10px;">
+                <a class="btn btn_s_m" id="btn_no_media" style="border-radius: 4px 0px 0px 4px;margin: 0px;" data="false">No</a><a class="btn btn_s_m" style="border-radius: 0px 4px 4px 0px;" data="true">Yes</a>
+                <input  style="width: 10px;display: none;" type="checkbox" value="" id="media_check" onchange="if($(this).prop('checked')){$('.media_textSend').show()}else{$('.media_textSend').hide()}">
+                <div class="col-12 row media_textSend" style="margin-top: 10px;">
+                    <div class="col-4 ">
+                        <select id="media_type_textSend">
+                            <option value="image">Image</option>
+                            <option value="audio">Audio</option>
+                            <option value="video">Video</option>
+                            <option value="document">Document</option>
+                        </select>
+                    </div>
+                    <div class="col-8 p-0">
+                        <input type="text"  id="media_textSend" placeholder="Url of your media" autocomplete="off" >
+                    </div>
+                </div>
+                
+                </div>
+                
                 <p id="succ_msg"></p>
             </div>
             <div class="modal-footer" style="border:0px">
@@ -453,15 +342,24 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     instancias=[]
-    
-    
     function capa(i){
-    $(".capa").hide();
-    $('.menu').css("color","#000").css("border-width","0px");
-    $('.menu_'+i).css("color","#25d365").css("border-width","0px 0px 4px 0px");;
-    
-    $(".capa_"+i).show()
+        $(".capa").hide();
+        $('.menu').css("color","#FFF")
+        $('.menu').css("border-width","0px");
+        $('.menu_'+i).css("border","0px solid #5AE4A8");;
+        $('.menu_'+i).css("border-width","0px 0px 4px 0px");;
+        $(".capa_"+i).show()
     }
+    $(".btn_s_t").on('click',function (){
+        $('.btn_s_t').css('background','#333333');
+        $(this).css('background','#5AE4A8');
+        $("#tipo_textSend").val($(this).attr('data')).change()
+    })
+    $(".btn_s_m").on('click',function (){
+        $('.btn_s_m').css('background','#333333');
+        $(this).css('background','#5AE4A8');
+        $("#media_check").attr('checked',$(this).attr('data')=="true"?true:false).change()
+    })
    
     $("#btn_login").on('click',()=>{
     iniciar_sesion();
@@ -553,17 +451,32 @@
     function sendTextWsp(){
         env={};
         env["token"]=user.token;
+        media=$("#media_check").prop('checked');
+        media?tipo="caption":tipo="message"
         env["instanceId"]=$("#id_textSend").val();
         env["remoteJid"]=$("#to_textSend").val();
-        env["message"]=$("#text_textSend").val();
+        if($("#tipo_textSend").val()=="New"){
+            env["remoteJid"]=$("#to1_textSend_country").val()+$("#to1_textSend").val()+"@s.whatsapp.net";    
+        }
+        env[tipo]=$("#text_textSend").val();
+        env["fileUrl"]=$("#media_textSend").val();
+        env["type"]=$("#media_type_textSend").val();;
+        env["document"]=true;
         console.log(env)
         mostrar('textSend',1);
-        ajax("/api/instance/send",env,(d)=>{
-            console.log(d)
+        ajax(media?"/api/instance/sendmedia":"/api/instance/send",env,(d)=>{
             const e=d.data
+            console.log(d)
+            if(d.error){
+                problema=analisis_error(d,true)
+                mostrar('textSend',2);
+                $('#succ_msg').append('<i class="zmdi zmdi-close" style="color:red"></i>'+problema);
+                setTimeout(()=>{$("#succ_msg").html("")},1500)
+                return true;
+            }
             mostrar('textSend',2);
             $("#text_textSend").val("");
-            $('#succ_msg').append('<i class="zmdi zmdi-check-all" style="color:#26D367"></i>Message succesful.');
+            $('#succ_msg').append('<i class="zmdi zmdi-check-all" style="color:#5AE4A8"></i>Message succesful.');
             setTimeout(()=>{$("#succ_msg").html("")},1500)
         })
     }
@@ -574,6 +487,11 @@
         console.log(env)
         capa(0)
         ajax("/login/users/sendvalidation",env,(d)=>{
+            if(d.error){
+                analisis_error(d);
+                capa(2);
+                return true;
+            }
             console.log(d)
             if(d.status==200){alertFun({text:`We have sent an email. Don't forget to check you spam.`,btn:`Ok`,functionModal:()=>{$("#alertModal").modal('hide')}});}
             capa(3)
@@ -632,21 +550,19 @@
                 b.session=='initializing'?init=true:false;
                 $("#div_phones").append(`<div class="col-12" style="padding:4px 0px">
                     <div class="col-12 placa" style="cursor:default">
-                        <button class="btn btn3 sombra" data="${b.uid}" onclick="eliminar_numero_modal($(this).attr('data'),'eliminado')" style="padding:2px 7px;float:right"><img src="assets/img/delete.png" style="height:18px"></button>
-                        <button class="btn btn3 sombra" data="${b.uid}" onclick="editar_numero($(this).attr('data'))" style="padding:2px 7px;float:right;margin-right:2px"><img src="assets/img/settings.png" style="height:18px"></button>
-                        <button class="btn btn3 sombra" data="${b.uid}" onclick="$('#textModal').modal('show');$('#tipo_textSend').val('NO');$('#to1_textSend').hide();$('#to_textSend').hide();mostrar('textSend',2);$('#id_textSend').val($(this).attr('data'));checkContacts()" style="padding:2px 7px;float:right;margin-right:2px"><img src="assets/img/send.png" style="height:18px"></button>
+                        <button class="btn btn3" data="${b.uid}" onclick="eliminar_numero_modal($(this).attr('data'),'eliminado')" ><img src="assets/img/delete.png" style="height:14px"></button>
+                        <button class="btn btn3" data="${b.uid}" onclick="editar_numero($(this).attr('data'))" ><img src="assets/img/settings.png" style="height:15px"></button>
+                        <button class="btn btn3" data="${b.uid}" onclick="$('#textModal').modal('show');$('#tipo_textSend').val('NO');$('#btn_contact').click();$('#btn_no_media').click();mostrar('textSend',2);$('#id_textSend').val($(this).attr('data'));checkContacts()" ><img src="assets/img/send.png" style="height:14px"></button>
                         <div style="display:${b.session=='close' || b.session=='qr'?'block':'none'}">
-                            <h3 style="margin:5px 0px;font-size:.7em;color:#333">Instance ID: ${b.uid || "No name"}</h3>
-                            <h3 style="margin:5px 0px;font-size:.8em">${b.name || "No name"} ${b.sessionStatus?.me?.name || ""}</h3>
-                            <h5 style='margin:0px 0px 0px 0px;font-weight:100;'>${b.number||"Disconnected"}</h5>
-                            <p style="font-size:.8em;margin:0px 0px 0px 0px"><img src="./assets/img/disconnect.png" style="width:25px"> 
-                                You must to allow the Whatsapp connection by QR.<a onclick="solicitar_qr('${b.uid}')" style="color:#26D367;cursor:pointer">
-                                Scan QR Code now !</a>
+                            <h3 style="margin:5px 0px;font-size:.7em">Instance ID: <b>${b.uid || "#"}</b></h3>
+                            <h3 style="margin:5px 0px;font-size:.7em"">Instance Name: <b>${b.name || "No name"} ${b.sessionStatus?.me?.name || ""}</b></h3>
+                            <p style="font-size:.8em;margin:0px 0px 0px 0px"><i class="zmdi zmdi-alert-triangle" style="color:#FFCC00"></i>
+                                Disconnected. <a class="a-green" onclick="solicitar_qr('${b.uid}')" >Connect now</a>
                             </p>
                         </div>
                         <div style="display:${b.session=='connected'?'block':'none'}"">
-                            <h3 style="margin:5px 0px;font-size:.7em;color:#333">Instance ID: ${b.uid || "No name"}</h3>
-                            <h3 style="margin:5px 0px;font-size:.8em">${b.name || "No name"}</h3>
+                            <h3 style="margin:5px 0px;font-size:.7em">Instance ID: ${b.uid || "No name"}</h3>
+                            <h3 style="margin:5px 0px;font-size:.7em">Instance Name: ${b.name || "No name"} ${b.sessionStatus?.me?.name || ""}</h3>
                             <h5 style='margin:0px 0px 0px 0px;font-weight:100;display:${b.session=='connected'?'block':'none'}'>${b.number||""}</h5>
                             <p style="font-size:.8em;margin:0px"><img src="./assets/img/check.png" style="width:14px"> Connected</p>
                         </div>
@@ -724,7 +640,7 @@
             data,
             image: "assets/img/base.png",
             dotsOptions: {
-                color: "#282828",
+                color: "#FFF",
                 type: "rounded"
             },
             backgroundOptions: {
@@ -929,7 +845,6 @@
     control_sesion();
     function control_sesion(buscar=true){
         user=JSON.parse(localStorage.getItem("user"))
-        console.log(user)
         if(user){
             mostrar('user',2)
             capa(2)
@@ -966,16 +881,15 @@
         }
     }
 
-    const analisis_error=(d)=>{
+    const analisis_error=(d,reverse)=>{
         text=d.message;
         if(d?.data?.errors){
             if(d.data.errors[0]?.msg=="Invalid token"){localStorage.clear();location.href=window.location.pathname;}
-            console.log(d.data.errors)
-            text+=`<br>`;
-            d.data.errors.forEach(a=>{
-                text+=`<br>${a.msg}.`
+            d.data.errors.forEach((a,i)=>{
+                text+=`<br>${i+1}) ${a.msg}.`
             })
         }
+        if(reverse){return text}
         alertFun({text});
         return false;
     }
@@ -984,33 +898,232 @@
 </script>
   <script>
     $(function() {
-        $('.navbar-panel').mtrPanel({toggle: '.menu-toggle'});
     })
     $(document).ready(function(){
-      const panel=$(".navbar-panel").html();
+      const panel=$("#navbar_container").html();
       function alertOnDesktop(){
         if($(window).width() > 992){ // Tamaño para computadora (puedes ajustar el valor según tus necesidades)
             $("#nav_lat").html(panel)
-            $(".navbar-panel").html("")
+            $("#navbar_container").html("")
             $("#nav_lat").css("padding","20px 10px")
         }else{
             $("#nav_lat").html("")
-            $(".navbar-panel").html(panel)
+            $("#navbar_container").html(panel)
+            $('.navbar-panel').mtrPanel({toggle: '.menu-toggle'});
         }
+        $("iframe").height($(window).height()-$(".fixed-top").height()-6)
       }
       alertOnDesktop(); // Llamada inicial
       
       $(window).resize(function(){
         alertOnDesktop(); // Llamada cuando cambia el tamaño de la pantalla
       });
+      
     });
-    function capa(i){
-        $(".capa").hide();
-        $('.menu').css("color","#000").css("border-width","0px");
-        $('.menu_'+i).css("color","#25d365").css("border-width","0px 0px 4px 0px");;
-        
-        $(".capa_"+i).show()
+
+    paises={
+    "countries": [
+        {"country": "Afghanistan", "code": "93"},
+        {"country": "Albania", "code": "355"},
+        {"country": "Algeria", "code": "213"},
+        {"country": "Andorra", "code": "376"},
+        {"country": "Angola", "code": "244"},
+        {"country": "Argentina", "code": "549"},
+        {"country": "Armenia", "code": "374"},
+        {"country": "Australia", "code": "61"},
+        {"country": "Austria", "code": "43"},
+        {"country": "Azerbaijan", "code": "994"},
+        {"country": "Bahamas", "code": "1242"},
+        {"country": "Bahrain", "code": "973"},
+        {"country": "Bangladesh", "code": "880"},
+        {"country": "Barbados", "code": "1246"},
+        {"country": "Belarus", "code": "375"},
+        {"country": "Belgium", "code": "32"},
+        {"country": "Belize", "code": "501"},
+        {"country": "Benin", "code": "229"},
+        {"country": "Bhutan", "code": "975"},
+        {"country": "Bolivia", "code": "591"},
+        {"country": "Bosnia and Herzegovina", "code": "387"},
+        {"country": "Botswana", "code": "267"},
+        {"country": "Brazil", "code": "55"},
+        {"country": "Brunei", "code": "673"},
+        {"country": "Bulgaria", "code": "359"},
+        {"country": "Burkina Faso", "code": "226"},
+        {"country": "Burundi", "code": "257"},
+        {"country": "Cabo Verde", "code": "238"},
+        {"country": "Cambodia", "code": "855"},
+        {"country": "Cameroon", "code": "237"},
+        {"country": "Canada", "code": "1"},
+        {"country": "Central African Republic", "code": "236"},
+        {"country": "Chad", "code": "235"},
+        {"country": "Chile", "code": "56"},
+        {"country": "China", "code": "86"},
+        {"country": "Colombia", "code": "57"},
+        {"country": "Comoros", "code": "269"},
+        {"country": "Congo (Congo-Brazzaville)", "code": "242"},
+        {"country": "Congo (DRC)", "code": "243"},
+        {"country": "Costa Rica", "code": "506"},
+        {"country": "Croatia", "code": "385"},
+        {"country": "Cuba", "code": "53"},
+        {"country": "Cyprus", "code": "357"},
+        {"country": "Czech Republic", "code": "420"},
+        {"country": "Denmark", "code": "45"},
+        {"country": "Djibouti", "code": "253"},
+        {"country": "Dominica", "code": "1767"},
+        {"country": "Dominican Republic", "code": "1"},
+        {"country": "Ecuador", "code": "593"},
+        {"country": "Egypt", "code": "20"},
+        {"country": "El Salvador", "code": "503"},
+        {"country": "Equatorial Guinea", "code": "240"},
+        {"country": "Eritrea", "code": "291"},
+        {"country": "Estonia", "code": "372"},
+        {"country": "Eswatini", "code": "268"},
+        {"country": "Ethiopia", "code": "251"},
+        {"country": "Fiji", "code": "679"},
+        {"country": "Finland", "code": "358"},
+        {"country": "France", "code": "33"},
+        {"country": "Gabon", "code": "241"},
+        {"country": "Gambia", "code": "220"},
+        {"country": "Georgia", "code": "995"},
+        {"country": "Germany", "code": "49"},
+        {"country": "Ghana", "code": "233"},
+        {"country": "Greece", "code": "30"},
+        {"country": "Grenada", "code": "1473"},
+        {"country": "Guatemala", "code": "502"},
+        {"country": "Guinea", "code": "224"},
+        {"country": "Guinea-Bissau", "code": "245"},
+        {"country": "Guyana", "code": "592"},
+        {"country": "Haiti", "code": "509"},
+        {"country": "Honduras", "code": "504"},
+        {"country": "Hungary", "code": "36"},
+        {"country": "Iceland", "code": "354"},
+        {"country": "India", "code": "91"},
+        {"country": "Indonesia", "code": "62"},
+        {"country": "Iran", "code": "98"},
+        {"country": "Iraq", "code": "964"},
+        {"country": "Ireland", "code": "353"},
+        {"country": "Israel", "code": "972"},
+        {"country": "Italy", "code": "39"},
+        {"country": "Jamaica", "code": "1876"},
+        {"country": "Japan", "code": "81"},
+        {"country": "Jordan", "code": "962"},
+        {"country": "Kazakhstan", "code": "7"},
+        {"country": "Kenya", "code": "254"},
+        {"country": "Kiribati", "code": "686"},
+        {"country": "Kuwait", "code": "965"},
+        {"country": "Kyrgyzstan", "code": "996"},
+        {"country": "Laos", "code": "856"},
+        {"country": "Latvia", "code": "371"},
+        {"country": "Lebanon", "code": "961"},
+        {"country": "Lesotho", "code": "266"},
+        {"country": "Liberia", "code": "231"},
+        {"country": "Libya", "code": "218"},
+        {"country": "Liechtenstein", "code": "423"},
+        {"country": "Lithuania", "code": "370"},
+        {"country": "Luxembourg", "code": "352"},
+        {"country": "Madagascar", "code": "261"},
+        {"country": "Malawi", "code": "265"},
+        {"country": "Malaysia", "code": "60"},
+        {"country": "Maldives", "code": "960"},
+        {"country": "Mali", "code": "223"},
+        {"country": "Malta", "code": "356"},
+        {"country": "Marshall Islands", "code": "692"},
+        {"country": "Mauritania", "code": "222"},
+        {"country": "Mauritius", "code": "230"},
+        {"country": "Mexico", "code": "52"},
+        {"country": "Micronesia", "code": "691"},
+        {"country": "Moldova", "code": "373"},
+        {"country": "Monaco", "code": "377"},
+        {"country": "Mongolia", "code": "976"},
+        {"country": "Montenegro", "code": "382"},
+        {"country": "Morocco", "code": "212"},
+        {"country": "Mozambique", "code": "258"},
+        {"country": "Myanmar", "code": "95"},
+        {"country": "Namibia", "code": "264"},
+        {"country": "Nauru", "code": "674"},
+        {"country": "Nepal", "code": "977"},
+        {"country": "Netherlands", "code": "31"},
+        {"country": "New Zealand", "code": "64"},
+        {"country": "Nicaragua", "code": "505"},
+        {"country": "Niger", "code": "227"},
+        {"country": "Nigeria", "code": "234"},
+        {"country": "North Macedonia", "code": "389"},
+        {"country": "Norway", "code": "47"},
+        {"country": "Oman", "code": "968"},
+        {"country": "Pakistan", "code": "92"},
+        {"country": "Palau", "code": "680"},
+        {"country": "Palestine", "code": "970"},
+        {"country": "Panama", "code": "507"},
+        {"country": "Papua New Guinea", "code": "675"},
+        {"country": "Paraguay", "code": "595"},
+        {"country": "Peru", "code": "51"},
+        {"country": "Philippines", "code": "63"},
+        {"country": "Poland", "code": "48"},
+        {"country": "Portugal", "code": "351"},
+        {"country": "Qatar", "code": "974"},
+        {"country": "Romania", "code": "40"},
+        {"country": "Russia", "code": "7"},
+        {"country": "Rwanda", "code": "250"},
+        {"country": "Saint Kitts and Nevis", "code": "1869"},
+        {"country": "Saint Lucia", "code": "1758"},
+        {"country": "Saint Vincent and the Grenadines", "code": "1784"},
+        {"country": "Samoa", "code": "685"},
+        {"country": "San Marino", "code": "378"},
+        {"country": "Sao Tome and Principe", "code": "239"},
+        {"country": "Saudi Arabia", "code": "966"},
+        {"country": "Senegal", "code": "221"},
+        {"country": "Serbia", "code": "381"},
+        {"country": "Seychelles", "code": "248"},
+        {"country": "Sierra Leone", "code": "232"},
+        {"country": "Singapore", "code": "65"},
+        {"country": "Slovakia", "code": "421"},
+        {"country": "Slovenia", "code": "386"},
+        {"country": "Solomon Islands", "code": "677"},
+        {"country": "Somalia", "code": "252"},
+        {"country": "South Africa", "code": "27"},
+        {"country": "South Korea", "code": "82"},
+        {"country": "South Sudan", "code": "211"},
+        {"country": "Spain", "code": "34"},
+        {"country": "Sri Lanka", "code": "94"},
+        {"country": "Sudan", "code": "249"},
+        {"country": "Suriname", "code": "597"},
+        {"country": "Sweden", "code": "46"},
+        {"country": "Switzerland", "code": "41"},
+        {"country": "Syria", "code": "963"},
+        {"country": "Taiwan", "code": "886"},
+        {"country": "Tajikistan", "code": "992"},
+        {"country": "Tanzania", "code": "255"},
+        {"country": "Thailand", "code": "66"},
+        {"country": "Timor-Leste", "code": "670"},
+        {"country": "Togo", "code": "228"},
+        {"country": "Tonga", "code": "676"},
+        {"country": "Trinidad and Tobago", "code": "1868"},
+        {"country": "Tunisia", "code": "216"},
+        {"country": "Turkey", "code": "90"},
+        {"country": "Turkmenistan", "code": "993"},
+        {"country": "Tuvalu", "code": "688"},
+        {"country": "Uganda", "code": "256"},
+        {"country": "Ukraine", "code": "380"},
+        {"country": "United Arab Emirates", "code": "971"},
+        {"country": "United Kingdom", "code": "44"},
+        {"country": "United States", "code": "1"},
+        {"country": "Uruguay", "code": "598"},
+        {"country": "Uzbekistan", "code": "998"},
+        {"country": "Vanuatu", "code": "678"},
+        {"country": "Vatican City", "code": "39"},
+        {"country": "Venezuela", "code": "58"},
+        {"country": "Vietnam", "code": "84"},
+        {"country": "Yemen", "code": "967"},
+        {"country": "Zambia", "code": "260"},
+        {"country": "Zimbabwe", "code": "263"}
+    ]
     }
+    paises_html=""
+    paises.countries.forEach(e => {
+        paises_html+=`<option value="${e.code}">${e.country} (+${e.code})</option>`
+    });
+    $("#to1_textSend_country").html(paises_html)
+    
   </script>
 </body>
 </html>

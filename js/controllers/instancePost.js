@@ -128,7 +128,7 @@ const instanceMessage=async(req,res)=>{
 }
 
 const instanceMedia=async(req,res)=>{
-    const {instanceId,jid,id}=req.body;
+    const {instanceId,remoteJid,messageId}=req.body;
     try {
         const instance=await Instance.findOne({_id:instanceId,user:req.body.user_jwt,status:"active"});
         if(!instance){
@@ -136,14 +136,14 @@ const instanceMedia=async(req,res)=>{
         }
         const wsp=await new Wsp();
         const instanceStart=await wsp.getInstance(instanceId);
-        const {data,mimetype} = await instanceStart.getMedia(jid,id);
+        const {data,mimetype} = await instanceStart.getMedia(remoteJid,messageId);
         if(!data){
             return res.status(200).json(await jsonAnswer(400,`We could not find you media file.`,null));
         }
         res.setHeader('Content-Type', mimetype);
         res.send(data);
     } catch (error) {
-        return res.status(200).json(await jsonAnswer(400,"The operation has failed","Your chat has not correctly found.",null));
+        return res.status(200).json(await jsonAnswer(400,"The operation has failed","Your chat has not correctly found.",{error:error.message}));
     }
     
 }
@@ -175,10 +175,29 @@ const instanceSendText=async(req,res)=>{
         }
         const wsp=await new Wsp();
         const instanceStart=await wsp.getInstance(instanceId);
+        console.log(remoteJid,message)
         const messageSent=await instanceStart.sendMessage({remoteJid,message});
         return res.status(200).json(await jsonAnswer(200,null,`Your message has been sent (${remoteJid})`,{message:messageSent}));
     } catch (error) {
         return res.status(200).json(await jsonAnswer(400,"The operation has failed","Your chat has not correctly found.",null));
+    }
+}
+
+const instanceSendMedia=async(req,res)=>{
+    const {instanceId,remoteJid,fileUrl,type,caption,ptt,document}=req.body;
+    try {
+        const instance=await Instance.findById(instanceId);
+        if(!instance){
+            return res.status(200).json(await jsonAnswer(400,`Incorrect instance ID","We have not found an active instance with the instance ID: ${instanceId}.`,null));
+        }
+        const wsp=await new Wsp();
+        const instanceStart=await wsp.getInstance(instanceId);
+        console.log(1111)
+        const messageSent=await instanceStart.sendMedia({remoteJid,fileUrl,type,caption,ptt,document});
+        return res.status(200).json(await jsonAnswer(200,null,`Your message has been sent (${remoteJid})`,{message:messageSent}));
+    } catch (error) {
+        console.log("error",error)
+        return res.status(200).json(await jsonAnswer(400,"The operation has failed","Your chat has not correctly found.",{error:error.message}));
     }
 }
 
@@ -190,6 +209,7 @@ module.exports={
     instanceDelete,
     instanceEdit,
     instanceSendText,
+    instanceSendMedia,
     instanceChat,
     instanceMessage,
     instanceMedia

@@ -69,6 +69,6 @@ const loginTokensPassport=async(req, res) => {
         await user.save();
     }
     const token=jwt.sign({ uid: user.id }, process.env.SEED,{expiresIn:'12h'})
-    return res.redirect(`../../../base.html?name=${name}&email=${email}&id=${user.id}&medio=${medio}&token=${token}`);
+    return res.redirect(`../../../app.html?name=${name}&email=${email}&id=${user.id}&medio=${medio}&token=${token}`);
 };
 module.exports={passport,receiptTokens,loginTokensPassport}

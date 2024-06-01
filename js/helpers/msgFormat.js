@@ -34,9 +34,10 @@ const msgFormat=(a)=>{
         }
     }
     if(message){
-        return {key,timestamp,conversation,pushName,replyTo,media,deleted,reactions};
+        return {remoteJid:key.remoteJid,fromMe:key.fromMe,messageId:key.id,timestamp,conversation,pushName,replyTo,media,deleted,reactions};
     }
     return null;
 }
+
 
 module.exports={msgFormat}

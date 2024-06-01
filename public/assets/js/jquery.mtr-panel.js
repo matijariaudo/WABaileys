@@ -95,6 +95,8 @@
       return console.err('Options [toggle] not present. It is a mandatory option.');
 
     $(this.options.toggle).on(events.tap, __bind(openPanel, this));
+    $('.menu').on("click", __bind(closePanel, this));
+    $('.nav-item').on("click", __bind(closePanel, this));
     this.overlay.on(events.tap, __bind(closePanel, this));
 
     this.panelWidth = this.$el.width();

@@ -1,6 +1,6 @@
 const {Router}=require('express');
-const { instanceCreate, instanceGet, instanceInit, instanceContacts,  instanceEdit, instanceSendText, instanceChat, instanceMessage, instanceMedia, instanceDelete } = require('../controllers/instancePost');
-const { checkUserJWT, checkInstanceCreate, checkInstanceDelete, checkInstanceEdit, checkInstanceID, checkInstanceGet, checkInstanceChat, checkInstanceMessage, checkInstanceSendMessage } = require('../helpers/validaciones');
+const { instanceCreate, instanceGet, instanceInit, instanceContacts,  instanceEdit, instanceSendText, instanceChat, instanceMessage, instanceMedia, instanceDelete, instanceSendMedia } = require('../controllers/instancePost');
+const { checkUserJWT, checkInstanceCreate, checkInstanceDelete, checkInstanceEdit, checkInstanceID, checkInstanceGet, checkInstanceChat, checkInstanceMessage, checkInstanceSendMessage, checkInstanceSendMedia } = require('../helpers/validaciones');
 
 const router=Router()
 
@@ -19,5 +19,6 @@ router.post('/instance/chat',checkInstanceChat,instanceChat);
 router.post('/instance/message',checkInstanceMessage,instanceMessage);
 router.post('/instance/media',checkInstanceMessage,instanceMedia);
 router.post('/instance/send',checkInstanceSendMessage,instanceSendText);
+router.post('/instance/sendmedia',checkInstanceSendMedia,instanceSendMedia);
 
 module.exports=router

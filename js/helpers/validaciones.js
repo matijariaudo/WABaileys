@@ -25,7 +25,6 @@ function validarJID(jid) {
 
 const checkValidation=async(req,res,next)=>{
     const error=validationResult(req)
-    console.log(error)
     if(error.errors.length>0){return res.status(200).json(await jsonAnswer(400,"Body params issues","An error has occurred with the parameters received, please check and try again",{errors:error.errors}));}
     next()
 }
@@ -34,7 +33,6 @@ const JWTValidation=async(tokenBase,{req})=>{
     try {
         const token=tokenBase.split(" ")[1];
         const rta=jwt.verify(token, process.env.SEED);
-        console.log(rta)
         const usuario_jwt=await User.findById(rta.uid);
         if(usuario_jwt){
             req.body.user_jwt=usuario_jwt;
@@ -128,6 +126,15 @@ const checkInstanceSendMessage=[
     checkValidation
 ];
 
+const checkInstanceSendMedia=[
+    body('instanceId','You must to enter a valid ID').custom(checkID),
+    body('remoteJid','You must to enter a valid ID').custom(checkRemoteJID),
+    body('fileUrl','You must enter a url').isURL(),
+    body('type',`You must enter a type('image','video','audio','document')`).isIn(['image','video','audio','document']),
+    header('authorization').notEmpty().custom(JWTValidation),
+    checkValidation
+];
+
 module.exports={
     checkUserCreate,
     checkUserLogin,
@@ -140,5 +147,6 @@ module.exports={
     checkInstanceGet,
     checkInstanceChat,
     checkInstanceMessage,
+    checkInstanceSendMedia,
     checkInstanceSendMessage
 }

@@ -5,6 +5,8 @@ const {Instance} = require("../database/models");
 const { msgFormat } = require("../helpers/msgFormat");
 const { checkMedia } = require("../helpers/checkMedia");
 const { checkFolder } = require("../helpers/checkFolder");
+const { default: axios } = require("axios");
+const path = require("path");
 
 
 class Instances{
@@ -19,6 +21,8 @@ class Instances{
     }
     async init({QrBlock}){
         this.QrBlock=QrBlock?QrBlock:false;
+        const t1=this.QrBlock?"100":60000;
+        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAA",this.QrBlock,t1)
         const { state, saveCreds } = await useMultiFileAuthState(this.path);
         const { version, isLatest } = await fetchLatestBaileysVersion()
         return new Promise(async(resolve, reject) => {
@@ -32,8 +36,8 @@ class Instances{
                     this.sock = await makeWASocket({ 
                         auth: state ,
                         version,
-                        qrTimeout:this.QrBlock?"100":60000,
-                        retryRequestDelayMs:this.QrBlock?"100":60000,
+                        qrTimeout:t1,
+                        retryRequestDelayMs:t1,
                         browser:["WspPlus","Ubuntu",null]
                     });
             } catch (error) {
@@ -81,7 +85,7 @@ class Instances{
                 let accError=false;
                 if(code==401 || (code==408 && message=='QR refs attempts ended')){  //408:Qr expired | 401: User close session from mobile
                     console.log(code==408?"Client QR die":"Client ends session");
-                    accError=true;db.session='close';this.deleteInstance();
+                    accError=true;db.session='close';this.deleteInstance(true);
                 }
                 //if(code==515){db.session='connecting';this.init();accError=true;}   //515: Scan / Restart needing
                 if(!accError){
@@ -130,9 +134,9 @@ class Instances{
         }
     }
 
-    deleteInstance=async()=>{
+    deleteInstance=async(deleteInst=false)=>{
         console.log("Instance delete",this.id)
-        //await eliminarCarpetaAsync(this.id);
+        if(deleteInst){await eliminarCarpetaAsync(this.id);}
         const wsp=new Wsp();
         await wsp.deleteIntance(this.id);
     }
@@ -141,9 +145,22 @@ class Instances{
         try {
             const a=await this.sock.sendMessage(remoteJid,{ text: message});
             const messageSend=await msgFormat(a);
-            return messageSend;   
+            return messageSend; 
         } catch (error) {
-            return {}
+            throw new Error(`The instance has failed. Cause: ${error.cause || '-'}`)
+        }        
+    }
+    async sendMedia({remoteJid,caption,fileUrl,type="document",ptt=false}){
+        try {
+                const a=await this.sock.sendMessage(remoteJid,{
+                    [type]: {url:fileUrl}, //[type] puedo transformar una variable en titulo de objeto
+                    caption,
+                    ptt
+                });                             
+                const messageSend=await msgFormat(a);
+                return messageSend; 
+        } catch (error) {
+            throw new Error(`The instance has failed. Cause: ${error.cause || '-'}`)
         }        
     }
 
@@ -180,7 +197,9 @@ class Instances{
     async getMedia(jid,id){
         const data=await this.store;
         const message =await data.loadMessage(jid,id);
+        if(!message){ throw new Error(`We can not find the message.`)}
         const archivo=await checkMedia(message,this);
+        if(!archivo){ throw new Error(`We can not find media files in the message.`)}
         return archivo;
     }
 }

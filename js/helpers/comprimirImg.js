@@ -3,7 +3,7 @@ const sharp = require('sharp');
 async function comprimirImagen(buffer) {
     try {
         // Comprimir la imagen en memoria
-        const imagenComprimida = await sharp(buffer).resize(600).jpeg({ quality: 33.3333 }).toBuffer();
+        const imagenComprimida = await sharp(buffer).resize(300).jpeg({ quality: 25 }).toBuffer();
         // Devolver la imagen comprimida como un nuevo buffer
         return imagenComprimida;
     } catch (error) {
