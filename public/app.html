@@ -554,15 +554,13 @@
                         <button class="btn btn3" data="${b.uid}" onclick="editar_numero($(this).attr('data'))" ><img src="assets/img/settings.png" style="height:15px"></button>
                         <button class="btn btn3" data="${b.uid}" onclick="$('#textModal').modal('show');$('#tipo_textSend').val('NO');$('#btn_contact').click();$('#btn_no_media').click();mostrar('textSend',2);$('#id_textSend').val($(this).attr('data'));checkContacts()" ><img src="assets/img/send.png" style="height:14px"></button>
                         <div style="display:${b.session=='close' || b.session=='qr'?'block':'none'}">
-                            <h3 style="margin:5px 0px;font-size:.7em">Instance ID: <b>${b.uid || "#"}</b></h3>
-                            <h3 style="margin:5px 0px;font-size:.7em"">Instance Name: <b>${b.name || "No name"} ${b.sessionStatus?.me?.name || ""}</b></h3>
+                            <h3 style="margin:5px 0px;font-size:.7em"><a style="color:#5AE4A8">ID</a> ${b.uid || "No name"} <a style="color:#5AE4A8">Name</a> ${b.name || "No name"}</h3>
                             <p style="font-size:.8em;margin:0px 0px 0px 0px"><i class="zmdi zmdi-alert-triangle" style="color:#FFCC00"></i>
                                 Disconnected. <a class="a-green" onclick="solicitar_qr('${b.uid}')" >Connect now</a>
                             </p>
                         </div>
                         <div style="display:${b.session=='connected'?'block':'none'}"">
-                            <h3 style="margin:5px 0px;font-size:.7em">Instance ID: ${b.uid || "No name"}</h3>
-                            <h3 style="margin:5px 0px;font-size:.7em">Instance Name: ${b.name || "No name"} ${b.sessionStatus?.me?.name || ""}</h3>
+                            <h3 style="margin:5px 0px;font-size:.7em"><a style="color:#5AE4A8">ID</a> ${b.uid || "No name"} <a style="color:#5AE4A8">Name</a> ${b.name || "No name"}</h3>
                             <h5 style='margin:0px 0px 0px 0px;font-weight:100;display:${b.session=='connected'?'block':'none'}'>${b.number||""}</h5>
                             <p style="font-size:.8em;margin:0px"><img src="./assets/img/check.png" style="width:14px"> Connected</p>
                         </div>

@@ -1,4 +1,11 @@
-const {Schema,model} = require('mongoose')
+const {Schema,model} = require('mongoose');
+const { generarCodigoAleatorio } = require('../../helpers/aleatoryGen');
+
+const apiSchema=Schema({
+    name:{type:String,require:[true,'You must define a name']},
+    password:{type:String,default:generarCodigoAleatorio(25)},
+    status:{type:String,default:'active',enum:['active','deleted']}
+})
 
 const userSchema=Schema({
     nombre:{
@@ -39,6 +46,7 @@ const userSchema=Schema({
         type:Boolean,
         default:false
     },
+    apiPass:[apiSchema],
     estado:{
         type:Boolean,
         default:true
@@ -53,3 +61,4 @@ userSchema.methods.toJSON= function(){
 }
 
 module.exports=model('User',userSchema)
+

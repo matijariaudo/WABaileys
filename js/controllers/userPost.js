@@ -91,4 +91,14 @@ const loginJWTCheckemail=async(req,res)=>{
     return res.redirect(`../../../base.html?accion=EMAIL_VALID&token=ERROR`);   
 }
 
-module.exports={userCreate,userLogin,userUpdate,loginJWT,loginJWTCheckemail,sendMailValidation}
+const createApiToken=async(req,res)=>{
+    const {name,user_jwt}=req.body;
+    const user=await User.findById(user_jwt.id);
+    user.apiPass.push({name});
+    user.save();
+    const newPassword = user.apiPass[user.apiPass.length - 1].password;
+    const token=jwt.sign({ email:user.correo,apiPass:newPassword}, process.env.SEED)
+    return res.status(200).json({token}) 
+}
+
+module.exports={userCreate,userLogin,userUpdate,loginJWT,loginJWTCheckemail,sendMailValidation,createApiToken}

@@ -4,4 +4,4 @@
     "ignore": ["*.test.js", "auth_wp/*","baileys_store.json","public/*"],
     "exec": "node app.js"
   }
-  
+    
