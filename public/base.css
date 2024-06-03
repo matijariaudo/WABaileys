@@ -137,6 +137,9 @@ body{
     font-family: 'Logo';
 
 }
+.capa .btn-green{
+  border: 0px solid #000;
+}
 .modal-footer .btn{
   background: none;
   box-shadow: 3px 3px 6px rgb(0,0,0,.0), 

@@ -92,13 +92,47 @@ const loginJWTCheckemail=async(req,res)=>{
 }
 
 const createApiToken=async(req,res)=>{
-    const {name,user_jwt}=req.body;
-    const user=await User.findById(user_jwt.id);
-    user.apiPass.push({name});
-    user.save();
-    const newPassword = user.apiPass[user.apiPass.length - 1].password;
-    const token=jwt.sign({ email:user.correo,apiPass:newPassword}, process.env.SEED)
-    return res.status(200).json({token}) 
+    try {
+        const {name,user_jwt}=req.body;
+        const user=await User.findById(user_jwt.id);
+        if(!user){return res.status(200).json(await jsonAnswer(400,"The operation has failed","The user could not be found.",null));}
+        user.apiPass.push({name});
+        user.save();
+        const newPassword = user.apiPass[user.apiPass.length - 1].password;
+        const token=jwt.sign({ email:user.correo,apiPass:newPassword}, process.env.SEED)
+        return res.status(200).json(await jsonAnswer(200,`Created successfuly`,`We have created your API token.`,{token}));
+    } catch (error) {
+        return res.status(200).json(await jsonAnswer(400,"The operation has failed","-",null));
+    }
 }
 
-module.exports={userCreate,userLogin,userUpdate,loginJWT,loginJWTCheckemail,sendMailValidation,createApiToken}
+const editApiToken=async(req,res)=>{
+    try {
+        const {status,tokenId,user_jwt}=req.body;
+        console.log(req.body)
+        const user=await User.findById(user_jwt.id);
+        if(!user){return res.status(200).json(await jsonAnswer(400,"The operation has failed","The user could not be found.",null));}
+        const reg=user.apiPass.find(a=>a.id==tokenId);
+        console.log(reg)
+        reg.status=status;
+        user.save();
+        console.log(user)
+        return res.status(200).json(await jsonAnswer(200,`Modified successfuly`,`We have modified your API token.`));
+    } catch (error) {
+        return res.status(200).json(await jsonAnswer(400,"The operation has failed","-",null));
+    }
+}
+
+const getApiToken=async(req,res)=>{
+    try {
+        const {user_jwt}=req.body;
+        const user=await User.findById(user_jwt.id);
+        if(!user){return res.status(200).json(await jsonAnswer(400,"The operation has failed","The user could not be found.",null));}
+        const apiPass=user.apiPass.map( a=> {return {name:a.name,status:a.status,id:a.id}}).filter(a=>a.status=='active' || a.status=='paused')
+        return res.status(200).json(await jsonAnswer(200,`Successful Operation`,`We have found your API tokens.`,{tokens:apiPass}));
+    } catch (error) {
+        return res.status(200).json(await jsonAnswer(400,"The operation has failed","-",null));
+    }
+}
+
+module.exports={userCreate,userLogin,userUpdate,loginJWT,loginJWTCheckemail,sendMailValidation,createApiToken,getApiToken,editApiToken}

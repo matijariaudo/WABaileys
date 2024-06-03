@@ -35,7 +35,7 @@ const instanceGet=async(req,res)=>{
         }));    
         return res.status(200).json(await jsonAnswer(200,null,"Instances data sent",{instances}))
     } catch (error) {
-        
+        return res.status(200).json(await jsonAnswer(400,"The operation has failed","-",null));
     }
     
     
@@ -152,7 +152,7 @@ const instanceMedia=async(req,res)=>{
 const instanceEdit=async(req,res)=>{
     const {instanceId,name,webhook}=req.body;
     try {
-        const instance=await Instance.findById(instanceId);
+        const instance=await Instance.findOne({_id:instanceId,user:req.body.user_jwt,status:"active"});;
         if(!instance){
             return res.status(200).json(await jsonAnswer(400,`Incorrect instance ID","We have not found an active instance with the instance ID: ${instanceId}.`,null));
         }
@@ -169,7 +169,7 @@ const instanceEdit=async(req,res)=>{
 const instanceSendText=async(req,res)=>{
     const {instanceId,remoteJid,message}=req.body;
     try {
-        const instance=await Instance.findById(instanceId);
+        const instance=await Instance.findOne({_id:instanceId,user:req.body.user_jwt,status:"active"});
         if(!instance){
             return res.status(200).json(await jsonAnswer(400,`Incorrect instance ID","We have not found an active instance with the instance ID: ${instanceId}.`,null));
         }
@@ -186,7 +186,7 @@ const instanceSendText=async(req,res)=>{
 const instanceSendMedia=async(req,res)=>{
     const {instanceId,remoteJid,fileUrl,type,caption,ptt,document}=req.body;
     try {
-        const instance=await Instance.findById(instanceId);
+        const instance=await Instance.findOne({_id:instanceId,user:req.body.user_jwt,status:"active"});
         if(!instance){
             return res.status(200).json(await jsonAnswer(400,`Incorrect instance ID","We have not found an active instance with the instance ID: ${instanceId}.`,null));
         }

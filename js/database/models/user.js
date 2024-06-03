@@ -4,7 +4,7 @@ const { generarCodigoAleatorio } = require('../../helpers/aleatoryGen');
 const apiSchema=Schema({
     name:{type:String,require:[true,'You must define a name']},
     password:{type:String,default:generarCodigoAleatorio(25)},
-    status:{type:String,default:'active',enum:['active','deleted']}
+    status:{type:String,default:'active',enum:['active','deleted','paused']}
 })
 
 const userSchema=Schema({

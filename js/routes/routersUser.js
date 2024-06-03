@@ -5,7 +5,7 @@ require('dotenv').config()
 const session=require('express-session');
 
 const { passport, receiptTokens, loginTokensPassport } = require('../helpers/passport');
-const { userCreate, userLogin, userUpdate, loginJWT, loginJWTCheckemail, sendMailValidation, createApiToken } = require('../controllers/userPost');
+const { userCreate, userLogin, userUpdate, loginJWT, loginJWTCheckemail, sendMailValidation, createApiToken, getApiToken, editApiToken } = require('../controllers/userPost');
 const { checkUserCreate, checkUserLogin, checkUserUpdate, checkUserJWT, checkUserJWTParam } = require('../helpers/validaciones');
 require('dotenv').config()
 
@@ -13,6 +13,8 @@ require('dotenv').config()
 UserRouter.post('/users',checkUserCreate,userCreate);
 UserRouter.post('/users/login',checkUserLogin,userLogin);
 UserRouter.post('/users/apitoken',checkUserJWT,createApiToken);
+UserRouter.post('/users/getapitoken',checkUserJWT,getApiToken);
+UserRouter.post('/users/editapitoken',checkUserJWT,editApiToken);
 UserRouter.post('/users/check',checkUserJWT,loginJWT);
 UserRouter.post('/users/sendvalidation',checkUserJWT,sendMailValidation);
 UserRouter.post('/users/edit',checkUserUpdate,userUpdate);

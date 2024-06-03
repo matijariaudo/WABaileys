@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png">
     <title>Chatter+</title>
     <!-- Bootstrap CSS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -83,9 +84,9 @@
                             Instances
                         </b>
                     </li>
-                    <li class="p-0" style="display: none;" onclick="capa(4)">
+                    <li class="p-0" style="" onclick="capa(4)">
                         <b href="#" class="menu menu_4 "  >
-                            Get Started
+                            API Tokens
                         </b>
                     </li>
                     <li onclick="capa(5)" class="p-0"  >
@@ -123,11 +124,26 @@
                         <button class="btn btn-green" onclick="buscar_phones()" style="float:right;font-size:.8em;margin-right: 3px;"> 
                             <img src="assets/img/refresh.png" style="width: 16px;"> </button>
                         <h2>Instances</h2>
+                        <p>Get your API token <a style="color: #5AE4A8;cursor: pointer;" onclick="capa(4)">Here</a> to interact with your API instance.</p>
                         <button id="toggleSidebarBtn" style="display: none;">Toggle Sidebar</button>
                         <div class="col-12 p-0" id="div_phones" style="padding: 10px 0px;">
                         </div>
                     </div>
                 </div>
+                <div class="  row  capa capa_4 m-0" style="padding: 30px 15px 0px 15px;">
+                    <div class="col-lg-10 col-md-10 col-12 offset-lg-1 offset-md-1" style="padding: 0px;">
+                        <button class="btn btn-green d-none d-sm-block" id="btn_new_intance" onclick="mostrar('token',2);$('#tokenModal').modal('show');$('.nuevo_token').val('')" style="float:right;font-size:.8em">NEW API TOKEN</button>
+                        <button class="btn btn-green d-block d-sm-none" id="btn_new_intance_xs" onclick="mostrar('token',2);$('#tokenModal').modal('show');$('.nuevo_token').val('')" style="float:right;font-size:.8em">+</button>
+                        <button class="btn btn-green" onclick="buscar_token()" style="float:right;font-size:.8em;margin-right: 3px;"> 
+                            <img src="assets/img/refresh.png" style="width: 16px;"> </button>
+                        <h2>API Tokens</h2>
+                        <p>Create here your API token to interact with your API instance.</p>
+                        <button id="toggleSidebarBtn" style="display: none;">Toggle Sidebar</button>
+                        <div class="col-12 p-0" id="div_tokens" style="padding: 10px 0px;">
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="  row  capa capa_3 m-0 p-0">
                             <div class="col-sm-10  col-xs-12 offset-sm-1" style="padding: 30px 20px;">
                                 <div class="col-12" style="background-color: #ffffff0b;padding: 10px;border-radius: 10px;">
@@ -183,6 +199,40 @@
             <div class="modal-footer create create_2 style="border:0px">
               <button type="button" class="btn" onclick="$('#nuevo_id_wsp').val()==''?agregar_numero_tel():editar_numero_tel()">Send</button>
             </div>
+          </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="tokenModal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header" style="border:0px">
+              <h5 class="modal-title">API TOKEN</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body token token_1">
+                <center><div class="lds-ring"><div></div><div></div><div></div><div></div></div></center>
+            </div>
+            <div class="modal-body token token_2"> 
+                <p>API Token name:</p>
+                <input class="nuevo_token" type="text" placeholder="Choose a name for your intance.." id="nuevo_name_token"> 
+                <p style="font-size:.8em;margin: 0px;color:rgb(107, 107, 107);font-style: oblique;">*Optional: Each time you'll receive a text we sent a notification to this url in a POST request.</p>
+            </div>
+            <div class="modal-body token token_3"> 
+                <b><i class="zmdi zmdi-check-all" style="color: #26D367;"></i> Your API token was created.</b>
+                <br>
+                <input type="text"id="form_token_success" disabled autocomplete="false" style="border:1px solid #5AE4A8;margin:10px 0px"> 
+                <button class="btn btn-green"id="copy_token" style="float: right;">Copy token</button>
+                <p style="font-size: .8em;">This token will be shown only once. This token is not stored on any server, so you must copy it and store it securely.
+                </p>
+            </div>
+            <div class="modal-footer token token_2 style="border:0px">
+              <button type="button" class="btn" onclick="crear_token()">Send</button>
+            </div>
+            
+            <div class="modal-footer token token_3 style="border:0px">
+                <button type="button" class="btn" onclick="$('#tokenModal').modal('hide')">Close</button>
+              </div>
           </div>
         </div>
     </div>
@@ -302,36 +352,6 @@
             </div>
             <div class="modal-footer eliminar eliminar_2" style="border:0px">
                 <button type="button" class="btn" onclick="eliminar_numero()">Delete</button>
-            </div>
-          </div>
-        </div>
-    </div>
-    <div class="modal" id="campainModal" tabindex="-1">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header" style="border:0px">
-              <h5 class="modal-title">Datos de envios</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" style="font-weight:100;font-size:0.8em">
-                <input type="hidden" id="campain_buscar_id" value="">
-                <table>
-                    <thead>
-                        <tr>
-                            <th style="width:30px"></th>
-                            <th>Destinatario</th>
-                            <th>Estado</th>
-                            <th>Enviado desde</th>
-                            <th>Fecha Envio</th>
-                        </tr>
-                    </thead>
-                    <tbody id="campainMensaje_tabla">
-                        
-                    </tbody>
-                </table>   
-            </div>
-            <div class="modal-footer" style="border:0px">
-              <button type="button" class="btn" style="display:none">Solicitar QR <i class="zmdi zmdi-arrow-right"></i></button>
             </div>
           </div>
         </div>
@@ -615,6 +635,8 @@
         })
     }
 
+    
+
     function actualizar_connection(nro,connection){
         $("#connection_"+nro).html(`
         
@@ -717,6 +739,64 @@
             buscar_phones();
         })
     }
+
+    function buscar_token(show){
+        env={};
+        if(show){capa(0)}
+        env["token"]=user.token;env["instanceId"]= $('#id_textSend').val();
+        $("#div_tokens").html('')
+        ajax("/login/users/getapitoken",env,(d)=>{
+            const e=d.data;
+            console.log(e.tokens)
+            e.tokens.forEach((b,i) => {
+                $("#div_tokens").append(`<div class="col-12" style="padding:4px 0px">
+                    <div class="col-12 placa" style="cursor:default">
+                        <button class="btn btn3" data="${b.id}" onclick="edit_token($(this).attr('data'),'deleted')" ><img src="assets/img/delete.png" style="height:14px"></button>
+                        <div>
+                            <h3 style="margin:5px 0px;font-size:.7em"><a style="color:#5AE4A8">API Token: </a> ${b.name || "No name"}</h3>
+                            <h3 style="margin:5px 0px;font-size:.7em"><a style="color:#5AE4A8">Status: </a> ${b.status=="active"?'working':'pause'}</h3>
+                            <button class="btn btn3" style="float:left;border:2px solid ${b.status=="active"?' #5AE4A8':'#333'}" data="${b.id}" onclick="edit_token($(this).attr('data'),'active')" ><i class='zmdi zmdi-play' style="color:#FFF"></i></button>
+                            <button class="btn btn3" style="float:left;border:2px solid ${b.status!="active"?' #5AE4A8':'#333'}" data="${b.id}" onclick="edit_token($(this).attr('data'),'paused')" ><i class="zmdi zmdi-pause" style="color:#FFF"></i></button>
+                            <hr style="border:0px">
+                        </div>
+                    </div>
+                </div>`);
+                actualizar_connection(b.nro,b.connection)  
+                
+            });
+            if(show){capa(4)}
+        })
+    }
+    
+    
+    function crear_token(){
+        name=$("#nuevo_name_token").val()
+        env={}
+        env.name=name;env.token=user.token;
+        mostrar('token',1)
+        ajax("/login/users/apitoken",env,(d)=>{
+            const e=d.data;
+            console.log(e);
+            if(e.error){alert(e.error);return false;}
+            $('#form_token_success').val(e.token);
+            mostrar('token',3)
+            buscar_token();
+        })
+    }
+    function edit_token(tokenId,status){
+        env={tokenId,status};
+        env.token=user.token;
+        console.log(env)
+        ajax("/login/users/editapitoken",env,(d)=>{
+            console.log(d);
+            const e=d.data;
+            if(e?.error){alert(e.error);return false;}
+            buscar_token(true);
+
+        })
+    }
+
+    
 
     function solicitar_qr_init(){
         solicitar_qr($("#form_create_success").val());
@@ -846,7 +926,7 @@
         if(user){
             mostrar('user',2)
             capa(2)
-            if(buscar){buscar_phones();}
+            if(buscar){buscar_phones();buscar_token();}
             $("#account_name").html(user.user.nombre);
             $("#name_form_user").val(user.user.nombre)
             $("#email_form_user").val(user.user.correo)
@@ -1121,6 +1201,13 @@
         paises_html+=`<option value="${e.code}">${e.country} (+${e.code})</option>`
     });
     $("#to1_textSend_country").html(paises_html)
+
+    $("#copy_token").on('click',function(){
+        var copyText = document.getElementById("form_token_success");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+        navigator.clipboard.writeText(copyText.value);
+    })
     
   </script>
 </body>

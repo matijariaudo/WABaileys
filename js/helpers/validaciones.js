@@ -52,8 +52,7 @@ const APIJWTValidation=async(tokenBase,{req})=>{
         const rta=jwt.verify(token, process.env.SEED);
         let usuario_jwt;
         if(rta.apiPass){
-            usuario_jwt=await User.findOne({apiPass:{$elemMatch:{password:rta.apiPass}}});
-            console.log("FUNCIONA",usuario_jwt)
+            usuario_jwt=await User.findOne({apiPass:{$elemMatch:{password:rta.apiPass,status:"active"}}});
         }
         if(rta.uid){
             usuario_jwt=await User.findById(rta.uid);
@@ -62,7 +61,7 @@ const APIJWTValidation=async(tokenBase,{req})=>{
             req.body.user_jwt=usuario_jwt;
             req.body.data_jwt=rta;
         }else{
-            throw new Error("Non-existent user"); 
+            throw new Error("Non-existent user, or Api token invalid."); 
         }
     } catch (error) {
         throw new Error("Invalid token: "+error.message);        
