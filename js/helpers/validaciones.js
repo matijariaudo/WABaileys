@@ -46,6 +46,27 @@ const JWTValidation=async(tokenBase,{req})=>{
     }
 }
 
+const JWTValidationEmail=async(tokenBase,{req})=>{
+    try {
+        const token=tokenBase;
+        const rta=jwt.verify(token, process.env.SEED);
+        let usuario_jwt;
+        if(rta.uid){
+            usuario_jwt=await User.findOne({id:rta.uid,correo:rta.email});
+            console.log(usuario_jwt)
+        }
+        if(usuario_jwt){
+            req.body.user_jwt=usuario_jwt;
+            req.body.data_jwt=rta;
+        }else{
+            throw new Error("Non-existent user, or Api token invalid."); 
+        }
+    } catch (error) {
+        throw new Error("Invalid token: "+error.message);        
+    }
+}
+
+
 const APIJWTValidation=async(tokenBase,{req})=>{
     try {
         const token=tokenBase.split(" ")[1];
@@ -96,7 +117,7 @@ const checkUserJWT=[
 ]
 
 const checkUserJWTParam=[
-    param('token','El token no es válido').custom(JWTValidation),
+    param('token','El token no es válido').custom(JWTValidationEmail),
     checkValidation
 ]
 

@@ -86,9 +86,9 @@ const loginJWTCheckemail=async(req,res)=>{
         checkUser.email_valid=true;
         checkUser.save()
         const token=jwt.sign({ uid: user.id }, process.env.SEED,{expiresIn:'12h'})
-        return res.redirect(`../../../base.html?accion=EMAIL_VALID&token=${token}`);
+        return res.redirect(`../../../app.html?accion=EMAIL_VALID&token=${token}`);
     }
-    return res.redirect(`../../../base.html?accion=EMAIL_VALID&token=ERROR`);   
+    return res.redirect(`../../../app.html?accion=EMAIL_VALID&token=ERROR`);   
 }
 
 const createApiToken=async(req,res)=>{
@@ -99,7 +99,7 @@ const createApiToken=async(req,res)=>{
         user.apiPass.push({name});
         user.save();
         const newPassword = user.apiPass[user.apiPass.length - 1].password;
-        const token=jwt.sign({ email:user.correo,apiPass:newPassword}, process.env.SEED)
+        const token=jwt.sign({ apiPass:newPassword}, process.env.SEED)
         return res.status(200).json(await jsonAnswer(200,`Created successfuly`,`We have created your API token.`,{token}));
     } catch (error) {
         return res.status(200).json(await jsonAnswer(400,"The operation has failed","-",null));
