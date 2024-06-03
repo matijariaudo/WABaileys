@@ -13,8 +13,8 @@ require('dotenv').config()
 UserRouter.post('/users',checkUserCreate,userCreate);
 UserRouter.post('/users/login',checkUserLogin,userLogin);
 UserRouter.post('/users/apitoken',checkUserJWT,createApiToken);
-UserRouter.post('/users/getapitoken',checkUserJWT,getApiToken);
-UserRouter.post('/users/editapitoken',checkUserJWT,editApiToken);
+UserRouter.post('/users/getapitoken',checkUserJWT,(req,res)=>{res.json({a:"La de tu hermana"})});
+UserRouter.post('/users/editapitoken',checkUserJWT,(req,res)=>{res.json({a:"La de tu hermana"})});
 UserRouter.post('/users/check',checkUserJWT,loginJWT);
 UserRouter.post('/users/sendvalidation',checkUserJWT,sendMailValidation);
 UserRouter.post('/users/edit',checkUserUpdate,userUpdate);
