@@ -13,16 +13,6 @@ const checkMongooId=(instanciaId)=>{
     return mongoose.Types.ObjectId.isValid(instanciaId);
 }
 
-const  checkRemoteJID=(v)=>{
-    if(validarJID(v)){return true}else{throw new Error('remoteJid is invalid');}
-}
-
-function validarJID(jid) {
-    // Expresión regular para verificar el formato de un JID
-    const jidRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    return jidRegex.test(jid);
-}
-
 const checkValidation=async(req,res,next)=>{
     const error=validationResult(req)
     if(error.errors.length>0){return res.status(200).json(await jsonAnswer(400,"Body params issues","An error has occurred with the parameters received, please check and try again",{errors:error.errors}));}
@@ -65,6 +55,18 @@ const JWTValidationEmail=async(tokenBase,{req})=>{
         throw new Error("Invalid token: "+error.message);        
     }
 }
+
+const validateRemoteJid = (value) => {
+                // Regular expression to match WhatsApp remoteJid
+                const userRegex = /^[0-9]+@s\.whatsapp\.net$/;
+                const groupRegex = /^[0-9-]+@g\.us$/;
+                
+                if (!userRegex.test(value) && !groupRegex.test(value)) {
+                    throw new Error('Invalid remoteJid format.');
+                }
+                return true;
+}
+
 
 
 const APIJWTValidation=async(tokenBase,{req})=>{
@@ -123,7 +125,7 @@ const checkUserJWTParam=[
 
 const checkInstanceCreate=[
     body('name','You must enter a name').notEmpty(),
-    body('webhook','webhook must to be an URL').if(body('webhook').notEmpty()).isURL(),
+    //body('webhook','webhook must to be an URL').if(body('webhook').notEmpty()).isURL({protocols: ['http', 'https'],require_tld: false,require_protocol: true}),
     header('authorization').notEmpty().custom(APIJWTValidation),
     checkValidation
 ]
@@ -136,7 +138,7 @@ const checkInstanceID=[
 
 const checkInstanceEdit=[
     body('instanceId','You must to enter a valid ID').custom(checkID),
-    body('webhook','webhook must to be an URL').if(body('webhook').notEmpty()).isURL(),
+    body('webhook','webhook must to be an URL').if(body('webhook').notEmpty()).isURL({protocols: ['http', 'https'],require_tld: false,require_protocol: true}),
     header('authorization').notEmpty().custom(APIJWTValidation),
     checkValidation
 ]
@@ -149,14 +151,14 @@ const checkInstanceGet=[
 
 const checkInstanceChat=[
     body('instanceId','You must to enter a valid ID').custom(checkID),
-    body('remoteJid','You must to enter a valid ID').custom(checkRemoteJID),
+    body('remoteJid','You must to enter a valid ID').custom(validateRemoteJid),
     header('authorization').notEmpty().custom(APIJWTValidation),
     checkValidation
 ];
 
 const checkInstanceMessage=[
     body('instanceId','You must to enter a valid ID').custom(checkID),
-    body('remoteJid','You must to enter a valid ID').custom(checkRemoteJID),
+    body('remoteJid','You must to enter a valid ID').custom(validateRemoteJid),
     body('messageId','You must enter a messageId').notEmpty(),
     header('authorization').notEmpty().custom(APIJWTValidation),
     checkValidation
@@ -164,7 +166,7 @@ const checkInstanceMessage=[
 
 const checkInstanceSendMessage=[
     body('instanceId','You must to enter a valid ID').custom(checkID),
-    body('remoteJid','You must to enter a valid ID').custom(checkRemoteJID),
+    body('remoteJid','You must to enter a valid ID').custom(validateRemoteJid),
     body('message','You must enter a message').notEmpty(),
     header('authorization').notEmpty().custom(APIJWTValidation),
     checkValidation
@@ -172,8 +174,8 @@ const checkInstanceSendMessage=[
 
 const checkInstanceSendMedia=[
     body('instanceId','You must to enter a valid ID').custom(checkID),
-    body('remoteJid','You must to enter a valid ID').custom(checkRemoteJID),
-    body('fileUrl','You must enter a url').isURL(),
+    body('remoteJid','You must to enter a valid ID').custom(validateRemoteJid),
+    //body('fileUrl','You must enter a url').isURL(),
     body('type',`You must enter a type('image','video','audio','document')`).isIn(['image','video','audio','document']),
     header('authorization').notEmpty().custom(APIJWTValidation),
     checkValidation

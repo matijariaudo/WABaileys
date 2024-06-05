@@ -73,6 +73,7 @@ const sendMailValidation=async(req,res)=>{
     console.log(req.headers.host)
     const user=req.body.user_jwt;
     const token=jwt.sign({ uid: user.id,email:user.correo}, process.env.SEED,{expiresIn:'12h'})
+    console.log(`Verify email http://${req.headers.host}/login/users/validar/${token}`)
     sendEmail({email:user.correo,subject:"Verify your email",typeNro:2,button:{frase:"Verify email",link:`http://${req.headers.host}/login/users/validar/${token}`}})
     return res.status(200).json(await jsonAnswer(200,`Sending success`,`We have sent an email to validate your direction`,{user,token}));
 }

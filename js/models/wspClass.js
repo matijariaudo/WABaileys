@@ -4,6 +4,7 @@ const { Instance } = require("../database/models");
 const { msgFormat } = require("../helpers/msgFormat");
 const { checkMedia } = require("../helpers/checkMedia");
 const { checkFolder } = require("../helpers/checkFolder");
+const {sendWebhook}=require("../helpers/sendWebhook")
 const { default: axios } = require("axios");
 const path = require("path");
 
@@ -16,12 +17,14 @@ class Instances {
         this.restart = 0;
         this.QrBlock = false;
         checkFolder('./media_wp/' + this.id);
+        this.trial()
+        
     }
 
     async init({ QrBlock }) {
         this.QrBlock = QrBlock ? QrBlock : false;
         const t1 = this.QrBlock ? "100" : 60000;
-        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAA", this.QrBlock, t1);
+        console.log("INSTANCE ID",this.id, this.QrBlock, t1);
         const { state, saveCreds } = await useMultiFileAuthState(this.path);
         const { version, isLatest } = await fetchLatestBaileysVersion();
 
@@ -44,7 +47,7 @@ class Instances {
 
                 this.sock.ev.on("creds.update", saveCreds); //IMPORTANT: It saves connection and session data.
                 this.sock.ev.on("connection.update", (update) => this.admConnection(update, resolve, reject)); //IMPORTANT: It admin the Connection changes
-                this.sock.ev.on('messages.upsert', this.receiveMessages);
+                this.sock.ev.on('messages.upsert', (message) =>this.receiveMessages(message));
 
                 this.store.bind(this.sock.ev);
 
@@ -65,6 +68,10 @@ class Instances {
                 reject("It has happened an issue while sock was initializing: " + error);
             }
         });
+    }
+
+    async trial(){
+        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",this.id)
     }
 
     async setStatus(status,{number}={}) {
@@ -131,10 +138,12 @@ class Instances {
     async receiveMessages(message) {
         const m = message.messages[0];
         const { remoteJid, fromMe } = m.key;
-
+        
         if (!fromMe) {
-            if (!m.message) return; // if there is no text or media message
-            console.log(`Nuevo mensaje recibido en ${this.id}: "${remoteJid.split("@")[0]}(${remoteJid})":${message.messages[0].message?.conversation}`);
+            const db = await Instance.findById(this.id);
+            sendWebhook(msgFormat(m),db.webhook)
+            //if (!m.message) return; // if there is no text or media message
+            //console.log(`Nuevo mensaje recibido en ${this.id}: "${remoteJid.split("@")[0]}(${remoteJid})":${message.messages[0].message?.conversation}`);
         }
     }
 
@@ -157,12 +166,14 @@ class Instances {
         }
     }
 
-    async sendMedia({ remoteJid, caption, fileUrl, type = "document", ptt = false }) {
+    async sendMedia({ remoteJid, caption, fileUrl, type = "document", ptt = false, mimetype,fileName}) {
         try {
             const a = await this.sock.sendMessage(remoteJid, {
                 [type]: { url: fileUrl }, // [type] permite transformar una variable en título de objeto
                 caption,
-                ptt
+                ptt,
+                mimetype,
+                fileName
             });
             const messageSend = await msgFormat(a);
             return messageSend;
