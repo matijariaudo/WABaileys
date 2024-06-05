@@ -43,7 +43,6 @@ const JWTValidationEmail=async(tokenBase,{req})=>{
         let usuario_jwt;
         if(rta.uid){
             usuario_jwt=await User.findOne({id:rta.uid,correo:rta.email});
-            console.log(usuario_jwt)
         }
         if(usuario_jwt){
             req.body.user_jwt=usuario_jwt;
