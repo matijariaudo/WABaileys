@@ -17,7 +17,7 @@ class Instances {
         this.restart = 0;
         this.QrBlock = false;
         checkFolder('./media_wp/' + this.id);
-        this.trial()
+        
         
     }
 
@@ -70,9 +70,6 @@ class Instances {
         });
     }
 
-    async trial(){
-        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",this.id)
-    }
 
     async setStatus(status,{number}={}) {
         this.status = status;
@@ -137,14 +134,8 @@ class Instances {
 
     async receiveMessages(message) {
         const m = message.messages[0];
-        const { remoteJid, fromMe } = m.key;
-        
-        if (!fromMe) {
-            const db = await Instance.findById(this.id);
-            sendWebhook(msgFormat(m),db.webhook)
-            //if (!m.message) return; // if there is no text or media message
-            //console.log(`Nuevo mensaje recibido en ${this.id}: "${remoteJid.split("@")[0]}(${remoteJid})":${message.messages[0].message?.conversation}`);
-        }
+        const db = await Instance.findById(this.id);
+        sendWebhook(msgFormat(m),db.webhook)
     }
 
     async deleteInstance(deleteInst = false) {

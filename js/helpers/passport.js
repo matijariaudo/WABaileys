@@ -28,7 +28,7 @@ const GoogleInstance=new GoogleStrategy(
     {
       clientID: GOOGLE_ID,
       clientSecret: GOOGLE_SECRET,
-      callbackURL: "/login/auth/google/redirect",
+      callbackURL: process.env.URL+"/login/auth/google/redirect",
       scope: [ 'profile','email' ]
     },
     baseProcess("google")

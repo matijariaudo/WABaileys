@@ -20,36 +20,12 @@
 </style>
 <body style="padding: 0px;background-color: #353535;color:#FFF">
 
-  <div class="user user_1 container-fluid m-0" style="height: 100vh;overflow-y: auto;padding: 0px 20px;">
-        <div class="col-12 col-sm-4 offset-sm-4 p-4 sombra" style="background:#ffffff;border-radius:10px;margin-top:25vh;height:auto;">
-        <center style="margin: 10px 0px;">
-            <a style="font-size:1.4em;margin-top: 20px;"><b style="color:#555555">WSP</b><b style="color: #61e9b9;"></b><img src="https://cdn-icons-png.flaticon.com/128/610/610413.png" alt="" style="width: 20px;"></a>
-        </center>
-        <div class="log log_2" style="display: none;text-align: center;">
-        <input type="text" placeholder="Email" id="login_correo" class="form_login_input" autocomplete="off">
-        <input type="password" placeholder="Password" id="login_clave" class="form_login_input" autocomplete="off">
-        <button class="btn" id="btn_login" onclick="$('.form_login').show()" style="width:100%;margin-top: 10px;background-color: #25D366;color:#FFF;border: 1px solid #d4d4d4;"><img src="assets/img/password.png" alt="" style="width: 25px;margin-top: 0px;"> Send now!</button>
-        <br><br>
-        <a onclick="mostrar('log',1);" style="margin-top: 20px;cursor: pointer;font-size: .7em;margin-top: 5px;"><i class="zmdi zmdi-arrow-left"></i> Back</a>
-        <br><br>
-        <a onclick="mostrar('log',3);" style="margin-top: 20px;cursor: pointer;">Create an account</a>
-        </div>
-        <div class="log log_1">
-            <button class="btn" id="btn_login" onclick="mostrar('log',2);setTimeout(()=>{$('.form_login_input').val('')},100)" style="width:100%;margin-top: 10px;background-color: #ffffff;color:#333333;border: 1px solid #d4d4d4;"><img src="assets/img/password.png" alt="" style="width: 25px;margin-top: 0px;"> Connect with your email</button>
-            <button class="btn" id="btn_login" onclick="location.href='/login/logingoogle'" style="width:100%;margin-top: 10px;background-color: #ffffff;color:#333333;border: 1px solid #d4d4d4;"><img src="assets/img/google.png" alt="" style="width: 19px;margin-top: -2px;"> Connect with Google</button>
-            <button class="btn" id="btn_login" onclick="location.href='login/loginfacebook'" style="width:100%;margin-top: 10px;background-color: #ffffff;color:#333333;border: 1px solid #d4d4d4;"><img src="assets/img/social-media.png" alt="" style="width: 24px;margin-top: -4px;"> Connect with Facebook </button>
-        </div>
-        <div class="log log_3" style="display: none;text-align: center;">
-            <input type="text" placeholder="Name" id="new_name" class="form_login_input" autocomplete="off">
-            <input type="text" placeholder="Email" id="new_email" class="form_login_input" autocomplete="off">
-            <input type="password" placeholder="Password" id="new_password" class="form_login_input" autocomplete="off">
-            <input type="password" placeholder="Repeat password" id="new_password2" class="form_login_input" autocomplete="off">
-            <button class="btn" id="btn_create" onclick="" style="width:100%;margin-top: 10px;background-color: #25D366;color:#FFF;border: 1px solid #d4d4d4;">Create your account</button>
-            <br>
-            <p id="new_txt" style="margin-top: 20px;"></p>
-            <a onclick="mostrar('log',2);" style="margin-top: 20px;cursor: pointer;font-size: .7em;margin-top: 5px;"><i class="zmdi zmdi-arrow-left"></i> Back</a>
-        </div>
-        </div>
+  <div class="user user_1 container-fluid m-0" style="height: 100vh;overflow-y: auto;padding: 0px 20px;color:#FFF">
+    <center style="margin-top: 30vh;">
+        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+        <br>
+        Connecting your account
+    </center>
   </div>  
   
   <div class="user user_2 container-fluid p-0 m-0">
@@ -961,8 +937,9 @@
 
     const analisis_error=(d,reverse)=>{
         text=d.message;
+        console.log(d)
         if(d?.data?.errors){
-            if(d.data.errors[0]?.msg=="Invalid token"){localStorage.clear();location.href=window.location.pathname;}
+            if(d.data.errors[0]?.msg.indexOf("Invalid token")>=0){localStorage.clear();location.href="index.html";}
             d.data.errors.forEach((a,i)=>{
                 text+=`<br>${i+1}) ${a.msg}.`
             })

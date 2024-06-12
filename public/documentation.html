@@ -16,6 +16,7 @@
     }
     h1,h2,h3,h4,h5,a{
         font-family: Sans;
+        
     }
     h2{
         font-size: 1.6em;
@@ -25,9 +26,18 @@
         font-size: 1.2em;
         color:#4bb687; 
         font-weight: 100;
+        margin:30px 0px
     }
+    
+    code{
+      color:#ce42b0
+    }
+    h3 code{
+      color:#a23f8e
+    }
+    
     a{
-        color:#000;
+        color:#16b9b3;
     }
     .sidebar {
       position: fixed;
@@ -62,6 +72,9 @@
     .btn:hover{
         color:#000
     }
+    .nav-item b{
+      color:#48b384;
+    }
     @font-face {
     font-family: 'Sans';
     src: url('./assets/fonts/Product\ Sans\ Regular.ttf') format('opentype');
@@ -85,22 +98,22 @@
     -3px -3px 6px rgb(0,0,0,.04);
     }
     ::-webkit-scrollbar {
-width: 10px;
-height: 10px;
-}
+    width: 10px;
+    height: 10px;
+    }
 
-::-webkit-scrollbar-thumb {
-background: #5ae4a8;
-border-radius: 5px;
-}
+    ::-webkit-scrollbar-thumb {
+    background: #5ae4a8;
+    border-radius: 5px;
+    }
 
-::-webkit-scrollbar-track {
-background-color: #f2f2f2 ;
-border: 1px solid #f2f2f2;
-}
+    ::-webkit-scrollbar-track {
+    background-color: #f2f2f2 ;
+    border: 1px solid #f2f2f2;
+    }
   </style>
 </head>
-<body style="background-color: #ececec;padding: 0px;">
+  <body style="background-color: #ececec;padding: 0px;">
         <div class="user user_2 container-fluid p-0 m-0">
             <div class="mainContainer col-lg-12 offset-lg-0 col-md-12 p-0 m-0"  style="padding: 0px;height: 100vh;overflow-y: auto;">
                 <div class="row  capa capa_0 m-0">
@@ -109,282 +122,193 @@ border: 1px solid #f2f2f2;
                             <b style="color:#555555">Chatter</b><b style="color: #5AE4A8">+</b></a>
                         <ul class="nav flex-column" id="menu-lateral">
                             <li class="nav-item"><a class="nav-link" href="#Introduction">Introduction</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#api-overview">Authentication</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#endpoints">Endpoints Instances</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#General">General</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#Authentication">Authentication</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#endpoints">Endpoints</a></li>
                                 <ul class="nav flex-column" style="padding-left: 10%;">
-                                    <li class="nav-item"><a class="nav-link" href="#Introduction">Create instance</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#Introduction">Edit instance</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#Introduction">Delete instance</a></li>
-                                </ul>
-                            <li class="nav-item"><a class="nav-link" href="#endpoints">Endpoints Instances</a></li>
-                                <ul class="nav flex-column" style="padding-left: 10%;">
-                                    <li class="nav-item"><a class="nav-link" href="#Introduction">Create instance</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#Introduction">Edit instance</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#Introduction">Delete instance</a></li>
+                                    <li class="nav-item"><b class="nav-link">Instances</b></li>
+                                    <li class="nav-item"><a class="nav-link" href="#Create">Create instance</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#Edit">Edit instance</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#Delete">Delete instance</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#Init">Init instance</a></li>
+                                    <li class="nav-item"><b class="nav-link">Actions</b></li>
+                                    <li class="nav-item"><a class="nav-link" href="#Contacts">Get contact list</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#Chat">Get conversation</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#Message">Get message</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#Media">Get media</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#Send">Send message</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#SendMedia">Send media</a></li>
+                                    
                                 </ul>
                                         
-                            <li class="nav-item"><a class="nav-link" href="#implementation-examples">Implementation Examples</a></li>
                           </ul>
-                        </div>
-                        <div class="col-lg-9 col-8" id="main-div" style="background-color: rgb(251, 251, 251);height: 100vh;overflow-y: auto;">
+                    </div>
+                    <div class="col-lg-9 col-8" id="main-div" style="background-color: rgb(251, 251, 251);height: 100vh;overflow-y: auto;">
+                      <!-- API Overview and Authentication -->
+                      <div class="container-fluid section" id="Introduction">
+                        <h2>Introduction</h2>
+                        <p>Welcome to our WhatsApp API documentation. This guide will walk you through the available endpoints and authentication process to interact with WhatsApp using our API.</p>
+                      </div>
+                      <div class="container-fluid section" id="General">
+                        <h2>General</h2>
+                        <p>Our API is based on instances, each equivalent to a WhatsApp account. From our APP or our API, you can create, modify, and delete instances. After creating an instance, link it to a WhatsApp Web account by scanning the provided QR code with a mobile device. Once linked, you can perform all available tasks: search for contacts, chats, view messages, download multimedia, and send text and multimedia messages.
+                          <center><img src="assets/img/doc_explanation_w.png" id="explanation_img" alt="" width="80%"></center>
+                        </p>
+                      </div>
+                      <div class="container-fluid section" id="Authentication">
+                          <h2>Authentication</h2>
+                          <h3>Base URL: <code>https://api.chatter.com</code></h3>
+                          <p>To access our API, you need to authenticate using JSON Web Tokens (JWT). Please include your JWT in the Authorization header for every request.</p>
+                          <pre><code>     curl -X GET \
+                      -H "Authorization: Bearer your-api-token" \
+                      -H "Accept: application/json" \
+                      -H "Content-Type: application/json" \
+                      https://api.chatter.com</code></pre>
+                    
+                          
+                      </div>
+                      <!-- Endpoints -->
+                      <div class="container-fluid section" id="endpoints">
+                        <h2>Endpoints</h2>
+                  
+                        <!-- Create an Instance -->
+                        <h3  id="Create">Create an Instance: <code>/api/instance/create</code></h3>
+                        <p><strong>Description:</strong> Create a WhatsApp instance.</p>
+                        <p><strong>Method:</strong> POST</p>
+                        <p><strong>Authentication:</strong> Requires JWT. (See <a href="#Authentication" style="color:#5AE4A8">click here</a>)</p>
+                        <p><strong>Input Parameters (body JSON params):</strong></p>
+                        <ul>
+                          <li><code>name:</code> ID of the instance. (Required)</li>
+                          <li><code>webhook:</code> URL where you want us to notify you with a POST request when you receive a message. (Optional)</li>
+                        </ul>
+                        <!-- Initialize an Instance -->
+                        <h3 id="Delete">Delete an Instance: <code>/api/instance/delete</code></h3>
+                        <p><strong>Description:</strong> Delete a WhatsApp instance.</p>
+                        <p><strong>Method:</strong> POST</p>
+                        <p><strong>Authentication:</strong> Requires JWT. (See <a href="#Authentication" style="color:#5AE4A8">click here</a>)</p>
+                        <p><strong>Input Parameters (body JSON params):</strong></p>
+                        <ul>
+                          <li><code>instanceId:</code> ID of the instance. (Required)</li>
+                        </ul>
                         
-    
-    <!-- API Overview and Authentication -->
-    <div class="container-fluid section" id="Introduction">
-        <h2>Introduction</h2>
-        <p>Welcome to our WhatsApp API documentation. This guide will walk you through the available endpoints and authentication process to interact with WhatsApp using our API.</p>
-    </div>
-    <div class="container-fluid section" id="api-overview">
-        <h2>Authentication</h2>
-        <p>To access our API, you need to authenticate using JSON Web Tokens (JWT). Please include your JWT in the Authorization header for every request.</p>
-        <pre><code>     curl -X GET \
-    -H "Authorization: Bearer your-api-token" \
-    -H "Accept: application/json" \
-    -H "Content-Type: application/json" \
-    https://api.yourcompany.com/endpoint</code></pre>
-  
-        <h3>Base URL</h3>
-        <p><a href="https://api.yourcompany.com">https://api.yourcompany.com</a></p>
-  
-      </div>
-  
-      <!-- Endpoints -->
-      <div class="container-fluid section" id="endpoints">
-        <h2>Endpoints</h2>
-  
-        <!-- Initialize an Instance -->
-        <h3>Initialize an Instance: <code>/api/instance/init</code></h3>
-        <p><strong>Description:</strong> Initializes a WhatsApp instance for active usage.</p>
-        <p><strong>Method:</strong> POST</p>
-        <p><strong>Authentication:</strong> Requires JWT.</p>
-        <p><strong>Input Parameters:</strong></p>
-        <ul>
-          <li>instanceId: ID of the instance to initialize.</li>
-        </ul>
-        <p><strong>Successful Response:</strong> 200 OK if the instance initializes successfully.</p>
-        <p><strong>Error Response:</strong> Specific error code and message if initialization fails.</p>
-  
-        <!-- Delete an Instance -->
-        <h3>Delete an Instance: <code>/api/instance/delete</code></h3>
-        <p><strong>Description:</strong> Permanently deletes a WhatsApp instance.</p>
-        <p><strong>Method:</strong> DELETE</p>
-        <p><strong>Authentication:</strong> Requires JWT.</p>
-        <p><strong>Input Parameters:</strong></p>
-        <ul>
-          <li>instanceId: ID of the instance to delete.</li>
-        </ul>
-        <p><strong>Successful Response:</strong> 204 No Content if the instance is deleted successfully.</p>
-        <p><strong>Error Response:</strong> Specific error code and message if deletion fails.</p>
-  
-        <!-- Edit an Instance -->
-        <h3>Edit an Instance: <code>/api/instance/edit</code></h3>
-        <p><strong>Description:</strong> Allows modification of details for an existing WhatsApp instance.</p>
-        <p><strong>Method:</strong> PUT</p>
-        <p><strong>Authentication:</strong> Requires JWT.</p>
-        <p><strong>Input Parameters:</strong></p>
-        <ul>
-          <li>instanceId: ID of the instance to edit.</li>
-          <li>Updated instance details (e.g., name, additional configurations).</li>
-        </ul>
-        <p><strong>Successful Response:</strong> 200 OK if the instance is edited successfully.</p>
-        <p><strong>Error Response:</strong> Specific error code and message if editing fails.</p>
-  
-        <!-- Get Contacts of an Instance -->
-        <h3>Get Contacts of an Instance: <code>/api/instance/contacts</code></h3>
-        <p><strong>Description:</strong> Retrieves the list of contacts associated with a WhatsApp instance.</p>
-        <p><strong>Method:</strong> GET</p>
-        <p><strong>Authentication:</strong> Requires JWT.</p>
-        <p><strong>Input Parameters:</strong></p>
-        <ul>
-          <li>instanceId: ID of the instance to fetch contacts from.</li>
-        </ul>
-        <p><strong>Successful Response:</strong> 200 OK and the list of contacts if successful.</p>
-        <p><strong>Error Response:</strong> Specific error code and message if operation fails.</p>
-  
-        <!-- Send Message to an Instance -->
-        <h3>Send Message to an Instance: <code>/api/instance/send</code></h3>
-        <p><strong>Description:</strong> Allows sending a message through an active WhatsApp instance.</p>
-        <p><strong>Method:</strong> POST</p>
-        <p><strong>Authentication:</strong> Requires JWT.</p>
-        <p><strong>Input Parameters:</strong></p>
-        <ul>
-          <li>instanceId: ID of the instance to send the message to.</li>
-          <li>Message data (content, recipient, message type).</li>
-        </ul>
-        <p><strong>Successful Response:</strong> 200 OK if the message is sent successfully.</p>
-        <p><strong>Error Response:</strong> Specific error code and message if sending fails.</p>
-  
-        <!-- Get Chat History of an Instance -->
-        <h3>Get Chat History of an Instance: <code>/api/instance/chat</code></h3>
-        <p><strong>Description:</strong> Retrieves the complete chat history of a WhatsApp instance.</p>
-        <p><strong>Method:</strong> GET</p>
-        <p><strong>Authentication:</strong> Requires JWT.</p>
-        <p><strong>Input Parameters:</strong></p>
-        <ul>
-          <li>instanceId: ID of the instance to fetch chat history from.</li>
-        </ul>
-        <p><strong>Successful Response:</strong> 200 OK and the complete chat history if successful.</p>
-        <p><strong>Error Response:</strong> Specific error code and message if operation fails.</p>
-  
-        <!-- Get Message Details -->
-        <h3>Get Message Details: <code>/api/instance/message</code></h3>
-        <p><strong>Description:</strong> Retrieves specific details of a sent or received message in a WhatsApp instance.</p>
-        <p><strong>Method:</strong> GET</p>
-        <p><strong>Authentication:</strong> Requires JWT.</p>
-        <p><strong>Input Parameters:</strong></p>
-        <ul>
-          <li>instanceId: ID of the instance to fetch message details from.</li>
-          <li>messageId: Unique ID of the message to get details of.</li>
-        </ul>
-        <p><strong>Successful Response:</strong> 200 OK and message details if successful.</p>
-        <p><strong>Error Response:</strong> Specific error code and message if operation fails.</p>
-  
-        <!-- Download Media of an Instance -->
-        <h3>Download Media of an Instance: <code>/api/instance/media</code></h3>
-        <p><strong>Description:</strong> Allows downloading multimedia files (images, videos, documents) sent through a WhatsApp instance.</p>
-        <p><strong>Method:</strong> GET</p>
-        <p><strong>Authentication:</strong> Requires JWT.</p>
-        <p><strong>Input Parameters:</strong></p>
-        <ul>
-          <li>instanceId: ID of the instance to download media from.</li>
-          <li>mediaId: Unique ID of the multimedia file to download.</li>
-        </ul>
-        <p><strong>Successful Response:</strong> The requested multimedia file if successful.</p>
-        <p><strong>Error Response:</strong> Specific error code and message if operation fails.</p>
-  
-      </div>
-  
-      <!-- Implementation Examples -->
-      <div class="container-fluid section" id="implementation-examples">
-        <h2>Implementation Examples</h2>
-        <p>Each operation can be implemented in various programming languages using suitable HTTP request libraries. Ensure proper handling of authentication and response parsing for each request.</p>
-      </div>
-  
-      <!-- Contact and Support -->
-      <div class="container-fluid section" id="contact-support">
-        <h2>Contact and Support</h2>
-        <p>For further inquiries or technical support regarding our WhatsApp API, please contact us at <a href="mailto:support@yourcompany.com">support@yourcompany.com</a>.</p>
-      </div>
-  
-      <!-- Operations on WhatsApp Instances -->
-      <div class="container-fluid section" id="operations">
-        <h2>Operations on WhatsApp Instances</h2>
-        <p>Here is a list of operations that you can perform on WhatsApp instances through our API:</p>
-  
-        <!-- Initialize an Instance -->
-        <h3>Initialize an Instance: <code>/api/instance/init</code></h3>
-        <p><strong>Description:</strong> Initializes a WhatsApp instance for active usage.</p>
-        <p><strong>Method:</strong> POST</p>
-        <p><strong>Authentication:</strong> Requires JWT.</p>
-        <p><strong>Input Parameters:</strong></p>
-        <ul>
-          <li>instanceId: ID of the instance to initialize.</li>
-        </ul>
-        <p><strong>Successful Response:</strong> 200 OK if the instance initializes successfully.</p>
-        <p><strong>Error Response:</strong> Specific error code and message if initialization fails.</p>
-  
-        <!-- Delete an Instance -->
-        <h3>Delete an Instance: <code>/api/instance/delete</code></h3>
-        <p><strong>Description:</strong> Deletes a WhatsApp instance permanently.</p>
-        <p><strong>Method:</strong> DELETE</p>
-        <p><strong>Authentication:</strong> Requires JWT.</p>
-        <p><strong>Input Parameters:</strong></p>
-        <ul>
-          <li>instanceId: ID of the instance to delete.</li>
-        </ul>
-        <p><strong>Successful Response:</strong> 204 No Content if the instance is deleted successfully.</p>
-        <p><strong>Error Response:</strong> Specific error code and message if deletion fails.</p>
-  
-        <!-- Edit an Instance -->
-        <h3>Edit an Instance: <code>/api/instance/edit</code></h3>
-        <p><strong>Description:</strong> Modifies details of an existing WhatsApp instance.</p>
-        <p><strong>Method:</strong> PUT</p>
-        <p><strong>Authentication:</strong> Requires JWT.</p>
-        <p><strong>Input Parameters:</strong></p>
-        <ul>
-          <li>instanceId: ID of the instance to edit.</li>
-          <li>Updated instance details (e.g., name, additional configurations).</li>
-        </ul>
-        <p><strong>Successful Response:</strong> 200 OK if the instance is edited successfully.</p>
-        <p><strong>Error Response:</strong> Specific error code and message if editing fails.</p>
-  
-        <!-- Get Contacts of an Instance -->
-        <h3>Get Contacts of an Instance: <code>/api/instance/contacts</code></h3>
-        <p><strong>Description:</strong> Retrieves contacts associated with a WhatsApp instance.</p>
-        <p><strong>Method:</strong> GET</p>
-        <p><strong>Authentication:</strong> Requires JWT.</p>
-        <p><strong>Input Parameters:</strong></p>
-        <ul>
-          <li>instanceId: ID of the instance to fetch contacts from.</li>
-        </ul>
-        <p><strong>Successful Response:</strong> 200 OK and the list of contacts if successful.</p>
-        <p><strong>Error Response:</strong> Specific error code and message if operation fails.</p>
-  
-        <!-- Send Message to an Instance -->
-        <h3>Send Message to an Instance: <code>/api/instance/send</code></h3>
-        <p><strong>Description:</strong> Sends a message through a WhatsApp instance.</p>
-        <p><strong>Method:</strong> POST</p>
-        <p><strong>Authentication:</strong> Requires JWT.</p>
-        <p><strong>Input Parameters:</strong></p>
-        <ul>
-          <li>instanceId: ID of the instance to send the message to.</li>
-          <li>Message data (content, recipient, message type).</li>
-        </ul>
-        <p><strong>Successful Response:</strong> 200 OK if the message is sent successfully.</p>
-        <p><strong>Error Response:</strong> Specific error code and message if sending fails.</p>
-  
-        <!-- Get Chat History of an Instance -->
-        <h3>Get Chat History of an Instance: <code>/api/instance/chat</code></h3>
-        <p><strong>Description:</strong> Retrieves the chat history of a WhatsApp instance.</p>
-        <p><strong>Method:</strong> GET</p>
-        <p><strong>Authentication:</strong> Requires JWT.</p>
-        <p><strong>Input Parameters:</strong></p>
-        <ul>
-          <li>instanceId: ID of the instance to fetch chat history from.</li>
-        </ul>
-        <p><strong>Successful Response:</strong> 200 OK and the chat history if successful.</p>
-        <p><strong>Error Response:</strong> Specific error code and message if operation fails.</p>
-  
-        <!-- Get Message Details -->
-        <h3>Get Message Details: <code>/api/instance/message</code></h3>
-        <p><strong>Description:</strong> Retrieves details of a message in a WhatsApp instance.</p>
-        <p><strong>Method:</strong> GET</p>
-        <p><strong>Authentication:</strong> Requires JWT.</p>
-        <p><strong>Input Parameters:</strong></p>
-        <ul>
-          <li>instanceId: ID of the instance to fetch message details from.</li>
-          <li>messageId: Unique ID of the message to get details of.</li>
-        </ul>
-        <p><strong>Successful Response:</strong> 200 OK and message details if successful.</p>
-        <p><strong>Error Response:</strong> Specific error code and message if operation fails.</p>
-  
-        <!-- Download Media of an Instance -->
-        <h3>Download Media of an Instance: <code>/api/instance/media</code></h3>
-        <p><strong>Description:</strong> Downloads multimedia files from a WhatsApp instance.</p>
-        <p><strong>Method:</strong> GET</p>
-        <p><strong>Authentication:</strong> Requires JWT.</p>
-        <p><strong>Input Parameters:</strong></p>
-        <ul>
-          <li>instanceId: ID of the instance to download media from.</li>
-          <li>mediaId: Unique ID of the media file to download.</li>
-        </ul>
-        <p><strong>Successful Response:</strong> The requested multimedia file if successful.</p>
-        <p><strong>Error Response:</strong> Specific error code and message if operation fails.</p>
-  
-      </div>
-  
-      <!-- Conclusion -->
-      <div class="container-fluid section" id="conclusion">
-        <h2>Conclusion</h2>
-        <p>These operations enable comprehensive interaction with WhatsApp instances through our API. Please refer to each endpoint's documentation for detailed implementation guidelines and error handling.</p>
-      </div>
-  
-        
-                        </div>
+                        <!-- Delete an Instance -->
+                        <h3 id="Edit">Edit an Instance: <code>/api/instance/edit</code></h3>
+                        <p><strong>Description:</strong> Edit a WhatsApp instance.</p>
+                        <p><strong>Method:</strong> POST</p>
+                        <p><strong>Authentication:</strong> Requires JWT. (See <a href="#Authentication" style="color:#5AE4A8">click here</a>)</p>
+                        <p><strong>Input Parameters (body JSON params):</strong></p>
+                        <ul>
+                          <li><code>instanceId:</code> ID of the instance. (Required)</li>
+                          <li><code>name:</code> ID of the instance. (Optional)</li>
+                          <li><code>webhook:</code> URL where you want us to notify you with a POST request when you receive a message. (Optional)</li>
+                        </ul>
+                  
+                        <!-- Delete an Instance -->
+                        <h3 id="Init">Init an Instance: <code>/api/instance/init</code></h3>
+                        <p><strong>Description:</strong> Init a WhatsApp instance. You will receive a QR code if your instance is not linked.</p>
+                        <p><strong>Method:</strong> POST</p>
+                        <p><strong>Authentication:</strong> Requires JWT. (See <a href="#Authentication" style="color:#5AE4A8">click here</a>)</p>
+                        <p><strong>Input Parameters (body JSON params):</strong></p>
+                        <ul>
+                        <li><code>instanceId:</code> ID of the instance. (Required)</li>
+                        </ul>
+
+                        <!-- Delete an Instance -->
+                        <h3 id="Contacts">Get your contacts <code>/api/instance/contacts</code></h3>
+                        <p><strong>Description:</strong> Get your contact list.</p>
+                        <p><strong>Method:</strong> POST</p>
+                        <p><strong>Authentication:</strong> Requires JWT. (See <a href="#Authentication" style="color:#5AE4A8">click here</a>)</p>
+                        <p><strong>Input Parameters (body JSON params):</strong></p>
+                        <ul>
+                          <li><code>instanceId:</code> ID of the instance. (Required)</li>
+                        </ul>
+
+                        <!-- Delete an Instance -->
+                        <h3 id="Chat">Get chat messages <code>/api/instance/chat</code></h3>
+                        <p><strong>Description:</strong> Get your conversation with an user or group.</p>
+                        <p><strong>Method:</strong> POST</p>
+                        <p><strong>Authentication:</strong> Requires JWT. (See <a href="#Authentication" style="color:#5AE4A8">click here</a>)</p>
+                        <p><strong>Input Parameters (body JSON params):</strong></p>
+                        <ul>
+                          <li><code>instanceId:</code> ID of the instance. (Required)</li>
+                          <li><code>remoteJid:</code> ID of user or group (ej phonenumber<b>@whatsapp.net</b> or groupid<b>@g.us</b>).(Required)</li>
+                          <li><code>qty:</code> Quantity of messages you want receive. (Optional)</li>
+                        </ul>
+                  
+                        <!-- Delete an Instance -->
+                        <h3 id="Message">Get message <code>/api/instance/message</code></h3>
+                        <p><strong>Description:</strong> Get message informations.</p>
+                        <p><strong>Method:</strong> POST</p>
+                        <p><strong>Authentication:</strong> Requires JWT. (See <a href="#Authentication" style="color:#5AE4A8">click here</a>)</p>
+                        <p><strong>Input Parameters (body JSON params):</strong></p>
+                        <ul>
+                          <li><code>instanceId:</code> ID of the instance. (Required)</li>
+                          <li><code>remoteJid:</code> ID of user or group (ej phonenumber<b>@whatsapp.net</b> or groupid<b>@g.us</b>).(Required)</li>
+                          <li><code>messageId:</code> Id of message. (Required)</li>
+                        </ul>
+
+                        <!-- Delete an Instance -->
+                        <h3 id="Media">Get message media<code>/api/instance/media</code></h3>
+                        <p><strong>Description:</strong> Download message media.</p>
+                        <p><strong>Method:</strong> POST</p>
+                        <p><strong>Authentication:</strong> Requires JWT. (See <a href="#Authentication" style="color:#5AE4A8">click here</a>)</p>
+                        <p><strong>Input Parameters (body JSON params):</strong></p>
+                        <ul>
+                          <li><code>instanceId:</code> ID of the instance. (Required)</li>
+                          <li><code>remoteJid:</code> ID of user or group (ej phonenumber<b>@whatsapp.net</b> or groupid<b>@g.us</b>).(Required)</li>
+                          <li><code>messageId:</code> Id of message. (Required)</li>
+                        </ul>
+                  
+                        <!-- Send Message to an Instance -->
+                        <h3 id="Send">Send Message: <code>/api/instance/send</code></h3>
+                        <p><strong>Description:</strong> Allows sending a message through an active WhatsApp instance.</p>
+                        <p><strong>Method:</strong> POST</p>
+                        <p><strong>Authentication:</strong> Requires JWT. (See <a href="#Authentication" style="color:#5AE4A8">click here</a>)</p>
+                        <p><strong>Input Parameters (body JSON params):</strong></p>
+                        <ul>
+                          <li><code>instanceId:</code> ID of the instance. (Required)</li>
+                          <li><code>remoteJid:</code> ID of user or group (ej phonenumber<b>@whatsapp.net</b> or groupid<b>@g.us</b>).(Required)</li>
+                          <li><code>message:</code> String you want to send. (Required)</li>
+                        </ul>
+                        
+                        <!-- Send Message to an Instance -->
+                        <h3  id="SendMedia">Send Media Message: <code>/api/instance/sendmedia</code></h3>
+                        <p><strong>Description:</strong> Allows sending a message through an active WhatsApp instance.</p>
+                        <p><strong>Method:</strong> POST</p>
+                        <p><strong>Authentication:</strong> Requires JWT. (See <a href="#Authentication" style="color:#5AE4A8">click here</a>)</p>
+                        <p><strong>Input Parameters (body JSON params):</strong></p>
+                        <ul>
+                          <li><code>instanceId:</code> ID of the instance. (Required)</li>
+                          <li><code>remoteJid:</code> ID of user or group (ej phonenumber<b>@whatsapp.net</b> or groupid<b>@g.us</b>).(Required)</li>
+                          <li><code>fileUrl:</code> URL of your media. (Required)</li>
+                          <li><code>caption:</code> Type of your media ('document', 'image', 'audio', 'video'). (Required)</li>
+                          <li><code>type:</code> Type of your media ('document','image','audio','video'). (Required)</li>
+                          <li><code>mimetype:</code> String indicating the format of your file. (Required, e.g., image/png, video/mp4 -> <a target="_blank" href="https://www.freeformatter.com/mime-types-list.html">Check mimetypes</a>)</li>
+                          <li><code>document:</code> Boolean. True if you want to send as a file. (Optional, default value: false)</li>
+                          <li><code>fileName:</code> String indicating the name of your file when 'document' value is true. (Optional)</li>
+                        </ul>
+                  
+                      </div>
+                      <!-- Implementation Examples -->
+                      <div class="container-fluid section" id="implementation-examples">
+                        <h2>Implementation Examples</h2>
+                        <p>Each operation can be implemented in various programming languages using suitable HTTP request libraries. Ensure proper handling of authentication and response parsing for each request.</p>
+                      </div>
+                      <!-- Contact and Support -->
+                      <div class="container-fluid section" id="contact-support">
+                        <h2>Contact and Support</h2>
+                        <p>For further inquiries or technical support regarding our WhatsApp API, please contact us at <a href="mailto:support@yourcompany.com">support@yourcompany.com</a>.</p>
+                      </div>
+                      <!-- Conclusion -->
+                      <div class="container-fluid section" id="conclusion">
+                        <h2>Conclusion</h2>
+                        <p>These operations enable comprehensive interaction with WhatsApp instances through our API. Please refer to each endpoint's documentation for detailed implementation guidelines and error handling.</p>
+                      </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+  </body>
 
   <!-- Bootstrap JS and dependencies -->
   <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
@@ -412,12 +336,17 @@ border: 1px solid #f2f2f2;
     hideLogo=getParameterByName("hideLogo")
     if(hideLogo){
       $("#logo").hide()
-      $("#menu-lateral").css("margin-top","30px")
+      $("#menu-lateral").css("margin-top","10px")
       $("#menu-lateral-div .nav-item a").css("color","#FFF")
       $("#menu-lateral-div").css("background","#353535")
       $("#menu-lateral-div").css("border","0px")
       $("#main-div").css("background","#403f3f")
       $("#main-div").css("color","#FFF")
+      $("#explanation_img").attr("src","assets/img/doc_explanation.png")
+      $("code").css("color","yellow");
+      $("h3 code").css("color","#f2a5e0");
+      $(".nav-item b").css("color","#5AE4A8")
+      $("<style>::-webkit-scrollbar-track { background-color: #333;border: 1px solid #000; }</style>").appendTo("head");
     }
 
   </script>
