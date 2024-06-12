@@ -38,7 +38,7 @@ const FacebookInstance=  new FacebookStrategy(
     {
         clientID: FACE_ID,
         clientSecret: FACE_SECRET,
-        callbackURL: "/login/auth/facebook/redirect",
+        callbackURL: process.env.URL+"/login/auth/google/redirect",
         profileFields: ['id', 'displayName', 'photos', 'email']
     },
     baseProcess("facebook")
