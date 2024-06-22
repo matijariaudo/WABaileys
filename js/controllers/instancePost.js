@@ -138,7 +138,7 @@ const instanceMedia=async(req,res)=>{
         const instanceStart=await wsp.getInstance(instanceId);
         const {data,mimetype} = await instanceStart.getMedia(remoteJid,messageId);
         if(!data){
-            return res.status(200).json(await jsonAnswer(400,`We could not find you media file.`,null));
+            return res.status(200).json(await jsonAnswer(400,`We could not find you media file.`,`-`,{error:"Media not found"}));
         }
         res.setHeader('Content-Type', mimetype);
         res.send(data);

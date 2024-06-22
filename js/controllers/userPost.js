@@ -8,14 +8,14 @@ const { link } = require('../routes/routers');
 require('dotenv').config()
 
 const userCreate=async(req,res)=>{
-    const {name,email,password}=req.body;
+    const {name,email,password,plan=0}=req.body;
     try {
         const user=await User.findOne({correo:email});
         console.log(user,email)
         if(user){return res.status(200).json(await jsonAnswer(400,"The operation has failed","The email is already used.",null));}
         const salt=await bcryptjs.genSalt(10);
         const claveEncrypt=await bcryptjs.hash(password,salt);
-        const newuser=new User({nombre:name,correo:email,clave:claveEncrypt,rol:"USER_ROLE"});
+        const newuser=new User({nombre:name,correo:email,clave:claveEncrypt,rol:"USER_ROLE",plan});
         await newuser.save()
         const tokenE=jwt.sign({ uid: newuser.id,email:newuser.correo}, process.env.SEED,{expiresIn:'12h'})
         sendEmail({email:newuser.correo,subject:"Verify your email",typeNro:2,button:{frase:"Verify email",link:`http://${req.headers.host}/login/users/validar/${tokenE}`}})
@@ -75,7 +75,7 @@ const sendMailValidation=async(req,res)=>{
     const token=jwt.sign({ uid: user.id,email:user.correo}, process.env.SEED,{expiresIn:'12h'})
     console.log(`Verify email http://${req.headers.host}/login/users/validar/${token}`)
     sendEmail({email:user.correo,subject:"Verify your email",typeNro:2,button:{frase:"Verify email",link:`http://${req.headers.host}/login/users/validar/${token}`}})
-    return res.status(200).json(await jsonAnswer(200,`Sending success`,`We have sent an email to validate your direction`,{user,token}));
+    return res.status(200).json(await jsonAnswer(200,null,`We have sent an email to validate your direction`,{user,token}));
 }
 
 const loginJWTCheckemail=async(req,res)=>{
@@ -101,7 +101,7 @@ const createApiToken=async(req,res)=>{
         user.save();
         const newPassword = user.apiPass[user.apiPass.length - 1].password;
         const token=jwt.sign({ apiPass:newPassword}, process.env.SEED)
-        return res.status(200).json(await jsonAnswer(200,`Created successfuly`,`We have created your API token.`,{token}));
+        return res.status(200).json(await jsonAnswer(200,null,`Created successfuly:We have created your API token.`,{token}));
     } catch (error) {
         return res.status(200).json(await jsonAnswer(400,"The operation has failed","-",null));
     }
@@ -118,7 +118,7 @@ const editApiToken=async(req,res)=>{
         reg.status=status;
         user.save();
         console.log(user)
-        return res.status(200).json(await jsonAnswer(200,`Modified successfuly`,`We have modified your API token.`));
+        return res.status(200).json(await jsonAnswer(200,null,`Modified successfuly: We have modified your API token.`));
     } catch (error) {
         return res.status(200).json(await jsonAnswer(400,"The operation has failed","-",null));
     }
@@ -130,7 +130,7 @@ const getApiToken=async(req,res)=>{
         const user=await User.findById(user_jwt.id);
         if(!user){return res.status(200).json(await jsonAnswer(400,"The operation has failed","The user could not be found.",null));}
         const apiPass=user.apiPass.map( a=> {return {name:a.name,status:a.status,id:a.id}}).filter(a=>a.status=='active' || a.status=='paused')
-        return res.status(200).json(await jsonAnswer(200,`Successful Operation`,`We have found your API tokens.`,{tokens:apiPass}));
+        return res.status(200).json(await jsonAnswer(200,null,`Successful Operation: We have found your API tokens.`,{tokens:apiPass}));
     } catch (error) {
         return res.status(200).json(await jsonAnswer(400,"The operation has failed","-",null));
     }

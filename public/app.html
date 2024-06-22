@@ -12,6 +12,7 @@
     <script src="assets/js/jquery.mtr-panel.js"></script>
     <script type="text/javascript" src="./assets/js/qr-code-styling.js"></script> 
     <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="app.css">
 </head>
 <style>
     input{
@@ -19,14 +20,120 @@
     }
 </style>
 <body style="padding: 0px;background-color: #353535;color:#FFF">
-
-  <div class="user user_1 container-fluid m-0" style="height: 100vh;overflow-y: auto;padding: 0px 20px;color:#FFF">
-    <center style="margin-top: 30vh;">
-        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-        <br>
-        Connecting your account
-    </center>
-  </div>  
+    <div class="user user_1 container-fluid m-0" style="height: 100vh;overflow-y: auto;padding: 0px 20px;color:#FFF">
+        <div class="capa capa_0">
+        <center style="margin-top: 30vh;">
+            <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+            <br>
+            Connecting your account
+        </center>
+        </div>
+        <div class="capa capa_100 p-0">
+            <div class="col-12 col-lg-4 offset-lg-4" style="padding: 10px;margin-top: 20vh;">
+                <div class="col-12" style="background-color: rgba(255,255,255,.12);color:#FFF;padding: 30px;border-radius: 10px;text-align: center;">
+                    <a class="nav-link" style="font-size:1.9em;margin-top: 0px;font-family: Square;">
+                        <b style="color:#e4e4e4">chAtter</b><b style="color: #5AE4A8">+</b></a>
+                        <p style="font-size: .9em;margin-top: 10px;">You must to verify your email. We have sent a email with a link to validate your email address. Do not forget to check your Spam.</p>
+                        <button class="btn btn-green" onclick="sent_email_valid()">Resend email validation</button>                        
+                </div>
+            </div>
+        </div>
+        
+        <div class="capa capa_101 p-0 row">
+            <div class="col-12 col-lg-10 offset-lg-1 " style="padding: 10px;margin-top: 0vh;">
+                <div class="col-12 m-0" style="color:#FFF;padding: 0px;border-radius: 10px;text-align: center;">
+                    <a class="nav-link" style="font-size:1.9em;margin-top: 0px;font-family: Square;">
+                        <b style="color:#e4e4e4">chAtter</b><b style="color: #5AE4A8">+</b></a>
+                        <p style="font-size: .9em;margin-top: 10px;">You must to choose a plan.</p>
+                        <div class="col-12 p-0">
+                            <div class="col-12 p-0">
+                                    <div class="carrusel">
+                                        <div class="col-lg-10 offset-lg-1 carrusel_div d-flex flex-nowrap" style="text-align: center;">
+                                        <div class="card_div col-4">
+                                            <div class="card mb-4 shadow p-0">
+                                            <div class="card-header">
+                                                <h4 class="my-0 font-weight-normal">Free</h4>
+                                            </div>
+                                            <div class="card-body">
+                                                <p style="color: black; position: relative; display: inline-block;margin: 0px;">
+                                                    
+                                                    <span style="position: absolute; left: 0; top: 50%; width: 100%; height: 1px; background-color: red; transform: translateY(-50%);"></span>
+                                                </p>
+                                                <h3 class="card-title pricing-card-title">FREE
+                                                    <p class="text-muted" style="text-align: center;font-size: .47em;font-weight: 100;margin-bottom: 5px;">Per instance / Per month</p>
+                                                    <p style="font-size: .47em;color:#bcbcbc00;margin: 0px;">.<br>.</p>
+                                                </h3>
+                                                <ul class="list-unstyled mt-3 mb-4">
+                                                <li class="green-txt">Unlimited WhatsApp messages</li>
+                                                <li class="green-txt">Webhook notifications</li>
+                                                <li class="red-txt">No multimedia download</li>
+                                                <li class="red-txt">No Email support</li>
+                                                <li class="red-txt">-</li>
+                                                </ul>
+                                                <button type="button" onclick="$('#ConnectModal').modal('show');mostrar('log',4);$('#plan_0').click()" class="btn btn-lg btn-block btn-outline-primary">Sign up for free</button>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class=" card_div col-4">
+                                            <div class="card mb-4 shadow">
+                                            <div class="card-header">
+                                                <h4 class="my-0 font-weight-normal">Pro</h4>
+                                            </div>
+                                            <div class="card-body">
+                                                <p style="color: black; position: relative; display: inline-block;margin: 0px;">
+                                                    $4.99
+                                                    <span style="position: absolute; left: 0; top: 50%; width: 100%; height: 1px; background-color: red; transform: translateY(-50%);"></span>
+                                                </p>
+                                                <h3 class="card-title pricing-card-title">$ 2.99
+                                                    <p class="text-muted" style="text-align: center;font-size: .47em;font-weight: 100;margin-bottom: 5px;">Per instance / Per month</p>
+                                                    <p style="font-size: .47em;color:#bcbcbc;margin: 0px;">Minimum 1 instance.<br>Plan starting from $2.99/Month</p>
+                                                </h3>
+                                                <ul class="list-unstyled mt-3 mb-4">
+                                                <li class="green-txt">Unlimited WhatsApp messages</li>
+                                                <li class="green-txt">Webhook notifications</li>
+                                                <li class="green-txt">Multimedia download</li>
+                                                <li class="green-txt">Email support</li>
+                                                <li class="sombra_btn" style="border:0px solid #000;border-radius: 3px;width: 75%;margin-left: 12.5%;background: #d25ae4;color:#FFF">Get $10 as a gift</li>
+                                                </ul>
+                                                <button type="button" onclick="$('#ConnectModal').modal('show');mostrar('log',4);$('#plan_1').click()" class="btn btn-lg btn-block btn-primary">Get started</button>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="card_div col-4">
+                                            <div class="card mb-4 shadow">
+                                            <div class="card-header">
+                                                <h4 class="my-0 font-weight-normal">Enterprise</h4>
+                                            </div>
+                                            <div class="card-body">
+                                                <p style="color: black; position: relative; display: inline-block;margin: 0px;">
+                                                    $3.99
+                                                    <span style="position: absolute; left: 0; top: 50%; width: 100%; height: 1px; background-color: red; transform: translateY(-50%);"></span>
+                                                </p>
+                                                <h3 class="card-title pricing-card-title">$ 1.99
+                                                    <p class="text-muted" style="text-align: center;font-size: .47em;font-weight: 100;margin-bottom: 5px;">Per instance / Per month</p>
+                                                    <p style="font-size: .47em;color:#bcbcbc;margin: 0px;font-style: oblique;">Minimum 20 instance.<br>Plan starting from $39.80/Month</p>
+                                                </h3>
+                                                <ul class="list-unstyled mt-3 mb-4">
+                                                    <li class="green-txt">Unlimited WhatsApp messages</li>
+                                                    <li class="green-txt">Webhook notifications</li>
+                                                    <li class="green-txt">Multimedia download</li>
+                                                    <li class="green-txt">Email support</li>
+                                                    <li class="green-txt" style="color:none">-</li>
+                                                </ul>
+                                                <button type="button" onclick="$('#ConnectModal').modal('show');mostrar('log',4);$('#plan_2').click()" class="btn btn-lg btn-block btn-primary">Get started</button>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                      </div>
+                                
+                            </div>    
+                        </div>               
+                </div>
+            </div>
+            
+        </div>
+    </div>  
   
   <div class="user user_2 container-fluid p-0 m-0">
     <div class="fixed-top p-0 capa capa_2 capa_3 capa_4 capa_5 capa_0 sombra" style="z-index:4;background:#FFF;border: 0px">
@@ -357,42 +464,6 @@
         $("#media_check").attr('checked',$(this).attr('data')=="true"?true:false).change()
     })
    
-    $("#btn_login").on('click',()=>{
-    iniciar_sesion();
-    })
-    $("#btn_create").on('click',()=>{
-        problema="";$("#new_txt").html(problema);
-        if($("#new_name").val().length<3){problema+="You must enter a name<br>";}   
-        if($("#new_email").val().length<3){problema+="You must enter a email<br>";}   
-        if($("#new_password").val().length<6 || $("#new_password").val()!=$("#new_password2").val()){problema+="Both password must be the same<br>";}   
-        if(problema){$("#new_txt").html(problema);return;}
-        create_account()
-    })
-
-    
-
-    const create_account=()=>{
-        env={};
-        env["name"]= $("#new_name").val();
-        env["email"]= $("#new_email").val();
-        env["password"]= $("#new_password").val();
-        console.log(env)
-        ajax("/login/users",env,(d)=>{
-            console.log(d)
-            if(d.error){
-                mostrar('log',3)
-                analisis_error(d)
-                return;
-            }
-            const e=d.data;
-            mostrar('log',1)
-            $(".log_1").append(`<p id='new_text_success'>Your accound has been created succesfuly.</p>`)
-            setTimeout(() => {
-                $("#new_text_success").remove()
-            }, 2000);
-            console.log(d)
-        })
-    }
     
     let eventQr=false;qrActual=""
     function checkQr(idI) {
@@ -483,14 +554,15 @@
         console.log(env)
         capa(0)
         ajax("/login/users/sendvalidation",env,(d)=>{
+            capa(100);
             if(d.error){
                 analisis_error(d);
                 capa(2);
                 return true;
             }
             console.log(d)
-            if(d.status==200){alertFun({text:`We have sent an email. Don't forget to check you spam.`,btn:`Ok`,functionModal:()=>{$("#alertModal").modal('hide')}});}
-            capa(3)
+            if(d.status==200){alertFun({text:`We have sent an email. Don't forget to check you spam.`,btn:`Ok`,functionModal:()=>{$("#alertModal").modal('hide');}});}
+            
         });
     }
 
@@ -542,28 +614,32 @@
             instancias=e.instances;
             e.instances.forEach((b,i) => {
                 $nros="";
-                console.log(b.sessionStatus?.me?.name)
+                //console.log(b.sessionStatus?.me?.name)
                 b.session=='initializing'?init=true:false;
                 $("#div_phones").append(`<div class="col-12" style="padding:4px 0px">
                     <div class="col-12 placa" style="cursor:default">
                         <button class="btn btn3" data="${b.uid}" onclick="eliminar_numero_modal($(this).attr('data'),'eliminado')" ><img src="assets/img/delete.png" style="height:14px"></button>
                         <button class="btn btn3" data="${b.uid}" onclick="editar_numero($(this).attr('data'))" ><img src="assets/img/settings.png" style="height:15px"></button>
-                        <button class="btn btn3" data="${b.uid}" onclick="$('#textModal').modal('show');$('#tipo_textSend').val('NO');$('#btn_contact').click();$('#btn_no_media').click();mostrar('textSend',2);$('#id_textSend').val($(this).attr('data'));checkContacts()" ><img src="assets/img/send.png" style="height:14px"></button>
                         <div style="display:${b.session=='close' || b.session=='qr'?'block':'none'}">
                             <h3 style="margin:5px 0px;font-size:.7em"><a style="color:#5AE4A8">ID</a> ${b.uid || "No name"} <a style="color:#5AE4A8">Name</a> ${b.name || "No name"}</h3>
                             <p style="font-size:.8em;margin:0px 0px 0px 0px"><i class="zmdi zmdi-alert-triangle" style="color:#FFCC00"></i>
-                                Disconnected. <a class="a-green" onclick="solicitar_qr('${b.uid}')" >Connect now</a>
+                                Disconnected. <button class="btn btn3" data="${b.uid}" style="font-size:.8em;float:inherit;background:#5AE4A8;color:#000;padding:2px 7px"  onclick="solicitar_qr('${b.uid}')"><img src="assets/img/qr.png" style="height:12px;margin-top:-2px;filter:invert(0)"> Connect now</button>
                             </p>
                         </div>
                         <div style="display:${b.session=='connected'?'block':'none'}"">
                             <h3 style="margin:5px 0px;font-size:.7em"><a style="color:#5AE4A8">ID</a> ${b.uid || "No name"} <a style="color:#5AE4A8">Name</a> ${b.name || "No name"}</h3>
                             <h5 style='margin:0px 0px 0px 0px;font-weight:100;display:${b.session=='connected'?'block':'none'}'>${b.number||""}</h5>
                             <p style="font-size:.8em;margin:0px"><img src="./assets/img/check.png" style="width:14px"> Connected</p>
+                            <div style="height:30px;margin-top:10px">
+                                <button class="btn btn3" data="${b.uid}" style="font-size:.7em;float:left" onclick="$('#textModal').modal('show');$('#tipo_textSend').val('NO');$('#btn_contact').click();$('#btn_no_media').click();mostrar('textSend',2);$('#id_textSend').val($(this).attr('data'));checkContacts()" ><img src="assets/img/send.png" style="height:12px;margin-top:-2px"> Send text</button>
+                                <button class="btn btn3" data="${b.uid}" style="font-size:.7em;float:left" onclick="$('#textModal').modal('show');$('#tipo_textSend').val('NO');$('#btn_contact').click();$('#btn_no_media').click();mostrar('textSend',2);$('#id_textSend').val($(this).attr('data'));checkContacts()" ><img src="assets/img/contact.png" style="height:14px;margin-top:-2px"> See contacts</button>
+                            </div>
                         </div>
                         <div style="font-size:.8em;display:${b.session=='initializing'?'block':'none'}"">
                             <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div> Starting instance
                         </div>
-                        <div id="connection_${b.nro}"></div>
+                        <div id="connection_${b.nro}">
+                        </div>
                     </div>
                 </div>`);
                 actualizar_connection(b.nro,b.connection)  
@@ -581,17 +657,16 @@
         $("#to_textSend").html('')
         ajax("/api/instance/contacts",env,(d)=>{
             const e=d.data;
-            contactsKeys=Object.keys(e.contacts);
-            newArray=[]
-            contactsKeys.forEach(x => {
-                const c=e.contacts[x]
-                newArray.push({id:c.id,name:c.name||'zzzzzzzzzzzzzzzzzzzzNo Name'})
-            });
-            // Ordenar newArray por el campo 'name'
-            newArray.sort((a, b) => {
+            console.log(d)
+            if(d.error){
+                analisis_error(d)
+                return;
+            }
+            e.contacts=e.contacts.map( a=> {return {id:a.id,name:a.name?a.name:a.notify}});
+            e.contacts.sort((a, b) => {
                 // Convertir ambos nombres a minúsculas para una comparación sin distinción entre mayúsculas y minúsculas
-                const nameA = a.name.toLowerCase();
-                const nameB = b.name.toLowerCase();
+                const nameA = a.name?.toLowerCase();
+                const nameB = b.name?.toLowerCase();
 
                 // Comparar los nombres y devolver el resultado de la comparación
                 if (nameA < nameB) {
@@ -602,11 +677,11 @@
                 }
                 return 0; // Si los nombres son iguales, devuelve 0
             });
-            newArray.forEach(x => {
-                const c=e.contacts[x.id];
+            e.contacts.forEach(x => {
+                const c=x;
                 //console.log(c)
                 //console.log("+"+c.id.split("@")[0],c.name||"No name")
-                $("#to_textSend").append(`<option value="${c.id}" class="${c.id?.indexOf('@g.us')>-1?"contact_group":"contact_contact"}">${c.name||"No name"} (${c.id})</option>`)
+                $("#to_textSend").append(`<option value="${c.id}" class="${c.id?.indexOf('@g.us')>-1?"contact_group":"contact_contact"}">${c.name|| c.notify} (${c.id})</option>`)
             });
         })
     }
@@ -619,7 +694,7 @@
         <p style="font-size:.7em;margin:0px;display:${connection=='online'?'block':'none'}"><img src="img/active.png" width="20">CONECTADO</p>
         <p style="font-size:.7em;margin:0px;display:${connection=='inicializando'?'block':'none'}"><img src="img/init.gif" style="width:15;margin:0px 4px">CONECTANDO..</p>
         <p style="font-size:.7em;margin:0px;display:${connection=='stop'?'block':'none'}"><img src="img/desactive.png" style="width:15px;margin:0px 4px">DESCONECTADO</p>
-        <p style="font-size:.7em;margin:0px;display:${connection=='qr'?'block':'none'}"><img src="img/qr.png" style="width:15px;margin:0px 4px">DESVINCULADO <button class="btn sombra"  onclick="$('#qr_nro').val('${nro}');mostrar('vincular',1);$('#vincularModal').modal('show')" style="background:#FFF;padding:3px 5px;font-size:.8em;margin:0px;margin-top:0px"> Vincular</button></p>
+        <p style="font-size:.7em;margin:0px;display:${connection=='qr'?'block':'none'}"><img src="assets/img/qr.png" style="width:15px;margin:0px 4px">DESVINCULADO <button class="btn sombra"  onclick="$('#qr_nro').val('${nro}');mostrar('vincular',1);$('#vincularModal').modal('show')" style="background:#FFF;padding:3px 5px;font-size:.8em;margin:0px;margin-top:0px"> Vincular</button></p>
         `)
     }
 
@@ -651,28 +726,6 @@
         qrCode.append(document.getElementById(divId));
     }
     
-
-    function solicitar_codigo(nro){
-        env={}
-        env.nro=nro;env.token=user.token;
-        ajax("/api/phone/codigo",env,(d)=>{
-            const e=d.data;
-            if(e.error){alert("No se pudo modificar");return false;}
-            console.log(e);
-            alert("código enviado")
-        })
-    }
-
-    function verificar_codigo(nro){
-        env={}
-        env.nro=nro;env.token=user.token;env.cod=$("#codigo_phone").val()
-        ajax("/api/phone/validar",env,(d)=>{
-            const e=d.data;
-            console.log(e);
-            if(e.error){alert(e.error);return false;}
-            buscar_phones();
-        })
-    }
 
     function editar_numero(id) {
         $("#phoneModal").modal('show');
@@ -744,7 +797,6 @@
         })
     }
     
-    
     function crear_token(){
         name=$("#nuevo_name_token").val()
         env={}
@@ -759,6 +811,7 @@
             buscar_token();
         })
     }
+    
     function edit_token(tokenId,status){
         env={tokenId,status};
         env.token=user.token;
@@ -771,8 +824,6 @@
 
         })
     }
-
-    
 
     function solicitar_qr_init(){
         solicitar_qr($("#form_create_success").val());
@@ -817,29 +868,14 @@
         $("#eliminar_id").val(idI)
     }
 
-    const iniciar_sesion=()=>{
-        env={};
-        env["correo"]= $("#login_correo").val();
-        env["clave"] = $("#login_clave").val();
-        ajax("/login/users/login",env,(d)=>{
-            const e=d.data;
-            console.log(d)
-            if(d.error){
-                mostrar('log',2)
-                analisis_error(d)
-                return;
-            }
-            localStorage.setItem("user",JSON.stringify(e))
-            control_sesion();
-        })
-    }
+    
 
     function ajax(url,json_dat,callback,error=(e)=>{console.log(e)}){
             let token="Bearer"
             if(json_dat?.token){
                  token=`Bearer ${json_dat.token}`
             }
-            console.log("token",token)
+            //console.log("token",token)
             $.ajax({url,type:"POST",headers: {"Content-Type": "application/json","Authorization": token},dataType : 'json',data: JSON.stringify(json_dat),success: function(data, textStatus, jqXHR){callback(data)},error: function( jqXHR, textStatus, errorThrown ) {error();}});
     }
 
@@ -899,17 +935,31 @@
     control_sesion();
     function control_sesion(buscar=true){
         user=JSON.parse(localStorage.getItem("user"))
+        console.log(user)
         if(user){
-            mostrar('user',2)
-            capa(2)
-            if(buscar){buscar_phones();buscar_token();}
             $("#account_name").html(user.user.nombre);
             $("#name_form_user").val(user.user.nombre)
             $("#email_form_user").val(user.user.correo)
-            if(!user.user.email_valid){$("#email_valid_form_user").show()}
-            if(!user.user.email_valid){$("#email_valid_form_user_uncheck").show()}
-            if(user.user.email_valid){$("#email_valid_form_user_check").show()}
+            if(!user.user.email_valid){
+                $("#email_valid_form_user").show();
+                $("#email_valid_form_user_uncheck").show();
+                mostrar('user',1);
+                capa(100)
+                return true;
+            }
+            if(user.user.email_valid){
+                $("#email_valid_form_user_check").show()
+            }
+            if(user.user.plan==0){
+                //mostrar('user',1);
+                //capa(101)
+                //return true;
+            }
             $("#plan_form_user").val(user.user.plan)
+            mostrar('user',2)
+            capa(2)
+            if(buscar){buscar_phones();buscar_token();}
+            
         }
     }
 

@@ -52,7 +52,9 @@ const sendEmail=async({email,subject,typeNro,button})=>{
 let mailTransporter =
 	nodemailer.createTransport(
 		{
-			service: 'gmail',
+            host: 'smtppro.zoho.com.au',
+            port: 465,
+            secure: true, // true for 465, false for other ports
 			auth: {
 				user: process.env.EMAIL_ACCOUNT,
 				pass: process.env.EMAIL_CLAVE
@@ -61,9 +63,9 @@ let mailTransporter =
 	);
 
 let mailDetails = {
-	from: process.env.EMAIL_ACCOUNT,
+	from:  `Mathias Sinclair <${process.env.EMAIL_ACCOUNT}>`,
 	to: email,
-	subject: subject,
+	subject: `Chatter.plus: ${subject}`,
 	html: creatHtml(typeNro,button)
 };
 
@@ -71,7 +73,7 @@ mailTransporter
 	.sendMail(mailDetails,
 		function (err, data) {
 			if (err) {
-				console.log('Error Occurs');
+				console.log('Error Occurs',err.message);
 			} else {
 				console.log('Email sent successfully');
 			}

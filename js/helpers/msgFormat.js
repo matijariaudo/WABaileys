@@ -2,16 +2,17 @@
 
 
 const msgFormat=(a)=>{
-    const { key, message, messageTimestamp,pushName,reactions} = a;
-    const {low:timestamp}=messageTimestamp || {low:""};
-    let { conversation } = message || { conversation:""};
-    let replyTo;let media;let deleted=false;
+    const { key, message, messageTimestamp,pushName,participant} = a;
+    const timestamp=messageTimestamp || 0;
+    let { conversation } = message || {};
+    let replyTo;let media;let deleted=undefined;let edited=undefined;let empty=true;let json=undefined;
     if(!conversation){
         kind=Object.keys(message||{"":""})
         indice=kind.indexOf('extendedTextMessage');
         indiceMultimedia=kind.findIndex(a=> a=='imageMessage' || a=='audioMessage' || a=='videoMessage' || a=='stickerMessage' || a=='documentMessage' || a=='documentWithCaptionMessage');
         indiceProtocol=kind.findIndex(a=> a=='protocolMessage')
-        //console.log(indiceMultimedia,indice,kind)
+        indiceEdit=kind.findIndex(a=> a=='editedMessage')
+        conversation=undefined;
         if(indice>-1){
             const {text,contextInfo}=message[kind[indice]];
             conversation=text;
@@ -29,12 +30,36 @@ const msgFormat=(a)=>{
             media={media:typeMedia,caption};
         }
         if(indiceProtocol>-1){
-            deleted=true;
+            const {key}=message[kind[indiceProtocol]];
+            const {id}=key || {};
+            deleted={messageId:id};
             //console.log(a)
         }
+        if(indiceEdit>-1){
+            const em=message[kind[indiceEdit]];
+            const datem=em.message?.protocolMessage;
+            const {key,editedMessage,timestampMs}=datem || {}
+            //console.log(key,editedMessage,timestampMs)
+            const {conversation}=editedMessage || {};
+            const {id}={key} || {};
+            edited={messageId:id,conversation}
+        }
+    }
+    let {reactionMessage } = message || {};
+    let reaction=undefined
+    if(reactionMessage){
+        const {text,key}=reactionMessage;
+        const {fromMe,id}=key || {};
+        reaction={text,fromMe,messageId:id};
+    }
+    if(conversation || replyTo || media || deleted || edited){
+        empty=false;
+    }
+    if(media){
+        json=JSON.stringify(a);
     }
     if(message){
-        return {remoteJid:key.remoteJid,fromMe:key.fromMe,messageId:key.id,timestamp,conversation,pushName,replyTo,media,deleted,reactions};
+        return {remoteJid:key.remoteJid,participant,fromMe:key.fromMe,messageId:key.id,timestamp,conversation,pushName,replyTo,media,json,deleted,reaction,edited,empty};
     }
     return null;
 }

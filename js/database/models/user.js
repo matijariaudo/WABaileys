@@ -55,8 +55,9 @@ const userSchema=Schema({
 
 //quita el password de la rta
 userSchema.methods.toJSON= function(){
-    const {__v,clave,_id,... user}=this.toObject();
+    const {__v,clave,_id,apiPass,... user}=this.toObject();
     user.uid=_id;
+    user.apiPass=apiPass.filter(a=> a.status=='active').map(a=> {return {id:a._id,name:a.name}})
     return user;
 }
 

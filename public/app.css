@@ -1,0 +1,50 @@
+.carrusel {
+    width: 100%;
+    overflow-x: auto;
+    padding: 10px;
+}
+.carrusel::-webkit-scrollbar {
+    display: none; /* Oculta la barra de desplazamiento en Chrome, Safari y Edge */
+}
+.card_div {
+    min-width: 270px;
+    position: relative;
+    margin-right: 10px; /* Espacio opcional entre tarjetas */
+}
+.card,.card-header{
+    border: 0px solid #000;
+}
+.card-header{
+    border-width: 0px 0px 2px 0px;
+}
+.card,.features{
+    border: 2px solid #000;
+}
+.card-header{
+    background: #5AE4A8;
+    color:#FFF
+}
+.green-txt{
+    color:#55be91
+}
+.red-txt{
+    color:rgb(169, 93, 93);
+}
+
+.pricing-card-title{
+    color:#000
+}
+.btn-primary{
+    background-color: #5AE4A8;
+    color:#000;
+    border: 2px solid #000;
+}
+.btn-outline-primary{
+    border: 2px solid #5AE4A8;
+    color:#5AE4A8
+}
+.btn-block:hover{
+    background-color: #3ba778;
+    border: 2px solid #5AE4A8;
+    color: #85eec0;
+}

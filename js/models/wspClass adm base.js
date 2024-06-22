@@ -1,47 +1,36 @@
 const { makeWASocket, useMultiFileAuthState, fetchLatestBaileysVersion, makeInMemoryStore } = require("@whiskeysockets/baileys");
 const { eliminarCarpetaAsync } = require("../helpers/deleteFolder");
-const { Instance } = require("../database/models");
+const { Instance, Chat, Message, Contact } = require("../database/models");
 const { msgFormat } = require("../helpers/msgFormat");
 const { checkMedia } = require("../helpers/checkMedia");
 const { checkFolder } = require("../helpers/checkFolder");
 const {sendWebhook}=require("../helpers/sendWebhook")
-const { default: axios } = require("axios");
-const path = require("path");
+const fs = require('fs');
+const message = require("../database/models/message");
+
 
 class Instances {
     constructor(id) {
         this.id = id;
         this.data = { qr: "", me: {} };
         this.path = `auth_wp/session_${this.id}`;
-        this.memory = `cache_wp/baileys_${this.id}.json`;
         this.status = "initializing";
         this.restart = 0;
         this.QrBlock = false;
-        checkFolder('./media_wp/' + this.id);
-        
-        
+        this.store;
+        this.userId;
+        checkFolder('./data_wp/' + this.id);
+        this.show=true;
+        this.shown=0;
     }
 
     async init({ QrBlock }) {
         this.QrBlock = QrBlock ? QrBlock : false;
         const t1 = this.QrBlock ? "100" : 60000;
-        console.log("INSTANCE ID",this.id, this.QrBlock, t1);
         const { state, saveCreds } = await useMultiFileAuthState(this.path);
         const { version, isLatest } = await fetchLatestBaileysVersion();
-
         return new Promise(async (resolve, reject) => {
             try {
-                this.store = makeInMemoryStore({});
-                const memory = `cache_wp/baileys_${this.id}.json`;
-                this.store.readFromFile(memory);
-
-                setInterval(() => {
-                    this.store.writeToFile(memory);
-                    this.cleanOldMessages()
-                }, 10_000);
-                setInterval(() => {
-                    this.cleanOldMessages()
-                }, 3600_000);
                 
                 this.sock = await makeWASocket({
                     auth: state,
@@ -50,23 +39,41 @@ class Instances {
                     retryRequestDelayMs: t1,
                     browser: ["WspPlus", "Ubuntu", null]
                 });
-
                 this.sock.ev.on("creds.update", saveCreds); //IMPORTANT: It saves connection and session data.
                 this.sock.ev.on("connection.update", (update) => this.admConnection(update, resolve, reject)); //IMPORTANT: It admin the Connection changes
-                this.sock.ev.on('messages.upsert', (message) =>this.receiveMessages(message));
-
-                this.store.bind(this.sock.ev);
-
-                this.sock.ev.on("contacts.upsert",(e) =>{
-                    console.log("CONTACTS",e)
-                    this.updateContact(e) 
-                })
+                //this.sock.ev.on('messages.upsert', (message) =>this.receiveMessages(message));
                 this.sock.ev.on("messaging-history.set",(e)=>{
-                    const contacts=e.contacts
-                    console.log(contacts.splice(0,10))
-                    console.log("Es la ultima? ",isLatest)
+                    const contacts=e.contacts.filter(a=>a.id.indexOf("s.whatsapp")>1).filter(a=> a.name!=undefined && a.name!=null);
+                    updateContact(contacts,this.id)
+                    const groups=e.contacts.filter(a=>a.id.indexOf("g.us")>1);
+                    updateContact(groups,this.id,true)
+                    const chats=e.chats.map(a=>{return {id:a.id,conversationTimestamp:a.conversationTimestamp?.low}})
+                    updateChats(chats,this.id);
+                    const messages=e.messages.map(a=>msgFormat(a)).filter(a=>a!=null);
+                    updateMesages(messages,this.id);
                 })
-                
+                this.sock.ev.on('messages.upsert', (e) =>{
+                    const newM=msgFormat(e.messages[0]);
+                    const messages=e.messages.map(a=>msgFormat(a)).filter(a=>a!=null);
+                    updateMesages(messages,this.id);
+                });
+                this.sock.ev.on("chats.upsert",(e) =>{
+                    updateChats(e,this.id)
+                });
+                this.sock.ev.on("chats.update",(e) =>{
+                    updateChats(e,this.id)
+                });
+                this.sock.ev.on("contacts.upsert",(e) =>{
+                    updateContact(e,this.id)
+                })
+
+                this.sock.ev.on("groups.update",(e) =>{
+                    //updateContact(e,this.id,true)
+                });
+                this.sock.ev.on("groups.upsert",(e) =>{
+                    updateContact(e,this.id,true)
+                });
+
                 setTimeout(() => {
                     reject("TimeOut: 5000ms");
                 }, 5000);
@@ -77,25 +84,6 @@ class Instances {
             }
         });
     }
-
-    async updateContact(dat){
-        dat.forEach(async e =>{
-           console.log("Añadiendo ",dat[e])
-           this.store.contacts[e]=dat[e]; 
-        });     
-        this.store.writeToFile(memory);  
-    }
-
-    // Función para limpiar mensajes viejos
-    async cleanOldMessages() {
-        const now =  Math.floor(Date.now()/ 1000);
-        const expirationTime = 7* 24 * 60 * 60 * 1000; // 7 x 24 horas en milisegundos
-        for (const key in this.store.messages) {
-            this.store.messages[key]=this.store?.messages[key]?.filter(a=> {if((now-a.messageTimestamp)<=expirationTime){return true;}});
-        }
-        this.store.writeToFile(this.memory);   
-    }
-
 
 
     async setStatus(status,{number}={}) {
@@ -114,6 +102,7 @@ class Instances {
             if (lastDisconnect?.error) {
                 const code = lastDisconnect?.error?.output?.statusCode;
                 const { message } = lastDisconnect?.error?.output?.payload;
+                console.log(`Error ${this.id} (Code:${code})-->`, lastDisconnect?.error?.message);
                 let accError = false;
 
                 if (code == 401 || (code == 408 && message == 'QR refs attempts ended')) {
@@ -160,7 +149,7 @@ class Instances {
     async receiveMessages(message) {
         const m = message.messages[0];
         const db = await Instance.findById(this.id);
-        sendWebhook(msgFormat(m),db.webhook)
+        //sendWebhook(msgFormat(m),db.webhook)
     }
 
     async deleteInstance(deleteInst = false) {
@@ -199,13 +188,11 @@ class Instances {
     }
 
     async getChat(contactId, qty = 3) {
-        console.log(contactId)
         const data = await this.store;
         this.n = 0;
         try {
             const myChats = await data.toJSON();
-            const rta = await myChats.messages[contactId]?.toJSON();
-            console.log(await myChats.messages[contactId])
+            const rta = myChats.messages[contactId]?.toJSON();
             return rta.slice(-1 * qty);
         } catch (error) {
             // Manejo de errores si es necesario
@@ -219,24 +206,18 @@ class Instances {
     }
 
     async getContacts() {
-        const data = await this.store;
         try {
-            const myContactsInfo = data.contacts;
-            const myContactsArray=[]
-            Object.keys(myContactsInfo).forEach(e => {
-                myContactsArray.push(myContactsInfo[e])
-            });
-            const myContacts=myContactsArray.filter(a=> a.name || a.notify);
-            return myContacts;
+            const contacts1=await "B";
+            const contacts2=await "A";
+            return [...contacts1, ...contacts2];
         } catch (error) {
-            // Manejo de errores si es necesario
+            console.log(error.message)
         }
     }
 
     async getMedia(jid, id) {
-        const data = await this.store;
-        const message = await data.loadMessage(jid, id);
-
+        const messageB = await Message.findOne({messageId:id,instanceId:this.id})
+        const message=JSON.parse(messageB.json) || undefined;
         if (!message) {
             throw new Error(`We cannot find the message.`);
         }
@@ -293,7 +274,6 @@ class Wsp {
 
 module.exports = { Wsp };
 
-
 function sizeOfObject(obj) {
     const objectList = [];
     const stack = [obj];
@@ -318,3 +298,47 @@ function sizeOfObject(obj) {
     }
     return bytes/1000000;
 }
+
+async function updateContact(dat,id){
+    batch=[]
+    dat.forEach(async e =>{
+        let contact=await Contact.findOne({instanceId:id,remoteJid:e.id});
+        if(contact){
+            contact.set(e);
+            contact.save()
+        }else{
+            batch.push({name:e.name,remoteJid:e.id,instanceId:id});
+        }
+    });
+    await Contact.insertMany(batch)        
+}
+
+async function updateChats(dat,id){
+    batch=[]
+    dat.forEach(async e =>{
+        let chat=await Chat.findOne({instanceId:id,remoteJid:e.id});
+        if(chat){
+            chat.conversationTimestamp=e.conversationTimestamp;
+            chat.save()
+        }else{
+            batch.push({remoteJid:e.id,conversationTimestamp:e.conversationTimestamp,instanceId:id});
+        }
+    });
+    await Chat.insertMany(batch)
+}
+
+const show=0
+async function updateMesages(dat,id){
+    batch=[]
+    dat.forEach(async e =>{
+        if(e.remoteJid.indexOf('@s.whatsapp.net')>-1 || e.remoteJid.indexOf('@g.us')>-1){
+            if(!e.empty){
+            batch.push({...e,instanceId:id});
+            }else{
+              console.log(e)
+            }        
+        }
+    });
+    await Message.insertMany(batch);
+}
+
