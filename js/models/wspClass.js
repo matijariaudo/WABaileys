@@ -257,7 +257,7 @@ class Wsp {
         Wsp.instance = this;
         setInterval(() => {
             console.log("Peso: ",sizeOfObject(this.instancias))    
-        }, 5000);
+        }, 60_000);
         return this;
     }
 

@@ -26,8 +26,26 @@ class Server{
     routes(){
         this.app.use(express.static(path.join(__dirname, "js")));
         this.app.use('/login',require('../routes/routersUser.js'));
-        this.app.use('/api',require('../routes/routers.js'));
+        this.app.use('/api',require('../routes/routers.js'));    // Ruta para servir index.html cuando la URL esté vacía
+        this.app.get('/', (req, res) => {
+            res.sendFile(path.join(__dirname, '../../public', 'index.html'));
+        });
+        this.app.get('/app', (req, res) => {
+            res.sendFile(path.join(__dirname, '../../public', 'app.html'));
+        });
+        this.app.get('/documentation', (req, res) => {
+            res.sendFile(path.join(__dirname, '../../public', 'documentation.html'));
+        });
         this.app.use(express.static('public'));
+            // Ruta para capturar todas las demás y servir index.html (para aplicaciones SPA)
+        this.app.get('/*', (req, res) => {
+            res.sendFile(path.join(__dirname, '../../public', 'index.html'));
+        });
+
+        // Middleware para manejar rutas no encontradas y mostrar página de error
+        this.app.use((req, res, next) => {
+            res.status(404).sendFile(path.join(__dirname, '../../public', 'error.html'));
+        });
     }
 
 
