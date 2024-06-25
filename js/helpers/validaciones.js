@@ -96,10 +96,18 @@ const checkUserCreate=[
     body('password','La clave debe tener al menos 6 caracteres').isLength({min:6}),
     checkValidation
 ];
+
+const checkUserUpdatePassword=[
+    header('authorization').notEmpty().custom(JWTValidation),
+    body('newPassword','You must to enter a new Password with size 6').not().isEmpty().isLength({min:6}),
+    checkValidation
+];
+
 const checkUserUpdate=[
     body('name','No ingresó nombre').if(body('nombre').notEmpty()).isLength({min:4}),
     body('email','El formato del correo es inválido').if(body('correo').notEmpty()).isEmail(),
     body('state','El formato del estado es inválido').if(body('estado').notEmpty()).isBoolean(),
+    body('plan','El formato del plan es inválido').if(body('plan').notEmpty()).isNumeric(),
     body('password','El formato de la clave es incorrecto').if(body('clave').notEmpty()).isLength({min:6}),
     header('authorization').notEmpty().custom(JWTValidation),
     body('uid','El id no tiene formato adecuado.').isMongoId(),
@@ -157,7 +165,6 @@ const checkInstanceChat=[
 
 const checkInstanceMessage=[
     body('instanceId','You must to enter a valid ID').custom(checkID),
-    body('remoteJid','You must to enter a valid ID').custom(validateRemoteJid),
     body('messageId','You must enter a messageId').notEmpty(),
     header('authorization').notEmpty().custom(APIJWTValidation),
     checkValidation
@@ -193,5 +200,6 @@ module.exports={
     checkInstanceChat,
     checkInstanceMessage,
     checkInstanceSendMedia,
-    checkInstanceSendMessage
+    checkInstanceSendMessage,
+    checkUserUpdatePassword
 }

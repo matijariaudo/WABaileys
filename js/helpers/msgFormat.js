@@ -3,9 +3,10 @@
 
 const msgFormat=(a)=>{
     const { key, message, messageTimestamp,pushName,participant} = a;
-    const timestamp=messageTimestamp || 0;
+    const {low}=messageTimestamp;
+    low?timestamp=parseInt(low):timestamp=parseInt(messageTimestamp)||0
     let { conversation } = message || {};
-    let replyTo;let media;let deleted=undefined;let edited=undefined;let empty=true;let json=undefined;
+    let replyTo;let media;let deleted=undefined;let edited=undefined;let empty=true;
     if(!conversation){
         kind=Object.keys(message||{"":""})
         indice=kind.indexOf('extendedTextMessage');
@@ -39,10 +40,14 @@ const msgFormat=(a)=>{
             const em=message[kind[indiceEdit]];
             const datem=em.message?.protocolMessage;
             const {key,editedMessage,timestampMs}=datem || {}
-            //console.log(key,editedMessage,timestampMs)
-            const {conversation}=editedMessage || {};
-            const {id}={key} || {};
-            edited={messageId:id,conversation}
+            //console.log(editedMessage)
+            let {conversation}=editedMessage;
+            if(!conversation){
+            const {text}=editedMessage?.extendedTextMessage || {};
+            conversation=text || '-';
+            }
+            const {id}=key || {};
+            edited={messageId:id,conversation}   
         }
     }
     let {reactionMessage } = message || {};
@@ -55,11 +60,8 @@ const msgFormat=(a)=>{
     if(conversation || replyTo || media || deleted || edited){
         empty=false;
     }
-    if(media){
-        json=JSON.stringify(a);
-    }
     if(message){
-        return {remoteJid:key.remoteJid,participant,fromMe:key.fromMe,messageId:key.id,timestamp,conversation,pushName,replyTo,media,json,deleted,reaction,edited,empty};
+        return {remoteJid:key.remoteJid,participant,fromMe:key.fromMe,messageId:key.id,timestamp,conversation,pushName,replyTo,media,deleted,reaction,edited,empty};
     }
     return null;
 }

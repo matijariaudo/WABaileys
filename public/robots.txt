@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /app/
+Disallow: /documentation/private/
+
+Sitemap: https://chatter.plus

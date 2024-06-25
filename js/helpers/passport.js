@@ -63,7 +63,7 @@ const loginTokensPassport=async(req, res) => {
     let user;
     user=await User.findOne({correo:email,status:"active"});
     if(!user){
-        user=await new User({nombre:name,correo:email,clave:"--",rol:"USER_ROLE",google:true,email_valid:true});
+        user=await new User({nombre:name,correo:email,clave:"-",rol:"USER_ROLE",google:true,email_valid:true});
         console.log("ENVIAR CORREO A : ",email)
         sendEmail({email,subject:"Welcome to WSPPlus :)",typeNro:1})
         await user.save();

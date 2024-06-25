@@ -7,6 +7,7 @@ const { checkFolder } = require("../helpers/checkFolder");
 const {sendWebhook}=require("../helpers/sendWebhook")
 const { default: axios } = require("axios");
 const path = require("path");
+const fs = require('fs');
 
 class Instances {
     constructor(id) {
@@ -16,33 +17,19 @@ class Instances {
         this.memory = `cache_wp/baileys_${this.id}.json`;
         this.status = "initializing";
         this.restart = 0;
-        this.QrBlock = false;
-        checkFolder('./media_wp/' + this.id);
-        
-        
-    }
+        this.store={messages:[],chats:{},contacts:{}};
+        createFile(this.store,this.memory)
+}
 
-    async init({ QrBlock }) {
-        this.QrBlock = QrBlock ? QrBlock : false;
-        const t1 = this.QrBlock ? "100" : 60000;
-        console.log("INSTANCE ID",this.id, this.QrBlock, t1);
+    async init({QrBlock= false}) {
+        const t1 = QrBlock ? 100 : 60_000;
+        console.log("INSTANCE ID",this.id, QrBlock, t1);
         const { state, saveCreds } = await useMultiFileAuthState(this.path);
-        const { version, isLatest } = await fetchLatestBaileysVersion();
+        const { version } = await fetchLatestBaileysVersion();
 
         return new Promise(async (resolve, reject) => {
             try {
-                this.store = makeInMemoryStore({});
-                const memory = `cache_wp/baileys_${this.id}.json`;
-                this.store.readFromFile(memory);
-
-                setInterval(() => {
-                    this.store.writeToFile(memory);
-                    this.cleanOldMessages()
-                }, 10_000);
-                setInterval(() => {
-                    this.cleanOldMessages()
-                }, 3600_000);
-                
+                this.store=await this.readMemory();
                 this.sock = await makeWASocket({
                     auth: state,
                     version,
@@ -53,19 +40,39 @@ class Instances {
 
                 this.sock.ev.on("creds.update", saveCreds); //IMPORTANT: It saves connection and session data.
                 this.sock.ev.on("connection.update", (update) => this.admConnection(update, resolve, reject)); //IMPORTANT: It admin the Connection changes
-                this.sock.ev.on('messages.upsert', (message) =>this.receiveMessages(message));
+                this.sock.ev.on('messages.upsert', async (e) =>{
+                    const messages=e.messages;
+                    messages?.forEach((e) => { this.store.messages.push(JSON.parse(JSON.stringify(e)))});
+                    await this.saveMemory()
+                    console.log(msgFormat(messages[0]))
+                    this.receiveMessages(messages);
+                });
 
-                this.store.bind(this.sock.ev);
-
+                
                 this.sock.ev.on("contacts.upsert",(e) =>{
-                    console.log("CONTACTS",e)
-                    this.updateContact(e) 
+                    //console.log("CONTACTS",e)
+                    //this.updateContact(e) 
                 })
-                this.sock.ev.on("messaging-history.set",(e)=>{
-                    const contacts=e.contacts
-                    console.log(contacts.splice(0,10))
-                    console.log("Es la ultima? ",isLatest)
+                this.sock.ev.on("messaging-history.set",async (e)=>{
+                    const now =  Math.floor(Date.now()/ 1000);
+                    const messages=e.messages.filter(a=>a!=null).filter(a=>{
+                        if((now-a.messageTimestamp)<=(1 * 24 * 60 * 60)){return true;}
+                    });
+                    messages?.forEach((e) => { this.store.messages.push(JSON.parse(JSON.stringify(e)))});
+                    
+                    const contacts=e.contacts.filter(a=> a.name || a.notify);
+                    contacts?.forEach((e) => { this.store.contacts[e.id]=e});
+                    
+                    const chats=e.chats.map(a=>{return {id:a.id,conversationTimestamp:a.conversationTimestamp?.low}})
+                    chats?.forEach((e) => { this.store.chats[e.id]=e});
+                    
+                    await this.saveMemory();
                 })
+                this.sock.ev.on("contacts.upsert",async (e) =>{
+                    const contacts=e.filter(a=> a.name || a.notify);
+                    contacts?.forEach((e) => { this.store.contacts[e.id]=e});
+                    await this.saveMemory();
+                });
                 
                 setTimeout(() => {
                     reject("TimeOut: 5000ms");
@@ -78,22 +85,24 @@ class Instances {
         });
     }
 
-    async updateContact(dat){
-        dat.forEach(async e =>{
-           console.log("Añadiendo ",dat[e])
-           this.store.contacts[e]=dat[e]; 
-        });     
-        this.store.writeToFile(memory);  
+    async memoryHistory(e){
+
     }
 
-    // Función para limpiar mensajes viejos
-    async cleanOldMessages() {
+    async cleanOldData(){
         const now =  Math.floor(Date.now()/ 1000);
-        const expirationTime = 7* 24 * 60 * 60 * 1000; // 7 x 24 horas en milisegundos
-        for (const key in this.store.messages) {
-            this.store.messages[key]=this.store?.messages[key]?.filter(a=> {if((now-a.messageTimestamp)<=expirationTime){return true;}});
-        }
-        this.store.writeToFile(this.memory);   
+        this.store.messages=await this.store?.messages?.filter(a=>a!=null).filter(a=>{
+            if((now-a.messageTimestamp)<=(1 * 24 * 60 * 60)){return true;}
+        });
+        await this.saveMemory();
+    }
+
+    async saveMemory(){
+        await writeJsonFile(this.memory,this.store);
+    }
+
+    async readMemory(){
+        return await readJsonFile(this.memory);
     }
 
 
@@ -120,7 +129,7 @@ class Instances {
                     console.log(code == 408 ? "Client QR die" : "Client ends session");
                     accError = true;
                     this.setStatus('close');
-                    await this.deleteInstance(true);
+                    await this.endInstance(true);
                 }
 
                 if (!accError) {
@@ -130,7 +139,7 @@ class Instances {
                         await this.init({ QrBlock: true });
                     } else {
                         this.setStatus('close');
-                        await this.deleteInstance();
+                        await this.endInstance(false);
                     }
                 }
                 reject(lastDisconnect?.error);
@@ -157,19 +166,28 @@ class Instances {
         }
     }
 
-    async receiveMessages(message) {
-        const m = message.messages[0];
+    async receiveMessages(messages) {
+        const m = messages[0];
         const db = await Instance.findById(this.id);
         sendWebhook(msgFormat(m),db.webhook)
     }
 
-    async deleteInstance(deleteInst = false) {
+    async endInstance(cleanMemory=false) {
         console.log("Instance delete", this.id);
-        if (deleteInst) {
-            await eliminarCarpetaAsync(this.id);
-        }
         const wsp = new Wsp();
-        await wsp.deleteIntance(this.id);
+        await wsp.deleteInstance(this.id,cleanMemory);
+    }
+
+    async disconnectInstance(){
+        if(this.status=='connected'){
+        await this.sock.logout();
+        }
+    }
+
+    async cleanMemoryInstance(){
+        this.store={};
+        await this.saveMemory()
+        await eliminarCarpetaAsync(this.id);
     }
 
     async sendMessage({ remoteJid, message = '' }) {
@@ -198,24 +216,20 @@ class Instances {
         }
     }
 
-    async getChat(contactId, qty = 3) {
+    async getChat(contactId, qty = 5) {
         console.log(contactId)
-        const data = await this.store;
         this.n = 0;
         try {
-            const myChats = await data.toJSON();
-            const rta = await myChats.messages[contactId]?.toJSON();
-            console.log(await myChats.messages[contactId])
-            return rta.slice(-1 * qty);
+            const myChats = await this.store.messages.filter(a=>a?.key?.remoteJid==contactId).sort((b, a) => a.messageTimestamp - b.messageTimestamp).slice(0, qty);
+            return myChats
         } catch (error) {
             // Manejo de errores si es necesario
         }
     }
 
-    async getMessage(jid, id) {
-        const data = await this.store;
-        const message = await data.loadMessage(jid, id);
-        return msgFormat(message);
+    async getMessage(id) {
+        const message = await this.store.messages.find(a=>a.key?.id==id);
+        return message;
     }
 
     async getContacts() {
@@ -233,10 +247,9 @@ class Instances {
         }
     }
 
-    async getMedia(jid, id) {
-        const data = await this.store;
-        const message = await data.loadMessage(jid, id);
-
+    async getMedia(id) {
+        const message = await this.getMessage(id);
+        console.log(message)
         if (!message) {
             throw new Error(`We cannot find the message.`);
         }
@@ -256,8 +269,12 @@ class Wsp {
         }
         Wsp.instance = this;
         setInterval(() => {
-            console.log("Peso: ",sizeOfObject(this.instancias))    
-        }, 60_000);
+            Object.keys(this.instancias).forEach(async e => {
+                if(this.instancias[e].status=="connected"){console.log("Clean");await this.instancias[e].cleanOldData()}
+                console.log("Peso: ",e,sizeOfObject(this.instancias[e]))
+                console.log(sizeOfObject(this.instancias[e].store.messages),`(${this.instancias[e].store.messages.length})`,sizeOfObject(this.instancias[e].store.contacts),sizeOfObject(this.instancias[e].store.chats))  
+            });
+        }, 360_000);
         return this;
     }
 
@@ -277,8 +294,12 @@ class Wsp {
         return this.instancias[id];
     }
 
-    async deleteIntance(id) {
-        delete this.instancias[id];
+    async deleteInstance(id,cleanMemory=true) {
+        if(cleanMemory){ 
+            this.instancias[id]?.cleanMemoryInstance();
+        }
+        await this.instancias[id]?.disconnectInstance();
+        delete this.instancias[id];   
     }
 
     async getInfo() {
@@ -302,19 +323,84 @@ function sizeOfObject(obj) {
     while (stack.length) {
         const value = stack.pop();
 
-        if (typeof value === 'boolean') {
-            bytes += 4;
+        if (value !== null && typeof value === 'object') {
+            if (!objectList.includes(value)) {
+                objectList.push(value);
+
+                for (let key in value) {
+                    if (Object.prototype.hasOwnProperty.call(value, key)) {
+                        stack.push(value[key]);
+                    }
+                }
+            }
         } else if (typeof value === 'string') {
             bytes += value.length * 2;
+        } else if (typeof value === 'boolean') {
+            bytes += 4;
         } else if (typeof value === 'number') {
             bytes += 8;
-        } else if (typeof value === 'object' && !objectList.includes(value)) {
-            objectList.push(value);
-
-            for (let key in value) {
-                stack.push(value[key]);
-            }
         }
     }
-    return bytes/1000000;
+    return bytes / 1000000; // Devuelve el tamaño en megabytes
+}
+
+async function readJsonFile(filePath) {
+    return new Promise((resolve, reject) => {
+        const readable = fs.createReadStream(filePath, { encoding: 'utf8' });
+        let data = '';
+
+        readable.on('data', chunk => {
+            data += chunk;
+        });
+
+        readable.on('end', () => {
+            try {
+                resolve(JSON.parse(data));
+            } catch (error) {
+                reject(error);
+            }
+        });
+
+        readable.on('error', error => {
+            reject(error);
+        });
+    });
+}
+
+async function writeJsonFile(filePath, jsonData) {
+    return new Promise((resolve, reject) => {
+        const writable = fs.createWriteStream(filePath, { encoding: 'utf8' });
+        const jsonString = JSON.stringify(jsonData);
+
+        writable.write(jsonString, 'utf8', (error) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve();
+            }
+        });
+
+        writable.end();
+    });
+}
+
+async function createFile(json,dir){
+    if(!await fileExists(dir)){
+    await writeJsonFile(dir, json);
+    }
+}
+
+
+
+async function fileExists(filePath) {
+    try {
+        await fs.promises.access(filePath, fs.constants.F_OK);
+        return true; // El archivo existe
+    } catch (error) {
+        if (error.code === 'ENOENT') {
+            return false; // El archivo no existe
+        } else {
+            throw error; // Ocurrió otro error al intentar acceder al archivo
+        }
+    }
 }

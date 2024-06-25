@@ -1,8 +1,5 @@
 const { Instance } = require("./js/database/models");
 const { checkFolder } = require("./js/helpers/checkFolder");
-const { eliminarCarpetaAsync } = require("./js/helpers/deleteFolder");
-const { sendEmail } = require("./js/helpers/sendEmail");
-const { sendWebhook } = require("./js/helpers/sendWebhook");
 const { Server } = require("./js/models/server");
 const { Wsp } = require("./js/models/wspClass");
 
@@ -22,7 +19,12 @@ const init=async()=>{
     const instancesNonActive=instances.filter(a=>a.session!='active');
     for (let x = 0; x < instancesNonActive.length; x++) {
         const e=instancesNonActive[x];
-        await wsp.createInstance(e.id,{QrBlock:true});
+        try {
+            await wsp.createInstance(e.id,{QrBlock:true});
+        } catch (error) {
+            await wsp.deleteInstance(e.id);
+            console.log(error)   
+        }
         await delayTime(333);
     };
 }

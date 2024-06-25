@@ -64,12 +64,12 @@ const instanceDelete=async(req,res)=>{
             return res.status(200).json(await jsonAnswer(200,`Incorrect instance ID","We have not found an active instance with the instance ID: ${instanceId}.`,null));
         }const wsp=new Wsp();
         const instanceStart=await wsp.getInstance(instanceId);
-        if(instanceStart){await wsp.deleteIntance(instanceId);}
+        if(instanceStart){await instanceStart.endInstance(true);}
         instance.status='delete';
         instance.save();
         return res.status(200).json(await jsonAnswer(200,null,"Your instance has been correctly deleted.",{instance}));
     } catch (error) {
-        return res.status(200).json(await jsonAnswer(400,"The operation has failed","Your instance has not been correctly deleted.",null));
+        return res.status(200).json(await jsonAnswer(400,"The operation has failed","Your instance has not been correctly deleted.",error.message));
     }
 }
 
@@ -100,9 +100,7 @@ const instanceChat=async(req,res)=>{
         const wsp=await new Wsp();
         const instanceStart=await wsp.getInstance(instanceId);
         let chats = await instanceStart.getChat(remoteJid,qty);
-        chats = chats.map(a => {
-            return msgFormat(a)
-        });
+        chats = chats.map(a => {return msgFormat(a)});
         chats=chats.filter(a=>a!=null);
         return res.status(200).json(await jsonAnswer(200,null,"Chat messages data sent.",{chats}));
     } catch (error) {
@@ -112,7 +110,7 @@ const instanceChat=async(req,res)=>{
 }
 
 const instanceMessage=async(req,res)=>{
-    const {instanceId,remoteJid,messageId}=req.body;
+    const {instanceId,messageId}=req.body;
     try {
         const instance=await Instance.findOne({_id:instanceId,user:req.body.user_jwt,status:"active"});
         if(!instance){
@@ -120,15 +118,15 @@ const instanceMessage=async(req,res)=>{
         }
         const wsp=await new Wsp();
         const instanceStart=await wsp.getInstance(instanceId);
-        let chats = await instanceStart.getMessage(remoteJid,messageId)
-        return res.status(200).json(await jsonAnswer(200,null,"Message data sent.",{chats}));
+        let chats = await instanceStart.getMessage(messageId)
+        return res.status(200).json(await jsonAnswer(200,null,"Message data sent.",{chats:[msgFormat(chats)]}));
     } catch (error) {
         return res.status(200).json(await jsonAnswer(400,"The operation has failed","Your chat has not correctly found.",null));
     }
 }
 
 const instanceMedia=async(req,res)=>{
-    const {instanceId,remoteJid,messageId}=req.body;
+    const {instanceId,messageId}=req.body;
     try {
         const instance=await Instance.findOne({_id:instanceId,user:req.body.user_jwt,status:"active"});
         if(!instance){
@@ -136,7 +134,7 @@ const instanceMedia=async(req,res)=>{
         }
         const wsp=await new Wsp();
         const instanceStart=await wsp.getInstance(instanceId);
-        const {data,mimetype} = await instanceStart.getMedia(remoteJid,messageId);
+        const {data,mimetype} = await instanceStart.getMedia(messageId);
         if(!data){
             return res.status(200).json(await jsonAnswer(400,`We could not find you media file.`,`-`,{error:"Media not found"}));
         }

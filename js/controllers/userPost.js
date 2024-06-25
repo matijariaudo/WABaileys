@@ -25,8 +25,32 @@ const userCreate=async(req,res)=>{
     }
 }
 
+const userSetPassword=async(req,res)=>{
+    const {password,newPassword}=req.body;
+    const {id}=req.body.user_jwt;
+    console.log("IDDDDDDDDD",id)
+    try {
+        const user=await User.findById(id)
+        if(!user){return res.status(200).json(await jsonAnswer(400,"The operation has failed","The user could not be found.",null));}
+        let rta=true;
+        if(user.clave!="-"){
+            rta=await bcryptjs.compare(password,user.clave);
+        }
+        console.log("RTA",rta,user.clave)
+        if(rta){
+        const salt=await bcryptjs.genSalt(10);
+        const claveEncrypt=await bcryptjs.hash(newPassword,salt);
+        user.clave=claveEncrypt;
+        user.save()
+        return res.status(200).json(await jsonAnswer(200,null,`The password has been modified`,{user:user}));
+        }
+    } catch (error) {
+        return res.status(200).json(await jsonAnswer(400,"The operation has failed","Your chat has not correctly found.",null));
+    }
+}
+
 const userUpdate=async(req,res)=>{
-    const {name,email,clave,estado,uid}=req.body;
+    const {name,email,clave,estado,uid,plan}=req.body;
     const user_jwt=req.body.user_jwt;
     if(user_jwt.id!=uid && user_jwt.rol!='ADMIN_ROLE'){return res.status(200).json(await jsonAnswer(400,"The operation has failed","Your account is not allowed to do this action.",null));}
     
@@ -39,6 +63,7 @@ const userUpdate=async(req,res)=>{
     if(name){user.nombre=name;}
     if(email){user.correo=email;}
     if(estado){user.estado=estado;}
+    if(plan){user.plan=plan;}
     if(clave){
         const salt=await bcryptjs.genSalt(10);
         user.clave=await bcryptjs.hash(clave,salt);
@@ -136,4 +161,4 @@ const getApiToken=async(req,res)=>{
     }
 }
 
-module.exports={userCreate,userLogin,userUpdate,loginJWT,loginJWTCheckemail,sendMailValidation,createApiToken,getApiToken,editApiToken}
+module.exports={userCreate,userLogin,userUpdate,loginJWT,loginJWTCheckemail,sendMailValidation,createApiToken,getApiToken,editApiToken,userSetPassword}

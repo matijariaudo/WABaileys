@@ -38,6 +38,20 @@
                 </div>
             </div>
         </div>
+
+        <div class="capa capa_102 p-0">
+            <div class="col-12 col-lg-4 offset-lg-4" style="padding: 10px;margin-top: 20vh;">
+                <div class="col-12" style="background-color: rgba(255,255,255,.12);color:#FFF;padding: 30px;border-radius: 10px;text-align: center;">
+                    <a class="nav-link" style="font-size:1.9em;margin-top: 0px;font-family: Square;">
+                        <b style="color:#e4e4e4">chAtter</b><b style="color: #5AE4A8">+</b></a>
+                        <p style="font-size: 1em;"><img src="assets/img/password_icon.png" style="filter: invert(1);width: 15px;">Set a new password</p>
+                        <input type="password" placeholder="New password" id="new_password_1">
+                        <input type="password" placeholder="Repeat your new password" id="new_password_2" >
+                        <button class="btn btn-green" onclick="set_password()" style="width: 100%;">Set your password</button>  
+                        <p id="new_password_alert" style="color:rgb(237, 150, 150);margin-top: 20px;"></p>                      
+                </div>
+            </div>
+        </div>
         
         <div class="capa capa_101 p-0 row">
             <div class="col-12 col-lg-10 offset-lg-1 " style="padding: 10px;margin-top: 0vh;">
@@ -70,7 +84,7 @@
                                                 <li class="red-txt">No Email support</li>
                                                 <li class="red-txt">-</li>
                                                 </ul>
-                                                <button type="button" onclick="$('#ConnectModal').modal('show');mostrar('log',4);$('#plan_0').click()" class="btn btn-lg btn-block btn-outline-primary">Sign up for free</button>
+                                                <button type="button" data="1" class="btn btn-lg btn-block btn-outline-primary btn_start">Sign up for free</button>
                                             </div>
                                             </div>
                                         </div>
@@ -95,7 +109,7 @@
                                                 <li class="green-txt">Email support</li>
                                                 <li class="sombra_btn" style="border:0px solid #000;border-radius: 3px;width: 75%;margin-left: 12.5%;background: #d25ae4;color:#FFF">Get $10 as a gift</li>
                                                 </ul>
-                                                <button type="button" onclick="$('#ConnectModal').modal('show');mostrar('log',4);$('#plan_1').click()" class="btn btn-lg btn-block btn-primary">Get started</button>
+                                                <button type="button" data="2" class="btn btn-lg btn-block btn-primary  btn_start">Get started</button>
                                             </div>
                                             </div>
                                         </div>
@@ -120,7 +134,7 @@
                                                     <li class="green-txt">Email support</li>
                                                     <li class="green-txt" style="color:none">-</li>
                                                 </ul>
-                                                <button type="button" onclick="$('#ConnectModal').modal('show');mostrar('log',4);$('#plan_2').click()" class="btn btn-lg btn-block btn-primary">Get started</button>
+                                                <button type="button"  data="3" class="btn btn-lg btn-block btn-primary btn_start">Get started</button>
                                             </div>
                                             </div>
                                         </div>
@@ -444,14 +458,15 @@
   <!-- Bootstrap JS (optional) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    instancias=[]
+    instancias=[];capa_actual=0
     function capa(i){
         $(".capa").hide();
-        $('.menu').css("color","#FFF")
+        $('.menu').css("color",$(window).width() > 992?"#FFF":"#000")
         $('.menu').css("border-width","0px");
         $('.menu_'+i).css("border","0px solid #5AE4A8");;
         $('.menu_'+i).css("border-width","0px 0px 4px 0px");;
         $(".capa_"+i).show()
+        capa_actual=i
     }
     $(".btn_s_t").on('click',function (){
         $('.btn_s_t').css('background','#333333');
@@ -856,7 +871,12 @@
         mostrar('eliminar',1)
         ajax("/api/instance/delete",env,(d)=>{
             const e=d.data;
-            if(e.error){alert("No se pudo modificar");return false;}
+            console.log(d)
+            if(e.error){
+                console.log(e)
+               $("#eliminarModal").modal('hide');
+               return false;
+            }
             console.log(e);
             $("#eliminarModal").modal('hide');
             buscar_phones()            
@@ -904,6 +924,7 @@
         //alert(token)
     })
 
+    //Cuando se hace un chequeo del email se inicia sesión con un token y hay que validarlo.
     function checktoken(token,id){
         env={token};
         ajax("/login/users/check",env,(d)=>{
@@ -940,20 +961,25 @@
             $("#account_name").html(user.user.nombre);
             $("#name_form_user").val(user.user.nombre)
             $("#email_form_user").val(user.user.correo)
+            if(!user.user.password){
+                mostrar('user',1);
+                capa(102)
+                return true;
+            }
+            if(user.user.plan==0){
+                mostrar('user',1);
+                capa(101)
+                return true;
+            }
+            if(user.user.email_valid){
+                $("#email_valid_form_user_check").show()
+            }
             if(!user.user.email_valid){
                 $("#email_valid_form_user").show();
                 $("#email_valid_form_user_uncheck").show();
                 mostrar('user',1);
                 capa(100)
                 return true;
-            }
-            if(user.user.email_valid){
-                $("#email_valid_form_user_check").show()
-            }
-            if(user.user.plan==0){
-                //mostrar('user',1);
-                //capa(101)
-                //return true;
             }
             $("#plan_form_user").val(user.user.plan)
             mostrar('user',2)
@@ -962,7 +988,42 @@
             
         }
     }
+    function set_password(){ 
+        problema=""
+        if($("#new_password_1").val().length<6){problema+="Passwords must be at least 6 characters.<br>"}
+        if($("#new_password_1").val()!=$("#new_password_2").val()){problema+="Passwords must match.<br>"}
+        $("#new_password_alert").html(problema);
+        if(problema!=""){return;}
+        env={};
+        env["password"]="";
+        env["newPassword"]=$("#new_password_1").val();
+        env["token"]=user.token;
+        capa(0)
+        ajax("/login/users/setpassword",env,(d)=>{
+            console.log(d)
+            mostrar('user',2);
+            capa(2)
+        });
+    }
 
+
+    $(".btn_start").on("click",function(){
+        env={};
+        env["plan"]=$(this).attr("data");
+        env["uid"]=user.user.uid;
+        env["token"]=user.token;
+        capa(0)
+        ajax("/login/users/edit",env,(d)=>{
+            console.log(d)
+            user.user=d.data.user;
+            localStorage.setItem("user",JSON.stringify(user));
+            control_sesion(false)
+            mostrar('user',2);
+            capa(2)
+        });
+    
+    })
+    
     function getParameterByName(name, url) {
         if (!url) url = window.location.href;
         name = name.replace(/[\[\]]/g, '\\$&');
@@ -1016,6 +1077,7 @@
             $("#navbar_container").html(panel)
             $('.navbar-panel').mtrPanel({toggle: '.menu-toggle'});
         }
+        capa(capa_actual)
         $("iframe").height($(window).height()-$(".fixed-top").height()-6)
       }
       alertOnDesktop(); // Llamada inicial
@@ -1023,7 +1085,11 @@
       $(window).resize(function(){
         alertOnDesktop(); // Llamada cuando cambia el tamaño de la pantalla
       });
-      
+      var $scrollContainer = $('.carrusel');
+      var scrollWidth = $scrollContainer.get(0).scrollWidth;
+      var containerWidth = $scrollContainer.width();
+      var scrollLeft = (scrollWidth - containerWidth) / 2;
+      $scrollContainer.scrollLeft(scrollLeft);
     });
 
     paises={
