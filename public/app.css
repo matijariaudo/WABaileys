@@ -25,10 +25,12 @@
     color:#FFF
 }
 .green-txt{
-    color:#55be91
+    color:#55be91;
+    margin: 0px;
 }
 .red-txt{
     color:rgb(169, 93, 93);
+    margin: 0px;
 }
 
 .pricing-card-title{

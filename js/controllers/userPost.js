@@ -28,13 +28,14 @@ const userCreate=async(req,res)=>{
 const userSetPassword=async(req,res)=>{
     const {password,newPassword}=req.body;
     const {id}=req.body.user_jwt;
-    console.log("IDDDDDDDDD",id)
+    console.log("IDDDDDDDDD",id,password)
     try {
         const user=await User.findById(id)
         if(!user){return res.status(200).json(await jsonAnswer(400,"The operation has failed","The user could not be found.",null));}
         let rta=true;
         if(user.clave!="-"){
-            rta=await bcryptjs.compare(password,user.clave);
+            rta=await bcryptjs.compare(password || '',user.clave);
+
         }
         console.log("RTA",rta,user.clave)
         if(rta){
@@ -43,9 +44,13 @@ const userSetPassword=async(req,res)=>{
         user.clave=claveEncrypt;
         user.save()
         return res.status(200).json(await jsonAnswer(200,null,`The password has been modified`,{user:user}));
+        }else{
+            let msg;
+            password?msg="Your current password is not correct":msg="We cannot set your password because one has already been set before. If you want to change it, click 'Forgot my password' to reset a new one from your email.";
+            return res.status(200).json(await jsonAnswer(400,"The operation has failed",msg,null));
         }
     } catch (error) {
-        return res.status(200).json(await jsonAnswer(400,"The operation has failed","Your chat has not correctly found.",null));
+        return res.status(200).json(await jsonAnswer(400,"The operation has failed","Your chat has not correctly found.",error.message));
     }
 }
 

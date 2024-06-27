@@ -22,13 +22,11 @@
 <body style="padding: 0px;background-color: #353535;color:#FFF">
     <div class="user user_1 container-fluid m-0" style="height: 100vh;overflow-y: auto;padding: 0px 20px;color:#FFF">
         <div class="capa capa_0">
-        <center style="margin-top: 30vh;">
+        <center style="margin-top: 32vh;">
             <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-            <br>
-            Connecting your account
         </center>
         </div>
-        <div class="capa capa_100 p-0">
+        <div class="capa capa_100 p-0" style="display: none;">
             <div class="col-12 col-lg-4 offset-lg-4" style="padding: 10px;margin-top: 20vh;">
                 <div class="col-12" style="background-color: rgba(255,255,255,.12);color:#FFF;padding: 30px;border-radius: 10px;text-align: center;">
                     <a class="nav-link" style="font-size:1.9em;margin-top: 0px;font-family: Square;">
@@ -39,26 +37,13 @@
             </div>
         </div>
 
-        <div class="capa capa_102 p-0">
-            <div class="col-12 col-lg-4 offset-lg-4" style="padding: 10px;margin-top: 20vh;">
-                <div class="col-12" style="background-color: rgba(255,255,255,.12);color:#FFF;padding: 30px;border-radius: 10px;text-align: center;">
-                    <a class="nav-link" style="font-size:1.9em;margin-top: 0px;font-family: Square;">
-                        <b style="color:#e4e4e4">chAtter</b><b style="color: #5AE4A8">+</b></a>
-                        <p style="font-size: 1em;"><img src="assets/img/password_icon.png" style="filter: invert(1);width: 15px;">Set a new password</p>
-                        <input type="password" placeholder="New password" id="new_password_1">
-                        <input type="password" placeholder="Repeat your new password" id="new_password_2" >
-                        <button class="btn btn-green" onclick="set_password()" style="width: 100%;">Set your password</button>  
-                        <p id="new_password_alert" style="color:rgb(237, 150, 150);margin-top: 20px;"></p>                      
-                </div>
-            </div>
-        </div>
         
-        <div class="capa capa_101 p-0 row">
+        <div class="capa capa_101 p-0 row" style="display: none;">
             <div class="col-12 col-lg-10 offset-lg-1 " style="padding: 10px;margin-top: 0vh;">
                 <div class="col-12 m-0" style="color:#FFF;padding: 0px;border-radius: 10px;text-align: center;">
-                    <a class="nav-link" style="font-size:1.9em;margin-top: 0px;font-family: Square;">
-                        <b style="color:#e4e4e4">chAtter</b><b style="color: #5AE4A8">+</b></a>
-                        <p style="font-size: .9em;margin-top: 10px;">You must to choose a plan.</p>
+                    <button class="btn" style="float: left;background-color: #ffffff2c;color:#FFF" onclick="mostrar('user',2);capa(3)"><i class="zmdi zmdi-arrow-left"></i> Go back</button>  
+                    <br>  
+                    <h3 style="margin-top: 30px;">Choose a plan.</h3>
                         <div class="col-12 p-0">
                             <div class="col-12 p-0">
                                     <div class="carrusel">
@@ -75,16 +60,18 @@
                                                 </p>
                                                 <h3 class="card-title pricing-card-title">FREE
                                                     <p class="text-muted" style="text-align: center;font-size: .47em;font-weight: 100;margin-bottom: 5px;">Per instance / Per month</p>
-                                                    <p style="font-size: .47em;color:#bcbcbc00;margin: 0px;">.<br>.</p>
                                                 </h3>
                                                 <ul class="list-unstyled mt-3 mb-4">
-                                                <li class="green-txt">Unlimited WhatsApp messages</li>
-                                                <li class="green-txt">Webhook notifications</li>
-                                                <li class="red-txt">No multimedia download</li>
-                                                <li class="red-txt">No Email support</li>
-                                                <li class="red-txt">-</li>
+                                                    <li class="green-txt" style="color:#d24ede;">-</li>
+                                                    <li class="green-txt">3 free & trial intances <a style="background-color: #000;color:#FFF;padding:2px;border-radius: 10px;">?</a></li>
+                                                    <li class="green-txt">Unlimited messages</li>
+                                                    <li class="green-txt">Webhook notifications</li>
+                                                    <li class="red-txt" style="color:#FFCC00">Multimedia download <a style="background-color: #FFcc00;color:#FFF;padding:2px;border-radius: 10px;">?</a></li>
+                                                    <li class="red-txt">No email support</li>
+                                                    <li class="red-txt" style="color:#333;margin-top: 10px;font-size: .8em;">$3.99<p style="margin-top: -4px;color:#959595">Each extra premium instance</p></li>
+                                                    <li class="red-txt" style="color:none;margin-top:20px">-</li>
                                                 </ul>
-                                                <button type="button" data="1" class="btn btn-lg btn-block btn-outline-primary btn_start">Sign up for free</button>
+                                                <button type="button" data="1" class="btn btn-lg btn-block btn-outline-primary btn_start">Choose Plan</button>
                                             </div>
                                             </div>
                                         </div>
@@ -95,21 +82,23 @@
                                             </div>
                                             <div class="card-body">
                                                 <p style="color: black; position: relative; display: inline-block;margin: 0px;">
-                                                    $4.99
+                                                    $9.99
                                                     <span style="position: absolute; left: 0; top: 50%; width: 100%; height: 1px; background-color: red; transform: translateY(-50%);"></span>
                                                 </p>
-                                                <h3 class="card-title pricing-card-title">$ 2.99
-                                                    <p class="text-muted" style="text-align: center;font-size: .47em;font-weight: 100;margin-bottom: 5px;">Per instance / Per month</p>
-                                                    <p style="font-size: .47em;color:#bcbcbc;margin: 0px;">Minimum 1 instance.<br>Plan starting from $2.99/Month</p>
+                                                <h3 class="card-title pricing-card-title">$ 6.99
+                                                    <p class="text-muted" style="text-align: center;font-size: .47em;font-weight: 100;margin-bottom: 5px;">Per month</p>
                                                 </h3>
                                                 <ul class="list-unstyled mt-3 mb-4">
-                                                <li class="green-txt">Unlimited WhatsApp messages</li>
+                                                <li class="green-txt" style="color:#d24ede;">3 premium instances. <a style="background-color: #000;color:#FFF;padding:2px;border-radius: 10px;">?</a></li>
+                                                <li class="green-txt">3 free & trial intances</li>
+                                                <li class="green-txt">Unlimited messages</li>
                                                 <li class="green-txt">Webhook notifications</li>
                                                 <li class="green-txt">Multimedia download</li>
                                                 <li class="green-txt">Email support</li>
-                                                <li class="sombra_btn" style="border:0px solid #000;border-radius: 3px;width: 75%;margin-left: 12.5%;background: #d25ae4;color:#FFF">Get $10 as a gift</li>
+                                                <li class="red-txt" style="color:#333;margin-top: 10px;font-size: .8em;">$2.99<p style="margin-top: -4px;color:#959595">Each extra premium instance</p></li>
+                                                <li class="sombra_btn" style="border:0px solid #000;border-radius: 3px;width: 75%;margin-left: 12.5%;background: #d25ae4;color:#FFF;margin-top:20px">Get 1 month <b style="color:#FFCC00;font-weight: 700;">FREE</b></li>
                                                 </ul>
-                                                <button type="button" data="2" class="btn btn-lg btn-block btn-primary  btn_start">Get started</button>
+                                                <button type="button" data="2" class="btn btn-lg btn-block btn-primary  btn_start">Choose Plan</button>
                                             </div>
                                             </div>
                                         </div>
@@ -120,21 +109,23 @@
                                             </div>
                                             <div class="card-body">
                                                 <p style="color: black; position: relative; display: inline-block;margin: 0px;">
-                                                    $3.99
+                                                    $29.99
                                                     <span style="position: absolute; left: 0; top: 50%; width: 100%; height: 1px; background-color: red; transform: translateY(-50%);"></span>
                                                 </p>
-                                                <h3 class="card-title pricing-card-title">$ 1.99
-                                                    <p class="text-muted" style="text-align: center;font-size: .47em;font-weight: 100;margin-bottom: 5px;">Per instance / Per month</p>
-                                                    <p style="font-size: .47em;color:#bcbcbc;margin: 0px;font-style: oblique;">Minimum 20 instance.<br>Plan starting from $39.80/Month</p>
+                                                <h3 class="card-title pricing-card-title">$ 19.99
+                                                    <p class="text-muted" style="text-align: center;font-size: .47em;font-weight: 100;margin-bottom: 5px;">Per month</p>
                                                 </h3>
                                                 <ul class="list-unstyled mt-3 mb-4">
-                                                    <li class="green-txt">Unlimited WhatsApp messages</li>
+                                                    <li class="green-txt" style="color:#d24ede;">15 premium instances. <a style="background-color: #000;color:#FFF;padding:2px;border-radius: 10px;">?</a></li>
+                                                    <li class="green-txt">3 free & trial intances</li>
+                                                    <li class="green-txt">Unlimited messages</li>
                                                     <li class="green-txt">Webhook notifications</li>
                                                     <li class="green-txt">Multimedia download</li>
                                                     <li class="green-txt">Email support</li>
-                                                    <li class="green-txt" style="color:none">-</li>
+                                                    <li class="red-txt" style="color:#333;margin-top: 10px;font-size: .8em;">$1.99<p style="margin-top: -4px;color:#959595">Each extra premium instance</p></li>
+                                                    <li class="sombra_btn" style="border:0px solid #000;border-radius: 3px;width: 75%;margin-left: 12.5%;background: #d25ae4;color:#FFF;margin-top:20px">Get 1 month <b style="color:#FFCC00;font-weight: 700;">FREE</b></li>
                                                 </ul>
-                                                <button type="button"  data="3" class="btn btn-lg btn-block btn-primary btn_start">Get started</button>
+                                                <button type="button"  data="3" class="btn btn-lg btn-block btn-primary btn_start">Choose Plan</button>
                                             </div>
                                             </div>
                                         </div>
@@ -244,7 +235,18 @@
                 <div class="  row  capa capa_3 m-0 p-0">
                             <div class="col-sm-10  col-xs-12 offset-sm-1" style="padding: 30px 20px;">
                                 <div class="col-12" style="background-color: #ffffff0b;padding: 10px;border-radius: 10px;">
-                                <h3>Your personal data</h3>
+                                <h3>Account</h3>
+                                <hr>
+                                <h5>Plan</h5>
+                                Current Plan: 
+                                <select name="" id="plan_form_user" disabled>
+                                    <option value="1" style="background-color: #333333;">Free</option>
+                                    <option value="2" style="background-color: #333333;">Pro</option>
+                                    <option value="3" style="background-color: #333333;">Enterprise</option>
+                                </select>
+                                <button class="btn btn-green" style="background:#d24ede;color:#FFF" onclick="mostrar('user',1);capa(101);">Change you plan!</button>
+                                <hr>
+                                <h5>Personal data</h5>
                                 Name:
                                 <input class="inputCapa" id="name_form_user" type="text">
                                 Email 
@@ -252,10 +254,13 @@
                                 <i class="zmdi zmdi-alert-triangle" style="color: #FFCC00;display: none;" id="email_valid_form_user_uncheck"></i>
                                 <button class="btn btn-green btn-xs" onclick="sent_email_valid()" id="email_valid_form_user" style="display: none;padding: 2px;font-size: .7em;margin-top: -3px;margin-left: 5px;background-color: #ffcc00;margin-bottom: 5px;">Verify your email now!</button>
                                 <input class="inputCapa" disabled id="email_form_user" type="text">
-                                Plan: 
-                                <input class="inputCapa" id="plan_form_user" type="text">
                                 <button class="btn btn-green" onclick="sent_edit_user()">Edit user</button>
+                                <hr>
+                                <h5>Password</h5>
+                                <button class="btn btn-green" style="background:#FFCC00" onclick="open_pass_modal(true)">Change Password</button>
+                                
                                 </div>
+                                
                             </div>
                 </div>
                 <div class="  row  capa capa_5 m-0 p-0 " style="padding:0px;">
@@ -333,6 +338,7 @@
           </div>
         </div>
     </div>
+
     <div class="modal" id="vincularModal" tabindex="-1">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -450,6 +456,41 @@
             <div class="modal-footer eliminar eliminar_2" style="border:0px">
                 <button type="button" class="btn" onclick="eliminar_numero()">Delete</button>
             </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal" id="passwordModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header" style="border:0px">
+              <h5 class="modal-title">SET NEW PASSWORD</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pass pass_1">
+                <center><div class="lds-ring"><div></div><div></div><div></div><div></div></div></center>
+            </div>
+            <div class="modal-body pass pass_2"> 
+                <div class="old_pass">
+                <p>Current Password:</p>
+                <input type="password" placeholder="Current password" id="old_password">
+                </div>
+                <p>New Password:</p>
+                <input type="password" placeholder="New password" id="new_password_1">
+                <p>Repeat new Password:</p>
+                <input type="password" placeholder="Repeat your new password" id="new_password_2" >
+                <p id="new_password_alert" style="color:rgb(237, 150, 150);margin-top: 0px;padding: 0px 10px;"></p> 
+            </div>
+            <div class="modal-body pass pass_3"> 
+                <b><i class="zmdi zmdi-check-all" style="color: #26D367;"></i> Your new password was setting.</b>
+            </div>
+            <div class="modal-footer pass pass_2 style="border:0px">
+              <button type="button" class="btn" onclick="set_password()">Send</button>
+            </div>
+            
+            <div class="modal-footer pass pass_3 style="border:0px">
+                <button type="button" class="btn" onclick="$('#passwordModal').modal('hide')">Close</button>
+              </div>
           </div>
         </div>
     </div>
@@ -920,6 +961,14 @@
         const token=getParameterByName("token")
         if(token){
             checktoken(token)
+        }else{
+            user=JSON.parse(localStorage.getItem("user")|| "{}")
+            console.log(user)
+            if(user.token){
+                checktoken(user.token)
+            }else{
+                localStorage.clear();location.href="index.html";
+            }
         }
         //alert(token)
     })
@@ -934,9 +983,9 @@
                 return;
             }
             localStorage.setItem("user",JSON.stringify(e))
-            const accion=getParameterByName("accion")
-            if(accion){alertFun({text:'Your email has been successfully validated',btn:"Go to my account",functionModal:()=>{location.href=window.location.pathname;}});setTimeout(()=>{location.href=window.location.pathname},2000);return;}
-            location.href=window.location.pathname
+            //const accion=getParameterByName("accion")
+            //if(accion){alertFun({text:'Your email has been successfully validated',btn:"Go to my account",functionModal:()=>{location.href=window.location.pathname;}});setTimeout(()=>{location.href=window.location.pathname},2000);return;}
+            //location.href=window.location.pathname
             control_sesion();
         })
     }
@@ -953,7 +1002,7 @@
     }
 
     mostrar('user',1)
-    control_sesion();
+    
     function control_sesion(buscar=true){
         user=JSON.parse(localStorage.getItem("user"))
         console.log(user)
@@ -962,8 +1011,10 @@
             $("#name_form_user").val(user.user.nombre)
             $("#email_form_user").val(user.user.correo)
             if(!user.user.password){
-                mostrar('user',1);
-                capa(102)
+                mostrar('user',2);
+                capa(2)
+                mostrar('pass',2);
+                open_pass_modal(false)
                 return true;
             }
             if(user.user.plan==0){
@@ -988,6 +1039,24 @@
             
         }
     }
+
+    function open_pass_modal(newPass){
+        $("#passwordModal").modal('show');
+        $("#new_password_1").val("");$("#new_password_2").val("");$("#old_password").val("");
+        $("#new_password_alert").html("")
+        mostrar('pass',2)
+        if(!newPass){
+            $('#passwordModal').attr('data-bs-backdrop',"static")
+            $(".btn-close").hide()
+            $(".old_pass").hide()
+        }else{
+            $('#passwordModal').attr('data-bs-backdrop', 'true');
+            $(".btn-close").show()
+            $(".old_pass").show()
+        }
+
+    }
+
     function set_password(){ 
         problema=""
         if($("#new_password_1").val().length<6){problema+="Passwords must be at least 6 characters.<br>"}
@@ -995,13 +1064,22 @@
         $("#new_password_alert").html(problema);
         if(problema!=""){return;}
         env={};
-        env["password"]="";
+        if($(".old_pass").eq(0).css("display")!="none"){
+            env["password"]=$("#old_password").val();
+        }
         env["newPassword"]=$("#new_password_1").val();
         env["token"]=user.token;
-        capa(0)
+        mostrar('pass',1)
+        console.log(env)
         ajax("/login/users/setpassword",env,(d)=>{
             console.log(d)
-            mostrar('user',2);
+            if(d.status==400){
+                mostrar('pass',2)
+                $("#new_password_alert").html(d.message)
+                return;
+            }
+            checktoken(user.token);
+            mostrar('pass',3);
             capa(2)
         });
     }
