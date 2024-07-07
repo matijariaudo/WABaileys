@@ -4,21 +4,19 @@ var jwt = require('jsonwebtoken');
 const { User } = require('../database/models');
 const { jsonAnswer } = require('../helpers/apiFormat');
 const { sendEmail } = require('../helpers/sendEmail');
-const { link } = require('../routes/routers');
+const { link } = require('../routes/routersInstances');
 require('dotenv').config()
 
 const userCreate=async(req,res)=>{
-    const {name,email,password,plan=0}=req.body;
+    const {name,email}=req.body;
     try {
         const user=await User.findOne({correo:email});
         console.log(user,email)
         if(user){return res.status(200).json(await jsonAnswer(400,"The operation has failed","The email is already used.",null));}
-        const salt=await bcryptjs.genSalt(10);
-        const claveEncrypt=await bcryptjs.hash(password,salt);
-        const newuser=new User({nombre:name,correo:email,clave:claveEncrypt,rol:"USER_ROLE",plan});
+        const newuser=new User({nombre:name,correo:email,clave:"-",rol:"USER_ROLE",plan:0});
         await newuser.save()
         const tokenE=jwt.sign({ uid: newuser.id,email:newuser.correo}, process.env.SEED,{expiresIn:'12h'})
-        sendEmail({email:newuser.correo,subject:"Verify your email",typeNro:2,button:{frase:"Verify email",link:`http://${req.headers.host}/login/users/validar/${tokenE}`}})
+        sendEmail({email:newuser.correo,subject:"Your account was created. Verify your email",typeNro:2,button:{frase:"Verify email and get started",link:`http://${req.headers.host}/login/users/validar/${tokenE}`}})
         return res.status(200).json(await jsonAnswer(200,null,`The user has been created`,{user:newuser}));
     } catch (error) {
         return res.status(200).json(await jsonAnswer(400,"The operation has failed","Your chat has not correctly found.",null));
@@ -27,17 +25,15 @@ const userCreate=async(req,res)=>{
 
 const userSetPassword=async(req,res)=>{
     const {password,newPassword}=req.body;
+    const tokenData=req.body.data_jwt;
     const {id}=req.body.user_jwt;
-    console.log("IDDDDDDDDD",id,password)
     try {
         const user=await User.findById(id)
         if(!user){return res.status(200).json(await jsonAnswer(400,"The operation has failed","The user could not be found.",null));}
         let rta=true;
-        if(user.clave!="-"){
+        if(user.clave!="-" && !tokenData.newPass){
             rta=await bcryptjs.compare(password || '',user.clave);
-
         }
-        console.log("RTA",rta,user.clave)
         if(rta){
         const salt=await bcryptjs.genSalt(10);
         const claveEncrypt=await bcryptjs.hash(newPassword,salt);
@@ -108,10 +104,25 @@ const sendMailValidation=async(req,res)=>{
     return res.status(200).json(await jsonAnswer(200,null,`We have sent an email to validate your direction`,{user,token}));
 }
 
+const sendMailPassword=async(req,res)=>{
+    const {email}=req.body;
+    const user=await User.findOne({correo:email,estado:true});
+    if(!user){return res.status(200).json(await jsonAnswer(400,"The operation has failed","-",null));}
+    const token=jwt.sign({ uid: user.id,email:user.correo,newPass:true}, process.env.SEED,{expiresIn:'15m'})
+    sendEmail({email:user.correo,subject:"Verify your email",typeNro:2,button:{frase:"Verify email",link:`http://${req.headers.host}/login/users/validar/${token}`}})
+    return res.status(200).json(await jsonAnswer(200,null,`We have sent an email to validate your direction`,{user,token}));
+}
+
 const loginJWTCheckemail=async(req,res)=>{
     const user=req.body.user_jwt;
     const tokenData=req.body.data_jwt;
-    console.log(tokenData)
+    if(req.body.errors){
+        return res.redirect(`http://${req.headers.host}?error=TOKEN`);  
+    }
+    if(tokenData.newPass){
+        const token=jwt.sign({ uid: user.id,newPass:true}, process.env.SEED,{expiresIn:'5m'})
+        return res.redirect(`http://${req.headers.host}/password?token=${token}&email=${tokenData.email}`);
+    }
     if(tokenData.email==user.correo){
         const checkUser=await User.findById(user.id);
         checkUser.email_valid=true;
@@ -119,7 +130,7 @@ const loginJWTCheckemail=async(req,res)=>{
         const token=jwt.sign({ uid: user.id }, process.env.SEED,{expiresIn:'12h'})
         return res.redirect(`../../../app.html?accion=EMAIL_VALID&token=${token}`);
     }
-    return res.redirect(`../../../app.html?accion=EMAIL_VALID&token=ERROR`);   
+    return res.redirect(`http://${req.headers.host}?error=TOKEN`);   
 }
 
 const createApiToken=async(req,res)=>{
@@ -166,4 +177,16 @@ const getApiToken=async(req,res)=>{
     }
 }
 
-module.exports={userCreate,userLogin,userUpdate,loginJWT,loginJWTCheckemail,sendMailValidation,createApiToken,getApiToken,editApiToken,userSetPassword}
+module.exports={
+    userCreate,
+    userLogin,
+    userUpdate,
+    loginJWT,
+    loginJWTCheckemail,
+    sendMailValidation,
+    createApiToken,
+    getApiToken,
+    editApiToken,
+    userSetPassword,
+    sendMailPassword
+}

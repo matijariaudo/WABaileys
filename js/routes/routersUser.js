@@ -5,8 +5,8 @@ require('dotenv').config()
 const session=require('express-session');
 
 const { passport, receiptTokens, loginTokensPassport } = require('../helpers/passport');
-const { userCreate, userLogin, userUpdate, loginJWT, loginJWTCheckemail, sendMailValidation, createApiToken, getApiToken, editApiToken, userSetPassword } = require('../controllers/userPost');
-const { checkUserCreate, checkUserLogin, checkUserUpdate, checkUserJWT, checkUserJWTParam, checkUserUpdatePassword } = require('../helpers/validaciones');
+const { userCreate, userLogin, userUpdate, loginJWT, loginJWTCheckemail, sendMailValidation, createApiToken, getApiToken, editApiToken, userSetPassword, sendMailPassword } = require('../controllers/userPost');
+const { checkUserCreate, checkUserLogin, checkUserUpdate, checkUserJWT, checkUserJWTEmail, checkUserUpdatePassword } = require('../helpers/validaciones');
 require('dotenv').config()
 
 //Users administration
@@ -18,8 +18,9 @@ UserRouter.post('/users/editapitoken',checkUserJWT,editApiToken);
 UserRouter.post('/users/check',checkUserJWT,loginJWT);
 UserRouter.post('/users/setpassword',checkUserUpdatePassword,userSetPassword);
 UserRouter.post('/users/sendvalidation',checkUserJWT,sendMailValidation);
+UserRouter.post('/users/sendpassword',sendMailPassword);
 UserRouter.post('/users/edit',checkUserUpdate,userUpdate);
-UserRouter.get( '/users/validar/:token',checkUserJWTParam,loginJWTCheckemail);
+UserRouter.get( '/users/validar/:token',checkUserJWTEmail,loginJWTCheckemail);
 
 
 UserRouter.use(session({secret: process.env.SESSION_SEED,resave: false,saveUninitialized: false}))

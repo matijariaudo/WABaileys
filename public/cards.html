@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stripe Payment</title>
+    
+    <meta name="theme-color" content="#333333" />
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    
+    <style>
+        body {
+            background-color: #353535; /* Fondo oscuro */
+            color: white; /* Texto blanco */
+            font-family: Arial, sans-serif;
+            display: flex;
+            margin: 0;
+        }
+        
+        input, button {
+            background: none;
+            color: white;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            width: 100%;
+            border: 1px solid #1dffbb;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="p-0 m-0">
+    <div class="container-fluid p-0 m-0">
+        <p style="margin-top: 0px;text-align: center;font-size: .8em;background-color: #1dffbb;color: #000;">Working with <img src="assets/img/stripe.png" style="width: 40px;"></p>
+        <div class="col-12 row m-0" style="text-align: center;padding: 0px 20px;">
+                <h4>Your Cards</h4> 
+                <div id="cards" class="row">
+
+                </div>
+                <hr style="margin:20px 0px;">
+                <h4>Your Pending Payments <b id="totalAmount" style="color: rgb(255,255,255,.8);"></b></h4> 
+                <div id="charges" class="row">
+
+                </div>
+                <p style="margin-top: 10px;text-align: left;font-size: .9em;">Total selected <b id="totalAmountPay" style="color: #5AE4A8;"></b>
+                <button class="btn" style="background:#5AE4A8;color:#FFF;width: auto;margin-top: -5px;padding:0px 8px;font-size: .8em;" onclick="$('#payNow').modal('show')">Pay Now</button>
+                </p>
+                <hr style="margin:20px 0px;">
+                <h4>Your Payments</h4> 
+                <div id="payments" class="row">
+
+                </div>
+                
+        </div>
+    </div>
+    <div class="modal" id="newCard" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content" style="background: #565656;color:#fbfbfb">
+            <div class="modal-header" style="border:0px">
+              <h5 class="modal-title">Add New Card</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="alertModal_body" style="font-weight:100;">
+                <div style="padding: 10px;">
+                    Your name:
+                    <input type="text" id="card-name" placeholder="Cardholder Name" autocomplete="off" style="border-width: 0px;width: 100%; margin: 10px 0px;">
+                    Card data:
+                    <div id="card-element" style="padding: 10px;margin: 10px 0px;"></div>
+                    <button id="add-card-button">Add Card</button>
+                </div>  
+            </div>
+            <div class="modal-footer" style="border:0px" id="alertModal_btn_div">
+                <button class="btn" id="alertModal_btn" onclick=""></button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal" id="payNow" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content" style="background: #565656;color:#fbfbfb">
+            <div class="modal-header" style="border:0px">
+              <h5 class="modal-title">Pay Now</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="alertModal_body" style="font-weight:100;">
+                <div style="padding: 10px;">
+                    Choose a card:
+                    <select id="cardOption" placeholder="Cardholder Name" style="border-width: 0px;width: 100%; margin: 10px 0px;">
+                    </select>
+                </div>  
+            </div>
+            <div class="modal-footer" style="border:0px" id="alertModal_btn_div">
+                <button class="btn" id="alertModal_btn" onclick=""></button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal" id="deleteCardModal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content" style="background: #565656;color:#fbfbfb">
+            <div class="modal-header" style="border:0px">
+              <h5 class="modal-title">Delete Card</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="alertModal_body" style="font-weight:100;">
+                <div style="padding: 10px;text-align: center;">
+                    
+                    Are you sure of delete this card?
+                    <br><br>
+                    <a style="color:#e9e9e9">
+                    <img src="" id="deleteCard_payment_img" style="width: 30px;border:1px solid #fff;border-radius: 3px;"><b style="color:#565656">_</b>_ _ _ _  <b style="color:#565656">_</b> _ _ _ _  <b style="color:#565656">_</b> _ _ _ _  <b style="color:#565656">_</b> <b style="color: #e9e9e9;font-weight: 900;" id="deleteCard_payment_last"></b>
+                    </a>
+                    <input type="hidden" id="deleteCard_payment_id">
+                </div>  
+            </div>
+            <div class="modal-footer" style="border:0px;text-align: right;">
+                <button class="btn" style="color:#5AE4A8;width: auto;;" id="alertModal_btn" onclick="delete_card()">Delete</button>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="modal" id="newSubscription" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content" style="background: #565656;color:#fbfbfb">
+            <div class="modal-header" style="border:0px">
+              <h5 class="modal-title">Subscription</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="alertModal_body" style="font-weight:100;">
+                <div style="padding: 10px;text-align: center;">
+                    Are you sure of subscribe?
+                    <input type="hidden" id="newSubscription_payment_id">
+                </div>  
+            </div>
+            <div class="modal-footer" style="border:0px;text-align: right;">
+                <button class="btn" style="color:#5AE4A8;width: auto;;" id="alertModal_btn" onclick="subscribe_plan()">Delete</button>
+            </div>
+          </div>
+        </div>
+    </div>
+    
+
+  <!-- Bootstrap JS (optional) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const stripe = Stripe('pk_test_51PWFKSLW177YQySElQnjLIo1JZZ5FxhoFKVXppGrHuE4RWOtovrgSBmjnoOCpkjtIsdC7AqBCE8hCrXLokuTwiQS00qmtpE7no');
+        const elements = stripe.elements();
+        const cardElement = elements.create('card', {
+            style: {
+                base: {
+                    color: 'white', // Texto blanco en el campo de la tarjeta
+                    '::placeholder': {
+                        color: '#888' // Color del texto del placeholder
+                    },
+                    iconColor: 'white',
+                    padding:'10px'
+                },
+                invalid: {
+                    color: '#FF6666', // Color del texto en caso de error
+                },
+            },
+            hidePostalCode : true
+        });
+        cardElement.mount('#card-element');
+        
+        const createPaymentMethod = async () => {
+            const cardName = document.querySelector('#card-name').value;
+            const postalCode = document.querySelector('input').value;
+            const formattedPostalCode = postalCode.padStart(5, '0');
+            document.querySelector('input').value = postalCode.padStart(5, '0');
+            
+            const { paymentMethod, error } = await stripe.createPaymentMethod({
+                type: 'card',
+                card: cardElement,
+                billing_details: {
+                    name: cardName,
+                    address: {
+                        postal_code: formattedPostalCode // Usar el código postal formateado
+                    }
+                },
+            });
+
+            if (error) {
+                console.error(error);
+            } else {
+                return paymentMethod.id;
+            }
+        };
+
+        document.querySelector('#add-card-button').addEventListener('click', async () => {
+            const user=JSON.parse(localStorage.getItem("user")|| "{}")
+            const paymentMethodId = await createPaymentMethod();
+            const sendData = {
+                userId:user.user.uid,
+                paymentMethodId,
+                token:user.token
+            };
+            console.log(sendData)
+            ajax('payment/addcard',sendData,(response)=>{
+                    console.log('Solicitud POST enviada correctamente', response);
+                    init()
+            });
+            
+        });
+
+        let paymentMethod_default;
+        async function init(){
+            $("#cards").html(`<center>Loading your cards...</center>`)
+            user=JSON.parse(localStorage.getItem("user")|| "{}");
+            ajax('payment/getcard',{token:user.token},(response)=>{
+                    console.log(response)
+                    const {paymentMethods:pay}=response;
+                    $("#cards").html(``)
+                    if(pay){
+                        pay.forEach(e => {
+                            if(e.isDefault){paymentMethod_default=e.id}
+                            $("#cardOption").append(`<option value="${e.id}"><span><img src="imagen3.jpg" alt="Imagen 3" class="option-image"><img src="assets/img/${e.card.brand}.png" style="width:30px;border:1px solid #FFF;border-radius:3px"> Ending:${e.card.last4} </option>`)
+                            $("#cards").append(`
+                            <div class="col-12 col-lg-3 col-md-4" style="padding:10px">
+                                <div class="col-12" style="color:#000;border-radius:10px;cursor:pointer;background:#FFF;font-size:.8em;padding:15px;border:3px solid ${e.isDefault?"yellow":"#000"}">
+                                    <img src="assets/img/delete.png" title="Delete card" onclick="deleteCardStart('${e.id}','${e.card.last4}','${e.card.brand}')"  style="width:15px;margin-top:2px;float:right;display:${e.isDefault?"none":"block"}">
+                                    <img src="assets/img/fav${e.isDefault?"_1":""}.png"  onclick="mark_as_fav('${e.id}')"  title="Choose as fav" style="width:18px;margin-top:1px;float:right;margin-right:5px">
+                                    <img src="assets/img/${e.card.brand}.png" style="width:30px;border:1px solid #FFF;border-radius:3px"> Ending: ${e.card.last4}
+                                </div>
+                            </div>
+                            `)
+                        });
+                        $("#cards").append(`
+                        <div class="col-12 col-lg-3 col-md-4" style="padding:10px">
+                            <div class="col-12" onclick="$('#newCard').modal('show')" style="border-radius:10px;padding:15px;background:#b03ec3;color:#FFF;text-align:center;cursor:pointer">
+                                ADD NEW CARD
+                            </div>
+                        </div>
+                        `)
+                    }
+                    // Manejar la respuesta del servidor si es necesario
+                });
+        }
+
+        
+        
+
+        function mark_as_fav(id){
+            const user=JSON.parse(localStorage.getItem("user")|| "{}")
+            ajax("/payment/changedefault",{token:user.token,paymentMethodId: id},(response)=>{
+                console.log(response)    
+                init()
+            });
+        }
+
+        function deleteCardStart(id,last4,brand) { 
+            $("#deleteCard_payment_id").val(id);
+            $("#deleteCard_payment_img").attr("src","assets/img/"+brand+".png");
+            $("#deleteCard_payment_last").html(last4);
+            $("#deleteCardModal").modal("show")
+         }
+
+         function delete_card(){
+            const user=JSON.parse(localStorage.getItem("user")|| "{}")
+            ajax("/payment/deletecard",{token:user.token,paymentMethodId:$("#deleteCard_payment_id").val()},(response)=>{
+                console.log(response)    
+                init()
+            });
+        }
+
+        const formatDate = (timestamp) => {
+            const date = new Date(timestamp * 1000); // Convertir de segundos a milisegundos
+
+            const year = date.getFullYear();
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth()+1).padStart(2, '0');
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+
+            return `${year}-${month}-${day} ${hours}:${minutes}`;
+        };
+
+        setTimeout(() => {
+            init();
+        }, 500);
+        function ajax(url,json_dat,callback,error=(e)=>{console.log(e)}){
+            let token="Bearer"
+            if(json_dat?.token){
+                 token=`Bearer ${json_dat.token}`
+            }
+            //console.log("token",token)
+            $.ajax({url,type:"POST",headers: {"Content-Type": "application/json","Authorization": token},dataType : 'json',data: JSON.stringify(json_dat),success: function(data, textStatus, jqXHR){callback(data)},error: function( jqXHR, textStatus, errorThrown ) {error();}});
+        }
+    </script>
+</body>
+</html>

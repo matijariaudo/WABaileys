@@ -29,8 +29,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="assets/js/jquery.mtr-panel.js"></script>
-    <script type="text/javascript" src="./assets/js/qr-code-styling.js"></script> 
-    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="assets/css/checkanimationBlack.css">
+    <link rel="stylesheet" href="./assets/css/base.css">
     <style>
         .seccion{
             min-height: 80vh;
@@ -164,7 +164,7 @@
             <div class="row col-12 p-0  m-0" >
             <div class="col-8 col-lg-1 offset-lg-1 p-2s" style="padding: 15px 0px 5px 15px;font-family: Logo;letter-spacing: 0.2em;">
                 <a class="nav-link" style="font-size:1.9em;margin-top: 0px;font-family: Square;">
-                    <b style="color:#555555">chAtter</b><b style="color: #5AE4A8">+</b></a>
+                    <b style="color:#171717">chAtter</b><b style="color: #5AE4A8">+</b></a>
             </div>
             <div class="col-lg-5 offset-lg-2 d-lg-block d-none p-2s " style="padding: 25px 0px;font-family: Logo;letter-spacing: 0.1em;font-weight:600;">
                 <nav class="navbar navbar-expand-lg p-0" >
@@ -402,58 +402,57 @@
             <div class="modal-header" style="border:0px">
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="col-10 offset-1" style="text-align: center;margin-top: -30px;">
-                <a class="nav-link" style="font-size:1.9em;margin: 0px;font-family: Square;">
-                <b style="color:#555555">chAtter</b><b style="color: #5AE4A8">+</b></a>
-            </div>
             <div class="modal-body log log_1" style="display: none;">
                 <center><div class="lds-ring"><div></div><div></div><div></div><div></div></div></center>
             </div>
             <div class="modal-body log log_2 col-10 offset-1" style="text-align: center;padding: 10px 0px 0px 0px;">
-                <input type="text" placeholder="Email" id="login_correo" class="form_login_input" autocomplete="off">
-                <input type="password" placeholder="Password" id="login_clave" class="form_login_input" autocomplete="off">
+                <input type="text" placeholder="Email" id="login_correo" class="form_login_input login" autocomplete="off" style="color:#000">
+                <input type="password" placeholder="Password" id="login_clave" class="form_login_input  login" autocomplete="off" style="color:#000">
                 <button class="btn btn-log" id="btn_login" onclick="$('.form_login').show()" style="width: 100%;margin-bottom: 10px;background:#000;color:#FFF">Log in</button>
                 <br>
-                <button class="btn btn-log" onclick="mostrar('log',4);$('#plan_1').click()" style="width: 100%"><img src="assets/img/password.png" alt="Password icon" style="width: 25px;margin-top: 0px;"> Create an account</button>
+                <div style="font-size: .9em;margin: 10px 0px;">
+                Don't have an account? <a onclick="mostrar('log',4)" style="color: #3ba778;">Sign Up</a><br>
+                Forgot your password? <a onclick="mostrar('log',5)" style="color: #3ba778;">Reset here</a>
+                </div>
                 <hr>
             </div>
             <div class="modal-body log log_2 col-10 offset-1" style="text-align: center;padding: 0px 0px 20px 0px;">
-                <p>or connect with</p>
+                <p>Connect or log in with</p>
                 <button class="btn btn-log"  onclick="location.href='/login/logingoogle'"><img src="assets/img/google.png" alt="Google Icon" style="width: 19px;margin-top: -2px;"> Google</button>
                 <br>
                 <button class="btn btn-log"  onclick="location.href='login/loginfacebook'"><img src="assets/img/social-media.png" alt="Facebook Icon" style="width: 24px;margin-top: -4px;"> Facebook </button>
             
             </div>
             <div class="modal-body log log_3  col-10 offset-1" style="text-align: center;">
-                
+                <center>
+                    <div class="check"></div>
+                </center>
+                <h1 class="animated-text" style="margin-top: 10px;">Your account has been created.</h1>  
+                <p class="animated-text">We have sent you an email to validate your email address. Please click on the link within the email. <br><br>
+                Don't forget to check your spam folder</p>
             </div>
             <div class="modal-body log log_4 col-10 offset-1" style="text-align: center;">
-                <input type="text" placeholder="Name" id="new_name" class="form_login_input" autocomplete="off">
-                <input type="text" placeholder="Email" id="new_email" class="form_login_input" autocomplete="off">
-                <input type="password" placeholder="Password" id="new_password" class="form_login_input" autocomplete="off">
-                <input type="password" placeholder="Repeat password" id="new_password2" class="form_login_input" autocomplete="off">
-                Choose your Plan
-                <div class="row" id="plan_container" style="padding: 10px 0px 0px 0px;">
-                <div class="col-4 plan_div"><div class="plan sombra" id="plan_0">Free</div></div>
-                <div class="col-4 plan_div"><div class="plan sombra" id="plan_1">Pro</div></div>
-                <div class="col-4 plan_div"><div class="plan sombra" id="plan_2">Enterprise</div></div>
-                <input type="hidden" id="plan">
-                <p style="margin-top:5px;margin-bottom: 0px;">Your Plan: <b id="plant_txt">-</b></p>
-                </div>
+                <h1 style="font-weight: 900;font-size:1.5em">Create an account</h1>
+                <input type="text" placeholder="Name" id="new_name" class="form_login_input" autocomplete="off" style="color:#000">
+                <input type="text" placeholder="Email" id="new_email" class="form_login_input" autocomplete="off" style="color:#000">
                 <button class="btn btn-log" id="btn_create" onclick="">Create your account</button>
                 <br>
                 <p id="new_txt" style="margin-top: 20px;"></p>
                 <a onclick="mostrar('log',2);" style="margin-top: 20px;cursor: pointer;font-size: .85em;margin-top: 5px;"><i class="zmdi zmdi-arrow-left"></i> Back</a>
             </div>
-            <div class="modal-body create create_3" style="text-align: center;display: none;">
-                <b><i class="zmdi zmdi-check-all" style="color: #5AE4A8;"></i> Your instance was created.</b>
+            <div class="modal-body log log_5 col-10 offset-1" style="text-align: center;">
+                <input type="text" placeholder="Your Email" id="reset_email" class="form_login_input" autocomplete="off" style="color:#000">
+                <button class="btn btn-log" id="btn_reset" onclick="">Reset your password</button>
                 <br>
-                <input type="hidden"id="form_create_success"> 
-                <p style="font-size: .8em;">The next step is to connect your instance with your WhatsApp account. 
-                    To do this you must go to your <b>WhatsApp > Settings > Linked devices > Link</b> new and scan the QR that we will show you.</p>
-                <button class="btn btn-green" onclick="solicitar_qr_init()">Connect now <i class="zmdi zmdi-arrow-right"></i></button>
+                <p id="new_txt" style="margin-top: 20px;"></p>
+                <a onclick="mostrar('log',2);" style="margin-top: 20px;cursor: pointer;font-size: .85em;margin-top: 5px;"><i class="zmdi zmdi-arrow-left"></i> Back</a>
             </div>
-            <div class="modal-footer create create_2 style="border:0px">
+            <div class="modal-body log log_6 col-10 offset-1" style="text-align: center;">
+                <center>
+                    <div class="check"></div>
+                </center>
+                <h1 class="animated-text" style="margin-top: 10px;">We've sent an email.</h1>  
+                <p class="animated-text">Don't forget to check your spam folder. Link valid for 15 minutes</p>
             </div>
           </div>
         </div>
@@ -527,7 +526,6 @@
         problema="";$("#new_txt").html(problema);
         if($("#new_name").val().length<3){problema+="You must enter a name<br>";}   
         if($("#new_email").val().length<3){problema+="You must enter a email<br>";}   
-        if($("#new_password").val().length<6 || $("#new_password").val()!=$("#new_password2").val()){problema+="Both password must be the same<br>";}   
         if(problema){$("#new_txt").html(problema);return;}
         create_account()
     })
@@ -535,7 +533,6 @@
         env={};
         env["name"]= $("#new_name").val();
         env["email"]= $("#new_email").val();
-        env["password"]= $("#new_password").val();
         console.log(env)
         ajax("/login/users",env,(d)=>{
             console.log(d)
@@ -549,14 +546,32 @@
                 return;
             }
             const e=d.data;
-            mostrar('log',1)
-            $(".log_1").append(`<p id='new_text_success'>Your accound has been created succesfuly.</p>`)
-            setTimeout(() => {
-                $("#new_text_success").remove()
-            }, 2000);
+            mostrar('log',3);
+            log3animation();
             console.log(d)
         })
     }
+    $("#btn_reset").on("click",()=>{
+        env={};
+        env["email"]= $("#reset_email").val();
+        console.log(env)
+        ajax("/login/users/sendpassword",env,(d)=>{
+            console.log(d)
+            if(d.error){
+                mostrar('log',5)
+                problema=analisis_error(d,true)
+                $(".log_5").append(`<p id='new_text_success' style='margin-top:10px;margin-bottom:0px'>An error has occurred, make sure the email address is correct</p>`)
+                setTimeout(() => {
+                    $("#new_text_success").remove()
+                }, 4000);
+                return;
+            }
+            const e=d.data;
+            mostrar('log',6);
+            log3animation();
+            console.log(d)
+        })
+    })
 
     function ajax(url,json_dat,callback,error=(e)=>{console.log(e)}){
             let token="Bearer"
@@ -594,7 +609,33 @@
         return false;
     }
 
-    
+    $(window).on('load',()=>{
+        const error=getParameterByName("error")
+        if(error=="TOKEN"){
+            var newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+            window.history.replaceState({ path: newUrl }, '', newUrl);
+            alertFun({text:"An error has occurred. The token is not valid or its validity has expired. Please try applying again",btn:"OK"})
+        }
+        const signin=getParameterByName("signin")
+        if(signin){
+            var newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+            window.history.replaceState({ path: newUrl }, '', newUrl);
+            $('#ConnectModal').modal('show');mostrar('log',2);
+        }
+        setTimeout(() => {
+            $(".login").val("")
+        }, 500);
+    })
+
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
 
 </script>
   <script>
@@ -683,7 +724,15 @@
         });
         
     });
-    
+    function log3animation(){
+        $('.check').css('animation', 'start 1s ease both');
+        setTimeout(function() {
+        $('.animated-text').addClass('typing');
+        }, 1000);
+        setTimeout(function() {
+        $("#btn-animation").show()
+        }, 2000);
+    }
         
     
   </script>

@@ -13,16 +13,23 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="assets/js/jquery.mtr-panel.js"></script>
     <script type="text/javascript" src="./assets/js/qr-code-styling.js"></script> 
-    <link rel="stylesheet" href="base.css">
-    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+    <link rel="stylesheet" href="assets/css/checkanimation.css">
 </head>
 <style>
     input{
         color:#FFF
     }
+    .option-image {
+        vertical-align: middle;
+        margin-right: 10px; /* Espacio entre la imagen y el texto */
+        max-width: 20px; /* Ancho máximo de la imagen */
+        max-height: 20px; /* Altura máxima de la imagen */
+    }
 </style>
 <body style="padding: 0px;background-color: #353535;color:#FFF">
-    <div class="user user_1 container-fluid m-0" style="height: 100vh;overflow-y: auto;padding: 0px 20px;color:#FFF">
+    <div class="user user_1 container-fluid m-0" style="display: none ;height: 100vh;overflow-y: auto;padding: 0px 20px;color:#FFF;background: linear-gradient(180deg, rgba(83,83,83,1) 0%, rgba(87,176,137,1) 78%, rgba(90,228,168,1) 100%);">
         <div class="capa capa_0">
         <center style="margin-top: 32vh;">
             <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
@@ -39,13 +46,41 @@
             </div>
         </div>
 
+        <div class="capa capa_102 p-0" style="display: none;">
+            <div class="col-12 col-lg-4 offset-lg-4" style="padding: 10px;margin-top: 20vh;">
+                <div class="col-12 m-0" style="color:#FFF;padding: 0px;border-radius: 10px;text-align: center;">
+                        <h3 class="title_pass" style="margin:30px 0px;">Please, set a password to continue...</h3>
+                        <div class="old_pass">
+                        <input type="password" placeholder="Current password" id="old_password">
+                        </div>
+                        <input type="password" placeholder="New password" id="new_password_1">
+                        <input type="password" placeholder="Repeat your new password" id="new_password_2" >
+                        <p id="new_password_alert" style="color:rgb(237, 150, 150);margin-top: 0px;padding: 0px 10px;"></p>
+                        <button class="btn old_pass" style="background-color: #ffffff2c;color:#FFF" onclick="mostrar('user',2);capa(3)"><i class="zmdi zmdi-arrow-left"></i> Cancel</button>  
+                        <button class="btn btn-green" onclick="set_password()">Continue</button>                        
+                </div>
+            </div>
+        </div>
+
+        <div class="capa capa_103 p-0" style="display: none;">
+            <div class="col-12 col-lg-4 offset-lg-4" style="padding: 10px;margin-top: 20vh;">
+                <div class="col-12 m-0" style="color:#FFF;padding: 0px;border-radius: 10px;text-align: center;">
+                    <center>
+                        <div class="check"></div>
+                    </center>
+                    <h1 class="animated-text" style="margin-top: 10px;">Your account is ready!</h1>  
+                    <button id="btn-animation" class="btn" style="background-color: #FFF;color:#959595;margin-top: 30px;display: none;" onclick="control_sesion(true)">Continue</button>             
+                </div>
+            </div>
+        </div>
+
         
         <div class="capa capa_101 p-0 row" style="display: none;">
             <div class="col-12 col-lg-10 offset-lg-1 " style="padding: 10px;margin-top: 0vh;">
                 <div class="col-12 m-0" style="color:#FFF;padding: 0px;border-radius: 10px;text-align: center;">
-                    <button class="btn" style="float: left;background-color: #ffffff2c;color:#FFF" onclick="mostrar('user',2);capa(3)"><i class="zmdi zmdi-arrow-left"></i> Go back</button>  
+                    <button class="btn btn_back_plan" style="float: left;background-color: #ffffff2c;color:#FFF" onclick="mostrar('user',2);capa(3)"><i class="zmdi zmdi-arrow-left"></i> Go back</button>  
                     <br>  
-                    <h3 style="margin-top: 30px;">Choose a plan.</h3>
+                    <h3 style="margin-top: 30px;">Please, choose your plan :)</h3>
                         <div class="col-12 p-0">
                             <div class="col-12 p-0">
                                     <div class="carrusel">
@@ -142,8 +177,8 @@
         </div>
     </div>  
   
-  <div class="user user_2 container-fluid p-0 m-0">
-    <div class="fixed-top p-0 capa capa_2 capa_3 capa_4 capa_5 capa_0 sombra" style="z-index:4;background:#FFF;border: 0px">
+  <div class="user user_2 container-fluid p-0 m-0" style="display: none ">
+    <div class="fixed-top p-0 capa capa_2 capa_3 capa_4 capa_5 capa_6 capa_0 sombra" style="z-index:4;background:#FFF;border: 0px">
         <div class="container-fluid p-0 m-0">
             <div class="row col-12 p-0  m-0 sombra" style="background-color: #333333;">
             <div class="col-8 col-lg-2 offset-lg-0 p-2s" style="padding: 10px 0px 5px 15px;font-family: Logo;letter-spacing: 0.2em;">
@@ -186,7 +221,12 @@
                     </li>
                     <li class="p-0" onclick="capa(3)">
                         <b href="#" class="menu menu_3" >
-                            Your account
+                            Account Settings
+                        </b>
+                    </li>
+                    <li class="p-0" onclick="capa(6)">
+                        <b href="#" class="menu menu_6" >
+                            Bills
                         </b>
                     </li>
                     <li class="p-0">
@@ -224,7 +264,7 @@
                     <div class="col-lg-10 col-md-10 col-12 offset-lg-1 offset-md-1" style="padding: 0px;">
                         <button class="btn btn-green d-none d-sm-block" id="btn_new_intance" onclick="mostrar('token',2);$('#tokenModal').modal('show');$('.nuevo_token').val('')" style="float:right;font-size:.8em">NEW API TOKEN</button>
                         <button class="btn btn-green d-block d-sm-none" id="btn_new_intance_xs" onclick="mostrar('token',2);$('#tokenModal').modal('show');$('.nuevo_token').val('')" style="float:right;font-size:.8em">+</button>
-                        <button class="btn btn-green" onclick="buscar_token()" style="float:right;font-size:.8em;margin-right: 3px;"> 
+                        <button class="btn btn-green" onclick="buscar_token(true)" style="float:right;font-size:.8em;margin-right: 3px;"> 
                             <img src="assets/img/refresh.png" style="width: 16px;"> </button>
                         <h2>API Tokens</h2>
                         <p>Create here your API token to interact with your API instance.</p>
@@ -233,10 +273,37 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="  row  capa capa_6 m-0" style="padding: 30px 15px 0px 15px;">
+                    <div class="col-lg-10 col-md-10 col-12 offset-lg-1 offset-md-1 row" style="padding: 0px;">
+                        <div class="col-12 col-md-8 col-lg-7" style="padding: 0px 20px;">
+                            <h4>Your Pending Payments <b id="totalAmount" style="color: rgb(255,255,255,.8);"></b></h4> 
+                            <div id="charges" class="row" style="padding: 0px 10px"></div>
+                            <p class="btn_pay_now" style="margin-top: 10px;text-align: left;font-size: .9em;">Total selected <b id="totalAmountPay" style="color: #5AE4A8;"></b>
+                            <button class="btn " style="background:#b03ec3;color:#FFF;width: auto;margin-top: -2px;padding:3px 8px;font-size: .8em;" onclick="$('#payNow').modal('show');mostrar('payDiv',2);">Pay Now</button>
+                            </p>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-5" style="padding: 0px 20px;">
+                            <div class="col-12 p-0">
+                                <button class="btn btn-green" style="float: right;padding:0px 0px 7px 2px;" onclick="$('#newCard').modal('show');mostrar('cardAdm',2)"><img src="assets/img/edit.png" style="width: 30px;"></button>
+                                <h4>Your Cards</h4>
+                                <p><b id="cards_number"></b> Card(s) registered</p> 
+                                <hr>
+                            </div>
+                            <div class="col-12 p-0">
+                                <h4>Your Payments</h4> 
+                                <div id="payments" class="row" style="max-height: 50vh;overflow-y: auto;padding:0px 10px">
+                                </div>
+                            </div>
+                        </div>  
+                        
+                        
+                    </div>
+                </div>
                 
                 <div class="  row  capa capa_3 m-0 p-0">
                             <div class="col-sm-10  col-xs-12 offset-sm-1" style="padding: 30px 20px;">
-                                <div class="col-12" style="background-color: #ffffff0b;padding: 10px;border-radius: 10px;">
+                                <div class="col-12" style="padding: 0px;border-radius: 10px;">
                                 <h3>Account</h3>
                                 <hr>
                                 <h5>Plan</h5>
@@ -246,7 +313,8 @@
                                     <option value="2" style="background-color: #333333;">Pro</option>
                                     <option value="3" style="background-color: #333333;">Enterprise</option>
                                 </select>
-                                <button class="btn btn-green" style="background:#d24ede;color:#FFF" onclick="mostrar('user',1);capa(101);">Change you plan!</button>
+                                <button class="btn btn-green" style="background:#4e9bde;color:#FFF" onclick="mostrar('user',1);capa(101);">Change you plan</button>
+                                <button class="btn btn-green" onclick="mostrar('user',1);capa(101);">Admin you plan</button>
                                 <hr>
                                 <h5>Personal data</h5>
                                 Name:
@@ -259,7 +327,7 @@
                                 <button class="btn btn-green" onclick="sent_edit_user()">Edit user</button>
                                 <hr>
                                 <h5>Password</h5>
-                                <button class="btn btn-green" style="background:#FFCC00" onclick="open_pass_modal(true)">Change Password</button>
+                                <button class="btn btn-green" onclick="open_pass_modal(true)">Change Password</button>
                                 
                                 </div>
                                 
@@ -273,6 +341,73 @@
             </div>
         </div>
     </div>
+    <div class="modal" id="payNow" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content" style="background: #565656;color:#fbfbfb">
+            <div class="modal-header" style="border:0px">
+              <h5 class="modal-title">Pay Now</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body"  style="font-weight:100;">
+                <div class="row payDiv payDiv_1"style="padding: 10px 30px;">
+                    <center><div class="lds-ring"><div></div><div></div><div></div><div></div></div></center>
+                </div>
+                <div class="payDiv payDiv_2" style="padding: 10px;">
+                    Are you sure about making this payment?
+                    <br>
+                    <select id="cardOption" placeholder="Cardholder Name" style="border-width: 0px;width: 100%; margin: 10px 0px;">
+                    </select>
+                    <p id="payNow_problem" style="color: rgb(255, 206, 206);margin-bottom: 0px;"></p>
+                </div> 
+                <div class="payDiv payDiv_3" style="padding: 10px;">
+                    Your payment has been sent correctly.
+                </div> 
+                 
+            </div>
+            <div class="modal-footer" style="border:0px" id="alertModal_btn_div">
+                <button class="btn payDiv payDiv_2" style="color:#5AE4A8;width: auto;;" onclick="paySum()">Pay now</button>
+                <button class="btn payDiv payDiv_3" style="color:#5AE4A8;width: auto;;" onclick="$('#payNow').modal('hide')">Close</button>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="modal" id="newCard" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+          <div class="modal-content" style="background: #565656;color:#fbfbfb">
+            <div class="modal-header" style="border:0px">
+              <h5 class="modal-title">Add New Card</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body"style="font-weight:100;">
+                <div class="row cardAdm cardAdm_1"style="padding: 10px 30px;">
+                    <center><div class="lds-ring"><div></div><div></div><div></div><div></div></div></center>
+                </div>
+                <div class="row cardAdm cardAdm_2" id="cards" style="padding: 10px 30px;"></div>
+                <div class="cardAdm cardAdm_3" style="padding: 10px;">
+                    Your name:
+                    <input type="text" id="card-name" placeholder="Cardholder Name" autocomplete="off" style="border-width: 0px;width: 100%; margin: 10px 0px;">
+                    Card data:
+                    <div id="card-element" style="padding: 10px;margin: 10px 0px;background-color:#505050;border-radius: 4px;"></div>
+                    <p id="addCard_problem" style="color: rgb(252, 213, 213);font-weight: 100;font-size:.9em"></p>
+                </div> 
+                <div class="cardAdm cardAdm_4" style="padding: 10px;text-align: center;">
+                    Are you sure of delete this card?
+                    <br><br>
+                    <a style="color:#e9e9e9">
+                    <img src="" id="deleteCard_payment_img" style="width: 30px;border:1px solid #fff;border-radius: 3px;"><b style="color:#565656">_</b>_ _ _ _  <b style="color:#565656">_</b> _ _ _ _  <b style="color:#565656">_</b> _ _ _ _  <b style="color:#565656">_</b> <b style="color: #e9e9e9;font-weight: 900;" id="deleteCard_payment_last"></b>
+                    </a>
+                    <input type="hidden" id="deleteCard_payment_id">
+                </div>  
+            </div>
+            <div class="modal-footer" style="border:0px" id="alertModal_btn_div">
+                <button type="button" class="btn cardAdm cardAdm_3" onclick="mostrar('cardAdm',2)">Cancel</button>
+                <button type="button" class="btn cardAdm cardAdm_3" id="add-card-button">Add Card</button>
+                <button class="btn cardAdm cardAdm_4" style="color:#5AE4A8;width: auto;;" onclick="delete_card()">Delete</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
     <div class="modal" id="phoneModal" tabindex="-1">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -462,40 +597,7 @@
         </div>
     </div>
 
-    <div class="modal" id="passwordModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header" style="border:0px">
-              <h5 class="modal-title">SET NEW PASSWORD</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body pass pass_1">
-                <center><div class="lds-ring"><div></div><div></div><div></div><div></div></div></center>
-            </div>
-            <div class="modal-body pass pass_2"> 
-                <div class="old_pass">
-                <p>Current Password:</p>
-                <input type="password" placeholder="Current password" id="old_password">
-                </div>
-                <p>New Password:</p>
-                <input type="password" placeholder="New password" id="new_password_1">
-                <p>Repeat new Password:</p>
-                <input type="password" placeholder="Repeat your new password" id="new_password_2" >
-                <p id="new_password_alert" style="color:rgb(237, 150, 150);margin-top: 0px;padding: 0px 10px;"></p> 
-            </div>
-            <div class="modal-body pass pass_3"> 
-                <b><i class="zmdi zmdi-check-all" style="color: #26D367;"></i> Your new password was setting.</b>
-            </div>
-            <div class="modal-footer pass pass_2 style="border:0px">
-              <button type="button" class="btn" onclick="set_password()">Send</button>
-            </div>
-            
-            <div class="modal-footer pass pass_3 style="border:0px">
-                <button type="button" class="btn" onclick="$('#passwordModal').modal('hide')">Close</button>
-              </div>
-          </div>
-        </div>
-    </div>
+    
   
 
   <!-- Bootstrap JS (optional) -->
@@ -643,6 +745,7 @@
     
     
     const buscar_phones=(spiner=true)=>{
+        mostrar('user',2)
         if(spiner){
         capa(0)
         }
@@ -674,7 +777,7 @@
                 $nros="";
                 //console.log(b.sessionStatus?.me?.name)
                 b.session=='initializing'?init=true:false;
-                $("#div_phones").append(`<div class="col-12" style="padding:4px 0px">
+                html=`<div class="col-12" style="padding:4px 0px">
                     <div class="col-12 placa" style="cursor:default">
                         <button class="btn btn3" data="${b.uid}" onclick="eliminar_numero_modal($(this).attr('data'),'eliminado')" ><img src="assets/img/delete.png" style="height:14px"></button>
                         <button class="btn btn3" data="${b.uid}" onclick="editar_numero($(this).attr('data'))" ><img src="assets/img/settings.png" style="height:15px"></button>
@@ -699,7 +802,8 @@
                         <div id="connection_${b.nro}">
                         </div>
                     </div>
-                </div>`);
+                </div>`
+                $("#div_phones").append(html);
                 actualizar_connection(b.nro,b.connection)  
             });
             if(init){
@@ -842,8 +946,8 @@
                         <div>
                             <h3 style="margin:5px 0px;font-size:.7em"><a style="color:#5AE4A8">API Token: </a> ${b.name || "No name"}</h3>
                             <h3 style="margin:5px 0px;font-size:.7em"><a style="color:#5AE4A8">Status: </a> ${b.status=="active"?'working':'pause'}</h3>
-                            <button class="btn btn3" style="float:left;border:2px solid ${b.status=="active"?' #5AE4A8':'#333'}" data="${b.id}" onclick="edit_token($(this).attr('data'),'active')" ><i class='zmdi zmdi-play' style="color:#FFF"></i></button>
-                            <button class="btn btn3" style="float:left;border:2px solid ${b.status!="active"?' #5AE4A8':'#333'}" data="${b.id}" onclick="edit_token($(this).attr('data'),'paused')" ><i class="zmdi zmdi-pause" style="color:#FFF"></i></button>
+                            <button class="btn btn-green" style="padding:0px 12px;float:left;border:1px solid ${b.status=="active"?' #5AE4A8':'#333'};background:#535353" data="${b.id}" onclick="edit_token($(this).attr('data'),'active')" ><i class='zmdi zmdi-play' style="color:#FFF"></i></button>
+                            <button class="btn btn-green" style="padding:0px 12px;float:left;border:1px solid ${b.status!="active"?' #5AE4A8':'#333'};background:#535353" data="${b.id}" onclick="edit_token($(this).attr('data'),'paused')" ><i class="zmdi zmdi-pause" style="color:#FFF"></i></button>
                             <hr style="border:0px">
                         </div>
                     </div>
@@ -957,11 +1061,26 @@
         $("#nro").val("")
     }
 
-    
+    function capa103animation(){
+        $('.check').css('animation', 'start 1s ease both');
+        setTimeout(function() {
+        $('.animated-text').addClass('typing');
+        }, 1000);
+        setTimeout(function() {
+        $("#btn-animation").show()
+        }, 2000);
+    }
 
+    
+    
+    mostrar('user',2)
+    let user;
     $(window).on('load',()=>{
+        mostrar('user',1)
         const token=getParameterByName("token")
         if(token){
+            var newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+            window.history.replaceState({ path: newUrl }, '', newUrl);
             checktoken(token)
         }else{
             user=JSON.parse(localStorage.getItem("user")|| "{}")
@@ -985,6 +1104,7 @@
                 return;
             }
             localStorage.setItem("user",JSON.stringify(e))
+            user=JSON.parse(localStorage.getItem("user")|| "{}")
             //const accion=getParameterByName("accion")
             //if(accion){alertFun({text:'Your email has been successfully validated',btn:"Go to my account",functionModal:()=>{location.href=window.location.pathname;}});setTimeout(()=>{location.href=window.location.pathname},2000);return;}
             //location.href=window.location.pathname
@@ -992,36 +1112,19 @@
         })
     }
     
-
-    function fecha(fc,seg){
-        fc=new Date(fc);
-        ms=fc.getMonth()+1;ms<10?ms="0"+ms:true;
-        d=fc.getDate();d<10?d="0"+d:true;
-        h=fc.getHours();h<10?h="0"+h:true;
-        m=fc.getMinutes();m<10?m="0"+m:true;
-        s="";if(seg){s=fc.getSeconds();s<10?s="0"+s:true;s=":"+s;}
-        return h+":"+m+s+" "+d+"/"+ms+"/"+fc.getFullYear();
-    }
-
-    mostrar('user',1)
-    
     function control_sesion(buscar=true){
-        user=JSON.parse(localStorage.getItem("user"))
-        console.log(user)
         if(user){
             $("#account_name").html(user.user.nombre);
             $("#name_form_user").val(user.user.nombre)
             $("#email_form_user").val(user.user.correo)
             if(!user.user.password){
-                mostrar('user',2);
-                capa(2)
-                mostrar('pass',2);
                 open_pass_modal(false)
                 return true;
             }
             if(user.user.plan==0){
                 mostrar('user',1);
-                capa(101)
+                capa(101);
+                $(".btn_back_plan").hide()
                 return true;
             }
             if(user.user.email_valid){
@@ -1034,27 +1137,45 @@
                 capa(100)
                 return true;
             }
+            $(".user").css("background","none")
             $("#plan_form_user").val(user.user.plan)
             mostrar('user',2)
             capa(2)
-            if(buscar){buscar_phones();buscar_token();}
-            
+            if(buscar){
+                buscar_phones();
+                buscar_token();
+                getCards()
+                pending_charges()
+                fetchPayment()
+            }
         }
     }
 
+    function fecha(fc,seg){
+        fc=new Date(fc);
+        ms=fc.getMonth()+1;ms<10?ms="0"+ms:true;
+        d=fc.getDate();d<10?d="0"+d:true;
+        h=fc.getHours();h<10?h="0"+h:true;
+        m=fc.getMinutes();m<10?m="0"+m:true;
+        s="";if(seg){s=fc.getSeconds();s<10?s="0"+s:true;s=":"+s;}
+        return h+":"+m+s+" "+d+"/"+ms+"/"+fc.getFullYear();
+    }
+
+    $(".capa").hide()
+    mostrar('user',2)
+    
+
     function open_pass_modal(newPass){
-        $("#passwordModal").modal('show');
+        capa(102);mostrar('user',1)
         $("#new_password_1").val("");$("#new_password_2").val("");$("#old_password").val("");
         $("#new_password_alert").html("")
         mostrar('pass',2)
         if(!newPass){
-            $('#passwordModal').attr('data-bs-backdrop',"static")
-            $(".btn-close").hide()
+            $(".title_pass").html("Set a password to continue")
             $(".old_pass").hide()
         }else{
-            $('#passwordModal').attr('data-bs-backdrop', 'true');
-            $(".btn-close").show()
             $(".old_pass").show()
+            $(".title_pass").html("Set new password")
         }
 
     }
@@ -1071,24 +1192,124 @@
         }
         env["newPassword"]=$("#new_password_1").val();
         env["token"]=user.token;
-        mostrar('pass',1)
+        capa(0)
         console.log(env)
         ajax("/login/users/setpassword",env,(d)=>{
-            console.log(d)
+            console.log(d,"Set new pass")
             if(d.status==400){
-                mostrar('pass',2)
+                capa(102);
                 $("#new_password_alert").html(d.message)
                 return;
             }
             checktoken(user.token);
-            mostrar('pass',3);
-            capa(2)
         });
     }
+    
+    chargesSelected=[];
+        async function pending_charges(){
+            chargesSelected=[];
+            $("#charges").html(`<center>Loading your pending payments...</center>`)
+            ajax('/payment/pendingcharges',{token:user.token},(response)=>{
+                    console.log(response)
+                    const {charges:data}=response
+                    total=0; 
+                    $("#charges").html("")
+                    data.forEach((e,i) => {
+                        chargesSelected.push({amount:e.amount,id:e._id,selected:true})
+                        total+=e.amount;
+                        $("#charges").append(`
+                        <div class="col-12" style="padding:4px 0px">
+                            <div class="col-12" style="color:#FFF;background:rgb(255,255,255,.1);padding:10px;text-align:left;border-radius:10px">
+                                <a style="float:right">u$d ${e.amount/100}</a>
+                                <div class="form-check" style="width:20px;height:15px;padding:0px;float:left;margin:0px">
+                                <input class="checkPending" style="margin:0px;padding:0px" type="checkbox" onchange="chargesSelected[${i}].selected=$(this).prop('checked');sumSelect()" checked>
+                                </div>${e.title} 
+                                <p style="font-size:.7em;margin:0px">Created: ${formatDate(e.created)}</p>
+                                <p style="font-size:.7em;margin:0px">Pay before: ${formatDate(e.dueDate)}</p> 
+                                <p style="font-size:.7em;margin:0px">Status: ${e.status.toUpperCase()}</p> 
+                            </div>
+                        </div>    
+                        `)
+                    });
+                    $("#totalAmount").html("u$d "+(total/100).toFixed(2))
+                    if(data.length==0){
+                            $("#charges").html(`No pending payments`)
+                            $(".btn_pay_now").hide()
+                    }
+                    sumSelect()
+                    console.log(chargesSelected)
+            },(e)=>{console.log(e)});
+        }
 
+        async function sumSelect(){
+            total=0;
+            chargesSelected.forEach(e => {
+               if(e.selected) total+=e.amount;
+            });
+            console.log(chargesSelected)
+            $("#totalAmountPay").html("u$d "+(total/100).toFixed(2))
+            const a=chargesSelected.map(a=>{return a.selected?a.id:undefined}).filter(a=>a)
+            console.log(a)
+        }
+        
 
+        async function paySum(){
+            if($("#cardOption").val()=="NO"){
+                $("#payNow_problem").html("You must choose a card.");
+                setTimeout(() => {
+                    $("#payNow_problem").html("")
+                }, 2000);
+                return true;
+            }
+            mostrar('payDiv',1);
+            const chargeIds=chargesSelected.map(a=>{return a.selected?a.id:undefined}).filter(a=>a)
+            const amount = chargesSelected.reduce((total, obj) => obj.selected ? total + obj.amount : total, 0);
+            const paymentMethodId=paymentMethod_default;
+            const env={ paymentMethodId, amount ,chargeIds , token:user.token};
+            ajax('/payment/chargecustomer',env,(response)=>{
+                    if(response.success){
+                    pending_charges()
+                    fetchPayment();
+                        mostrar('payDiv',3);
+                    }else{
+                        $("#payNow_problem").html("Error: Payment failed. Try again or use another card.");
+                        setTimeout(() => {
+                            $("#payNow_problem").html("")
+                        }, 3000);
+                        mostrar('payDiv',2)
+                    }
+            });
+        }
+
+        async function fetchPayment(){
+            $("#payments").html(`<center>Loading your payments...</center>`)
+            ajax('/payment/userPayments',{token:user.token},(response)=>{
+                    const {payments:data}=response
+                    console.log(data)
+                    total=0; 
+                    $("#payments").html(``)
+                    data.forEach((e,i) => {
+                        $("#payments").append(`
+                        <div class="col-12" style="padding:4px 0px">
+                            <div class="col-12" style="color:#FFF;background:rgb(255,255,255,.1);padding:10px;text-align:left;border-radius:10px">
+                                ${formatDate(e.created)}
+                                <a style="float:right">u$d ${e.amount/100}</a>
+                            </div>
+                        </div>    
+                        `)
+                    });
+                    $("#totalAmount").html("u$d "+(total/100).toFixed(2))
+                    if(data.length==0){
+                            $("#payments").html(`No registered payments`)
+                    }
+                    sumSelect()
+                    console.log(chargesSelected)
+                });
+        }
+        
     $(".btn_start").on("click",function(){
         env={};
+        const initPlan=user.user.plan;
         env["plan"]=$(this).attr("data");
         env["uid"]=user.user.uid;
         env["token"]=user.token;
@@ -1097,7 +1318,12 @@
             console.log(d)
             user.user=d.data.user;
             localStorage.setItem("user",JSON.stringify(user));
-            control_sesion(false)
+            if(initPlan==0){
+                mostrar('user',1);
+                capa(103);
+                capa103animation()
+                return
+            }
             mostrar('user',2);
             capa(2)
         });
@@ -1143,8 +1369,6 @@
 
 </script>
   <script>
-    $(function() {
-    })
     $(document).ready(function(){
       const panel=$("#navbar_container").html();
       function alertOnDesktop(){
@@ -1171,6 +1395,19 @@
       var scrollLeft = (scrollWidth - containerWidth) / 2;
       $scrollContainer.scrollLeft(scrollLeft);
     });
+
+    const formatDate = (timestamp) => {
+            const date = new Date(timestamp * 1000); // Convertir de segundos a milisegundos
+
+            const year = date.getFullYear();
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth()+1).padStart(2, '0');
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+
+            return `${year}-${month}-${day} ${hours}:${minutes}`;
+        };
+    
 
     paises={
     "countries": [
@@ -1381,6 +1618,150 @@
         copyText.setSelectionRange(0, 99999);
         navigator.clipboard.writeText(copyText.value);
     })
+
+    styleStipe={
+            style: {
+                base: {
+                    color: 'white', // Texto blanco en el campo de la tarjeta
+                    '::placeholder': {
+                        color: '#888' // Color del texto del placeholder
+                    },
+                    backgroundColor: '#505050', 
+                    padding: '10px', // Padding para el contenido dentro del campo
+                    borderRadius: '10px', // Radio de borde para suavizar las esquinas
+                    iconColor: 'white'
+                },
+                invalid: {
+                    color: '#FF6666', // Color del texto en caso de error
+                },
+            },
+            hidePostalCode : true
+        }
+
+    async function getCards(){
+        mostrar('cardAdm',1)
+        ajax('payment/getcard',{token:user.token},(response)=>{
+            console.log(response)
+                    const {paymentMethods:pay}=response;
+                    $("#cards").html("")
+                    $("#cards_number").html(0)
+                    $("#cardOption").html(`<option value="NO">Choose a card</option>`)
+                    mostrar('cardAdm',2)
+                    if(pay){
+                        pay.forEach(e => {
+                            if(e.isDefault){paymentMethod_default=e.id}
+                            $("#cardOption").append(`<option value="${e.id}">${e.card.brand.toUpperCase()} (${e.card.last4} )</option>`)
+                            $("#cards").append(`
+                            <div class="col-12 col-lg-12 col-md-12" style="padding:2px 2px">
+                                <div class="col-12" style="border-radius:10px;cursor:pointer;background:rgb(255,255,255,.2);color:#FFF;font-size:.8em;padding:10px;">
+                                    <img src="assets/img/delete.png" title="Delete card" onclick="deleteCardStart('${e.id}','${e.card.last4}','${e.card.brand}')"  style="width:15px;margin-top:2px;float:right;display:${e.isDefault?"none":"block"};filter:invert(1)">
+                                    <img src="assets/img/fav${e.isDefault?"_1":""}.png"  onclick="mark_as_fav('${e.id}')"  title="Choose as fav" style="width:18px;margin-top:1px;float:right;margin-right:5px;${e.isDefault?"":"filter:invert(1)"}">
+                                    <img src="assets/img/${e.card.brand}.png" style="width:30px;border:1px solid #FFF;border-radius:3px;"> Ending: ${e.card.last4} ${e.isDefault?"[Default]":""}
+                                </div>
+                            </div>
+                            `)
+                        });
+                        $("#cards").append(`
+                        <div class="col-12 col-lg-12 col-md-12" style="padding:2px 2px">
+                            <div class="col-12" onclick="mostrar('cardAdm',3)" style="border-radius:10px;padding:5px;color:#5AE4A8;text-align:center;cursor:pointer">
+                                ADD NEW CARD
+                            </div>
+                        </div>
+                        `)
+                        $("#cards_number").html(pay.length)
+                    }   
+        })
+    }
+    
+
+    $(document).ready();
+
+    function initStripe() {
+    $.getScript("https://js.stripe.com/v3/", function() {
+        // El script está cargado y listo para usarse
+        console.log('Stripe.js está listo');
+        const stripe = Stripe('pk_test_51PWFKSLW177YQySElQnjLIo1JZZ5FxhoFKVXppGrHuE4RWOtovrgSBmjnoOCpkjtIsdC7AqBCE8hCrXLokuTwiQS00qmtpE7no');
+        const elements = stripe.elements();
+        const cardElement = elements.create('card',styleStipe);
+        const stripeAddCard=async () => {
+            const paymentMethodId = await createPaymentMethod();
+            if(paymentMethodId.error){mostrar('cardAdm',3);$("#addCard_problem").html(paymentMethodId.error.message);
+            setTimeout(()=>{
+                $("#addCard_problem").html("")
+            },2500)
+            return false;}
+            const sendData = {
+                userId:user.user.uid,
+                paymentMethodId,
+                token:user.token
+            };
+            console.log(sendData)
+            ajax('payment/addcard',sendData,(response)=>{
+                    console.log('Solicitud POST enviada correctamente', response);
+                    getCards()
+            });
+            
+        }
+        
+        const createPaymentMethod = async () => {
+            mostrar('cardAdm',1)
+            const cardName = document.querySelector('#card-name').value;
+            const postalCode = document.querySelector('input').value;
+            const formattedPostalCode = postalCode.padStart(5, '0');
+            document.querySelector('input').value = postalCode.padStart(5, '0');
+            
+            const { paymentMethod, error } = await stripe.createPaymentMethod({
+                type: 'card',
+                card: cardElement,
+                billing_details: {
+                    name: cardName,
+                    address: {
+                        postal_code: formattedPostalCode // Usar el código postal formateado
+                    }
+                },
+            });
+
+            if (error) {
+                console.error(error);
+                return {error};
+            } else {
+                if(cardName==""){
+                    return {error:{message:"You must to enter a cardholder name"}};
+                }
+                return paymentMethod.id;
+            }
+        };
+
+        cardElement.mount('#card-element');
+        document.querySelector('#add-card-button').addEventListener('click',stripeAddCard );
+        //$('#newCard').modal('show');;
+        
+        
+    });
+    }
+
+    function deleteCardStart(id,last4,brand) { 
+        $("#deleteCard_payment_id").val(id);
+        $("#deleteCard_payment_img").attr("src","assets/img/"+brand+".png");
+        $("#deleteCard_payment_last").html(last4);
+        mostrar('cardAdm',4)
+    }
+
+        function delete_card(){
+        mostrar('cardAdm',1)
+        ajax("/payment/deletecard",{token:user.token,paymentMethodId:$("#deleteCard_payment_id").val()},(response)=>{
+            getCards()
+        });
+    }
+    function mark_as_fav(id){
+        ajax("/payment/changedefault",{token:user.token,paymentMethodId: id},(response)=>{
+            getCards()
+        });
+    }
+
+        
+
+        
     
   </script>
 </body>

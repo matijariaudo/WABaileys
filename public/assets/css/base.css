@@ -179,7 +179,8 @@ input,textarea,select{
     padding:5px 20px;
     border:1px solid rgba(181, 145, 145, 0);
     background-color: rgba(35, 35, 35, 0.113);
-    border-radius:5px
+    border-radius:5px;
+    color:#000;
   }
   input::placeholder,textarea::placeholder{
     color:rgb(179, 177, 177);
@@ -251,17 +252,17 @@ input,textarea,select{
 
   @font-face {
     font-family: 'Sans';
-    src: url('./assets/fonts/Product\ Sans\ Regular.ttf') format('opentype');
+    src: url('../fonts/Product\ Sans\ Regular.ttf') format('opentype');
     /* También puedes proporcionar otras fuentes como fallback si es necesario */
   }
   @font-face {
     font-family: 'Logo';
-    src: url('./assets/fonts/GD\ Sherpa\ Regular.ttf') format('opentype');
+    src: url('../fonts/GD\ Sherpa\ Regular.ttf') format('opentype');
     /* También puedes proporcionar otras fuentes como fallback si es necesario */
   }
   @font-face {
     font-family: 'Square';
-    src: url('./assets/fonts/Square\ One\ Bold.ttf') format('opentype');
+    src: url('../fonts/Square\ One\ Bold.ttf') format('opentype');
     /* También puedes proporcionar otras fuentes como fallback si es necesario */
   }
   @media only screen and (max-width: 768px) {
@@ -329,13 +330,14 @@ height: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-background: #5ae4a8;
+background: #ffffff32;
+border: 1px solid #dddddd00;
 border-radius: 5px;
 }
 
 ::-webkit-scrollbar-track {
-background-color: #f2f2f2 ;
-border: 1px solid #f2f2f2;
+background-color: #383737 ;
+border: 1px solid none;
 }
 
 .btn_s_m,.btn_s_t{

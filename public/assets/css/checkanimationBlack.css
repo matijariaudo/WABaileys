@@ -1,0 +1,53 @@
+:root {
+    --check-width: 55px;
+    --check-height: 30px;
+    --check-stroke: 10px; /* Variable para el grosor de las líneas */
+  }
+  
+  /* Here... */
+  .check {
+    border: solid var(--check-stroke) rgb(0, 0, 0); /* Usa la variable para el grosor */
+    width: var(--check-width);
+    height: var(--check-height);
+    border-top: none;
+    border-right: none;
+    transform: rotate(-45deg);
+    transform-origin: top left;
+  }
+  
+  @keyframes start {
+    0% {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+  
+    20% {
+      opacity: 1;
+      width: 0;
+      height: var(--check-height);
+    }
+  
+    100% {
+      width: var(--check-width);
+      height: var(--check-height);
+    }
+  }
+  
+
+  .animated-text {
+    opacity: 0;
+    animation: none;
+  }
+  @keyframes type {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  .typing {
+    animation: type 1s steps(30, end) forwards;
+  }

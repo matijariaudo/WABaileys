@@ -46,6 +46,18 @@ const userSchema=Schema({
         type:Boolean,
         default:false
     },
+    payment_session:{
+        type:String,
+        default:""
+    },
+    payment_customer:{
+        type:String,
+        default:""
+    },
+    payment_subscription:{
+        type:String,
+        default:""
+    },
     apiPass:[apiSchema],
     estado:{
         type:Boolean,

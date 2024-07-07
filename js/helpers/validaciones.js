@@ -36,12 +36,21 @@ const JWTValidation=async(tokenBase,{req})=>{
     }
 }
 
+const checkValidationEmail=async(req,res,next)=>{
+    const error=validationResult(req)
+    if(error.errors.length>0){
+        req.body.errors=error.errors
+    }
+    next()
+}
+
 const JWTValidationEmail=async(tokenBase,{req})=>{
     try {
         const token=tokenBase;
         const rta=jwt.verify(token, process.env.SEED);
         let usuario_jwt;
-        if(rta.uid){
+        if(!rta.uid){throw new Error("You must to enter a Session token.");}
+        if(rta.email){
             usuario_jwt=await User.findOne({id:rta.uid,correo:rta.email});
         }
         if(usuario_jwt){
@@ -93,7 +102,6 @@ const APIJWTValidation=async(tokenBase,{req})=>{
 const checkUserCreate=[
     body('name','No ingresó nombre').not().isEmpty(),
     body('email','No ingresó correo').not().isEmpty(),
-    body('password','La clave debe tener al menos 6 caracteres').isLength({min:6}),
     checkValidation
 ];
 
@@ -125,9 +133,9 @@ const checkUserJWT=[
     checkValidation
 ]
 
-const checkUserJWTParam=[
+const checkUserJWTEmail=[
     param('token','El token no es válido').custom(JWTValidationEmail),
-    checkValidation
+    checkValidationEmail
 ]
 
 const checkInstanceCreate=[
@@ -187,12 +195,22 @@ const checkInstanceSendMedia=[
     checkValidation
 ];
 
+
+const checkPaymentChargeCustomer=[
+    header('authorization').notEmpty().custom(JWTValidation),
+    body('amount','You must enter a message').isNumeric(),
+    body('paymentMethodId','You must enter a payment Method Id').notEmpty(),
+    body('chargeIds').isArray({ min: 1 }).withMessage('chargeIds must to be an Array'),
+    body('chargeIds.*').isMongoId().withMessage('Each item of chargeIds must to be a Mongo Id.'),
+    checkValidation
+]
+
 module.exports={
     checkUserCreate,
     checkUserLogin,
     checkUserUpdate,
     checkUserJWT,
-    checkUserJWTParam,
+    checkUserJWTEmail,
     checkInstanceCreate,
     checkInstanceID,
     checkInstanceEdit,
@@ -201,5 +219,6 @@ module.exports={
     checkInstanceMessage,
     checkInstanceSendMedia,
     checkInstanceSendMessage,
-    checkUserUpdatePassword
+    checkUserUpdatePassword,
+    checkPaymentChargeCustomer
 }
