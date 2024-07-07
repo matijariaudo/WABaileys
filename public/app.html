@@ -69,6 +69,9 @@
                         <div class="check"></div>
                     </center>
                     <h1 class="animated-text" style="margin-top: 10px;">Your account is ready!</h1>  
+                    <p class="animated-text">
+                        If you chose a paid plan, the first month we will deduct the corresponding amount from your bill. It does not apply to extra instances that you consume.
+                    </p>   
                     <button id="btn-animation" class="btn" style="background-color: #FFF;color:#959595;margin-top: 30px;display: none;" onclick="control_sesion(true)">Continue</button>             
                 </div>
             </div>
@@ -1663,7 +1666,7 @@
                         });
                         $("#cards").append(`
                         <div class="col-12 col-lg-12 col-md-12" style="padding:2px 2px">
-                            <div class="col-12" onclick="mostrar('cardAdm',3)" style="border-radius:10px;padding:5px;color:#5AE4A8;text-align:center;cursor:pointer">
+                            <div class="col-12" onclick="if(!initStripFlag){initStripe();}mostrar('cardAdm',3)" style="border-radius:10px;padding:5px;color:#5AE4A8;text-align:center;cursor:pointer">
                                 ADD NEW CARD
                             </div>
                         </div>
@@ -1676,8 +1679,11 @@
 
     $(document).ready();
 
+    initStripFlag=false
     function initStripe() {
-    $.getScript("https://js.stripe.com/v3/", function() {
+        console.log("Inicializado Stripe")
+        $.getScript("https://js.stripe.com/v3/", function() {
+        initStripFlag=true;
         // El script está cargado y listo para usarse
         console.log('Stripe.js está listo');
         const stripe = Stripe('pk_test_51PWFKSLW177YQySElQnjLIo1JZZ5FxhoFKVXppGrHuE4RWOtovrgSBmjnoOCpkjtIsdC7AqBCE8hCrXLokuTwiQS00qmtpE7no');
