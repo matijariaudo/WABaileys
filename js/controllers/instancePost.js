@@ -1,5 +1,6 @@
 const Instance = require("../database/models/instance");
 const { jsonAnswer } = require("../helpers/apiFormat");
+const { checkCons } = require("../helpers/consumption");
 const { msgFormat } = require("../helpers/msgFormat");
 const { Wsp } = require("../models/wspClass");
 
@@ -7,7 +8,7 @@ const { Wsp } = require("../models/wspClass");
 const instanceCreate=async(req,res)=>{
     const {name,webhook}=req.body;
     try {
-        const instance=new Instance({name,user:req.body.user_jwt._id,webhook});
+        const instance=new Instance({name,user:req.body.user_jwt._id,webhook,start:Math.floor(Date.now() / 1000)});
         await instance.save()
         return res.status(200).json(await jsonAnswer(200,null,'The instance has been created.',{instance}));
     } catch (error) {
@@ -16,29 +17,29 @@ const instanceCreate=async(req,res)=>{
 }
 
 const instanceGet=async(req,res)=>{
-    const {instanceId}=req.body;
+    const {instanceId,user_jwt}=req.body;
     let instances;
     try {
         if(instanceId){
-            instances=await Instance.find({user:req.body.user_jwt._id,status:"active",_id:instanceId}).lean();
+            instances=await Instance.find({user:user_jwt.id,status:"active",_id:instanceId}).lean();
             }else{
-            instances=await Instance.find({user:req.body.user_jwt._id,status:"active"}).lean();
-        }
-        instances = await Promise.all(instances.map(async a => {
-            const wsp=await new Wsp();
-            const inst =await  wsp.getInstance(a._id);
-            const dataInst= await inst?.data ; // Devolver el objeto modificado
-            const rta={...a,uid:a._id,sessionStatus:dataInst};
-            delete rta._id;
-            delete rta.__v;
-            return rta;            
-        }));    
+            instances=await Instance.find({user:user_jwt.id,status:"active"}).lean();
+        } 
         return res.status(200).json(await jsonAnswer(200,null,"Instances data sent",{instances}))
     } catch (error) {
         return res.status(200).json(await jsonAnswer(400,"The operation has failed","-",null));
     }
-    
-    
+}
+
+const instanceConsumption=async(req,res)=>{
+    const {user_jwt,month,year}=req.body;
+    let instancesData;
+    try {
+        instancesData=await checkCons(user_jwt.id,month,year)
+        return res.status(200).json(await jsonAnswer(200,null,"Instances data sent",{instancesData}))
+    } catch (error) {
+        return res.status(200).json(await jsonAnswer(400,"The operation has failed","-",null));
+    }
 }
 
 const instanceInit=async(req,res)=>{
@@ -66,6 +67,7 @@ const instanceDelete=async(req,res)=>{
         const instanceStart=await wsp.getInstance(instanceId);
         if(instanceStart){await instanceStart.endInstance(true);}
         instance.status='delete';
+        instance.end=Math.floor(Date.now() / 1000);
         instance.save();
         return res.status(200).json(await jsonAnswer(200,null,"Your instance has been correctly deleted.",{instance}));
     } catch (error) {
@@ -209,5 +211,6 @@ module.exports={
     instanceSendMedia,
     instanceChat,
     instanceMessage,
-    instanceMedia
+    instanceMedia,
+    instanceConsumption
 }

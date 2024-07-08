@@ -109,7 +109,7 @@ const sendMailPassword=async(req,res)=>{
     const user=await User.findOne({correo:email,estado:true});
     if(!user){return res.status(200).json(await jsonAnswer(400,"The operation has failed","-",null));}
     const token=jwt.sign({ uid: user.id,email:user.correo,newPass:true}, process.env.SEED,{expiresIn:'15m'})
-    sendEmail({email:user.correo,subject:"Verify your email",typeNro:2,button:{frase:"Verify email",link:`http://${req.headers.host}/login/users/validar/${token}`}})
+    sendEmail({email:user.correo,subject:"Verify your email",typeNro:3,button:{frase:"Verify email",link:`http://${req.headers.host}/login/users/validar/${token}`}})
     return res.status(200).json(await jsonAnswer(200,null,`We have sent an email to validate your direction`,{user,token}));
 }
 

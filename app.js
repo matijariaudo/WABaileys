@@ -15,14 +15,14 @@ const init=async()=>{
     await checkFolder('./auth_wp');
     await checkFolder('./cache_wp')
     const instancesActive=instances.filter(a=>a.session=='connected');
-    instancesActive.forEach(async e => {await wsp.createInstance(e.id,{});});
+    //instancesActive.forEach(async e => {await wsp.createInstance(e.id,{});});
     const instancesNonActive=instances.filter(a=>a.session!='connected');
     for (let x = 0; x < instancesNonActive.length; x++) {
         const e=instancesNonActive[x];
         try {
-            await wsp.createInstance(e.id,{QrBlock:true});
+            //await wsp.createInstance(e.id,{QrBlock:true});
         } catch (error) {
-            await wsp.deleteInstance(e.id);
+            //await wsp.deleteInstance(e.id);
             console.log(error)   
         }
         await delayTime(333);
@@ -30,6 +30,7 @@ const init=async()=>{
 }
 
 init()
+
 
 
 

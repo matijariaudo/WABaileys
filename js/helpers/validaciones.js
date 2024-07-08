@@ -100,8 +100,8 @@ const APIJWTValidation=async(tokenBase,{req})=>{
 }
 
 const checkUserCreate=[
-    body('name','No ingresó nombre').not().isEmpty(),
-    body('email','No ingresó correo').not().isEmpty(),
+    body('name','You must enter a name').not().isEmpty(),
+    body('email','You must enter an email').not().isEmpty(),
     checkValidation
 ];
 
@@ -112,19 +112,19 @@ const checkUserUpdatePassword=[
 ];
 
 const checkUserUpdate=[
-    body('name','No ingresó nombre').if(body('nombre').notEmpty()).isLength({min:4}),
-    body('email','El formato del correo es inválido').if(body('correo').notEmpty()).isEmail(),
-    body('state','El formato del estado es inválido').if(body('estado').notEmpty()).isBoolean(),
-    body('plan','El formato del plan es inválido').if(body('plan').notEmpty()).isNumeric(),
-    body('password','El formato de la clave es incorrecto').if(body('clave').notEmpty()).isLength({min:6}),
+    body('name','You must enter a name').if(body('nombre').notEmpty()).isLength({min:4}),
+    body('email','You must enter a valid email').if(body('correo').notEmpty()).isEmail(),
+    body('state','You must enter a valid new state').if(body('estado').notEmpty()).isBoolean(),
+    body('plan','You must enter a valid plan').if(body('plan').notEmpty()).isNumeric(),
+    body('password','You must enter a valid password (at least 6 characters)').if(body('clave').notEmpty()).isLength({min:6}),
     header('authorization').notEmpty().custom(JWTValidation),
-    body('uid','El id no tiene formato adecuado.').isMongoId(),
+    body('uid','You must enter a valid user Id').isMongoId(),
     checkValidation
 ];
 
 const checkUserLogin=[
-    body('correo','No ingresó correo').isEmail(),
-    body('clave','La clave debe tener al menos 6 caracteres').isLength({min:6}),
+    body('correo','You must enter an email').isEmail(),
+    body('clave','You must enter a valid password (at least 6 characters)').isLength({min:6}),
     checkValidation,
 ];
 
@@ -134,7 +134,7 @@ const checkUserJWT=[
 ]
 
 const checkUserJWTEmail=[
-    param('token','El token no es válido').custom(JWTValidationEmail),
+    param('token','You must enter a valid token').custom(JWTValidationEmail),
     checkValidationEmail
 ]
 
@@ -146,50 +146,50 @@ const checkInstanceCreate=[
 ]
 
 const checkInstanceID=[
-    body('instanceId','You must to enter a valid ID').custom(checkID),
+    body('instanceId','You must enter a valid instance ID').custom(checkID),
     header('authorization').notEmpty().custom(APIJWTValidation),
     checkValidation
 ];
 
 const checkInstanceEdit=[
-    body('instanceId','You must to enter a valid ID').custom(checkID),
+    body('instanceId','You must enter a valid instance ID').custom(checkID),
     body('webhook','webhook must to be an URL').if(body('webhook').notEmpty()).isURL({protocols: ['http', 'https'],require_tld: false,require_protocol: true}),
     header('authorization').notEmpty().custom(APIJWTValidation),
     checkValidation
 ]
 
 const checkInstanceGet=[
-    body('instanceId','You must to enter a valid ID').if(body('instanceId').notEmpty()).custom(checkID),
+    body('instanceId','You must enter a valid instance ID').if(body('instanceId').notEmpty()).custom(checkID),
     header('authorization').notEmpty().custom(APIJWTValidation),
     checkValidation
 ];
 
 const checkInstanceChat=[
-    body('instanceId','You must to enter a valid ID').custom(checkID),
-    body('remoteJid','You must to enter a valid ID').custom(validateRemoteJid),
+    body('instanceId','You must enter a valid instance ID').custom(checkID),
+    body('remoteJid','You must enter a valid remoteJid').custom(validateRemoteJid),
     header('authorization').notEmpty().custom(APIJWTValidation),
     checkValidation
 ];
 
 const checkInstanceMessage=[
-    body('instanceId','You must to enter a valid ID').custom(checkID),
-    body('messageId','You must enter a messageId').notEmpty(),
+    body('instanceId','You must enter a valid instance ID').custom(checkID),
+    body('messageId','You must enter a valid messageId').notEmpty(),
     header('authorization').notEmpty().custom(APIJWTValidation),
     checkValidation
 ];
 
 const checkInstanceSendMessage=[
-    body('instanceId','You must to enter a valid ID').custom(checkID),
-    body('remoteJid','You must to enter a valid ID').custom(validateRemoteJid),
+    body('instanceId','You must enter a valid instance ID').custom(checkID),
+    body('remoteJid','You must enter a valid remoteJid').custom(validateRemoteJid),
     body('message','You must enter a message').notEmpty(),
     header('authorization').notEmpty().custom(APIJWTValidation),
     checkValidation
 ];
 
 const checkInstanceSendMedia=[
-    body('instanceId','You must to enter a valid ID').custom(checkID),
-    body('remoteJid','You must to enter a valid ID').custom(validateRemoteJid),
-    //body('fileUrl','You must enter a url').isURL(),
+    body('instanceId','You must enter a valid instance ID').custom(checkID),
+    body('remoteJid','You must enter a valid remoteJid').custom(validateRemoteJid),
+    body('fileUrl','Your fileUrl must be an URL').if(body('fileUrl').notEmpty()).isURL({protocols: ['http', 'https'],require_tld: false,require_protocol: true}),
     body('type',`You must enter a type('image','video','audio','document')`).isIn(['image','video','audio','document']),
     header('authorization').notEmpty().custom(APIJWTValidation),
     checkValidation

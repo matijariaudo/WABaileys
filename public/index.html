@@ -414,14 +414,6 @@
                 Don't have an account? <a onclick="mostrar('log',4)" style="color: #3ba778;">Sign Up</a><br>
                 Forgot your password? <a onclick="mostrar('log',5)" style="color: #3ba778;">Reset here</a>
                 </div>
-                <hr>
-            </div>
-            <div class="modal-body log log_2 col-10 offset-1" style="text-align: center;padding: 0px 0px 20px 0px;">
-                <p>Connect or log in with</p>
-                <button class="btn btn-log"  onclick="location.href='/login/logingoogle'"><img src="assets/img/google.png" alt="Google Icon" style="width: 19px;margin-top: -2px;"> Google</button>
-                <br>
-                <button class="btn btn-log"  onclick="location.href='login/loginfacebook'"><img src="assets/img/social-media.png" alt="Facebook Icon" style="width: 24px;margin-top: -4px;"> Facebook </button>
-            
             </div>
             <div class="modal-body log log_3  col-10 offset-1" style="text-align: center;">
                 <center>
@@ -440,11 +432,19 @@
                 <p id="new_txt" style="margin-top: 20px;"></p>
                 <a onclick="mostrar('log',2);" style="margin-top: 20px;cursor: pointer;font-size: .85em;margin-top: 5px;"><i class="zmdi zmdi-arrow-left"></i> Back</a>
             </div>
+            <div class="modal-body log log_2 log_4 col-10 offset-1" style="text-align: center;padding: 0px 0px 20px 0px;">
+                <hr>
+                <p>Or connect with</p>
+                <button class="btn btn-log"  onclick="location.href='/login/logingoogle'"><img src="assets/img/google.png" alt="Google Icon" style="width: 19px;margin-top: -2px;"> Google</button>
+                <br>
+                <button class="btn btn-log"  onclick="location.href='login/loginfacebook'"><img src="assets/img/social-media.png" alt="Facebook Icon" style="width: 24px;margin-top: -4px;"> Facebook </button>
+            
+            </div>
+            
             <div class="modal-body log log_5 col-10 offset-1" style="text-align: center;">
                 <input type="text" placeholder="Your Email" id="reset_email" class="form_login_input" autocomplete="off" style="color:#000">
                 <button class="btn btn-log" id="btn_reset" onclick="">Reset your password</button>
                 <br>
-                <p id="new_txt" style="margin-top: 20px;"></p>
                 <a onclick="mostrar('log',2);" style="margin-top: 20px;cursor: pointer;font-size: .85em;margin-top: 5px;"><i class="zmdi zmdi-arrow-left"></i> Back</a>
             </div>
             <div class="modal-body log log_6 col-10 offset-1" style="text-align: center;">
@@ -539,9 +539,9 @@
             if(d.error){
                 mostrar('log',4)
                 problema=analisis_error(d,true)
-                $("#plan_container").after(`<p id='new_text_success' style='margin-top:10px;margin-bottom:0px'>${problema}</p>`)
+                $("#new_txt").html(problema)
                 setTimeout(() => {
-                    $("#new_text_success").remove()
+                    $("#new_txt").html("")
                 }, 10000);
                 return;
             }

@@ -7,7 +7,9 @@ const instanceSchema=Schema({
     number:{type:Number},
     webhook:{type:String},
     plan:{type:Number},
-    status:{type:String,default:"active"}
+    status:{type:String,default:"active"},
+    start:{type:Number},
+    end:{type:Number}
 });
 instanceSchema.methods.toJSON= function(){
     const {__v,_id,... campain}=this.toObject();
