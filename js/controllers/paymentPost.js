@@ -67,7 +67,6 @@ const changeDefaultCard=async (req, res) => {
         const {paymentMethodId } = req.body;
         const {id:userId}=req.body.user_jwt;
         const user=await User.findById(userId);
-        console.log(user,userId)
         if(!user){ throw new Error('No user founded')}
         
         // Actualiza la tarjeta de pago predeterminada del cliente
@@ -133,7 +132,6 @@ const chargeCustomer=async (req, res) => {
             off_session: true, // para intentos de pago fuera de sesión
             confirm: true,
         });
-        console.log(paymentIntent)     
         if (paymentIntent.status === 'succeeded') {
             const newPayment = new Payment({
                 paymentIntentId: paymentIntent.id,
@@ -158,11 +156,9 @@ const chargeCustomer=async (req, res) => {
 
             return res.status(200).json({ success: true, paymentIntent: newPayment });
         } else {
-            console.log("AAA")
             return res.status(400).json({ success: false, message: 'Payment failed' });
         }
     } catch (error) {
-        console.log(error.message)
         res.status(400).send({ error: { message: error.message } });
     }
 }
@@ -190,7 +186,6 @@ const getPayments=async (req, res) => {
     try {
         // Buscar todos los pagos del usuario por su ID
         const payments = await Payment.find({userId});
-        console.log("USERRR",payments)
         // Si encontramos pagos, los enviamos como respuesta
         if (payments) {
             res.status(200).json({ success: true, payments });

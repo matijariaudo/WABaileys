@@ -283,11 +283,11 @@
                             <h4>Your Consumption</h4> 
                             <div class="col-3">
                                 Month
-                                <select id="consumption_month"  style="padding-left: 0px;"></select>
+                                <select id="consumption_month"  style="padding-left: 0px;background-color: rgb(255,255,255,.2);"></select>
                             </div>
                             <div class="col-5">
                                 Year:
-                                <select id="consumption_year" style="padding-left:0px;"></select>
+                                <select id="consumption_year" style="padding-left:0px;;background-color: rgb(255,255,255,.2);"></select>
                             </div>
                             <div class="col-4">
                                 <button class="btn btn-green" style="margin-top: 15px;" onclick="buscar_consumptions()">Search</button>
@@ -445,6 +445,7 @@
                 <p>Webhooks URL:</p>
                 <input class="nuevo_wsp" type="text" placeholder="Ej: https://mysite.com" id="nuevo_webhook_wsp"> 
                 <p style="font-size:.8em;margin: 0px;color:rgb(107, 107, 107);font-style: oblique;">*Optional: Each time you'll receive a text we sent a notification to this url in a POST request.</p>
+                <p id="create_problem"></p>
             </div>
             <div class="modal-body create create_3" style="text-align: center;">
                 <b><i class="zmdi zmdi-check-all" style="color: #26D367;"></i> Your instance was created.</b>
@@ -713,36 +714,31 @@
         mostrar('textSend',1);
         ajax(media?"/api/instance/sendmedia":"/api/instance/send",env,(d)=>{
             const e=d.data
-            console.log(d)
-            if(d.error){
-                problema=analisis_error(d,true)
-                mostrar('textSend',2);
-                $('#succ_msg').append('<i class="zmdi zmdi-close" style="color:red"></i>'+problema);
-                setTimeout(()=>{$("#succ_msg").html("")},1500)
-                return true;
-            }
             mostrar('textSend',2);
             $("#text_textSend").val("");
             $('#succ_msg').append('<i class="zmdi zmdi-check-all" style="color:#5AE4A8"></i>Message succesful.');
             setTimeout(()=>{$("#succ_msg").html("")},1500)
+        },(d)=>{
+            problema=analisis_error(d,true)
+            mostrar('textSend',2);
+            $('#succ_msg').append('<i class="zmdi zmdi-close" style="color:red"></i>'+problema);
+            setTimeout(()=>{$("#succ_msg").html("")},3000)
+            return true;
         })
     }
 
     const sent_email_valid=()=>{
         env={};
         env["token"]=user.token;
-        console.log(env)
         capa(0)
         ajax("/login/users/sendvalidation",env,(d)=>{
             capa(100);
-            if(d.error){
-                analisis_error(d);
-                capa(2);
-                return true;
-            }
-            console.log(d)
             if(d.status==200){alertFun({text:`We have sent an email. Don't forget to check you spam.`,btn:`Ok`,functionModal:()=>{$("#alertModal").modal('hide');}});}
             
+        },(d)=>{
+            analisis_error(d);
+            capa(2);
+            return true;
         });
     }
 
@@ -752,14 +748,16 @@
         env["uid"]=user.user.uid;
         env["name"]=$("#name_form_user").val();
         env["email"]=$("#email_form_user").val();
-        console.log(env)
         capa(0)
         ajax("/login/users/edit",env,(d)=>{
-            console.log(d)
             user.user=d.data.user;
             localStorage.setItem("user",JSON.stringify(user));
             control_sesion(false)
             capa(3)
+        },(d)=>{
+            analisis_error(d);
+            capa(3);
+            return true;
         });
     }
     
@@ -772,15 +770,8 @@
         env={};
         env["token"]=user.token;
         ajax("/api/instance/get",env,(d)=>{
-            console.log(d)
+            const e=d.data;
             $("#div_phones").html("")
-            capa(2);
-            if(d.error){
-                analisis_error(d);
-                capa(2);
-                return true;
-            }
-            const e=d.data
             capa(2)
             if(e.length==0)
             {
@@ -796,11 +787,10 @@
             instancias=e.instances;
             e.instances.forEach((b,i) => {
                 $nros="";
-                //console.log(b.sessionStatus?.me?.name)
                 b.session=='initializing'?init=true:false;
                 html=`<div class="col-12" style="padding:4px 0px">
                     <div class="col-12 placa" style="cursor:default">
-                        <button class="btn btn3" data="${b.uid}" onclick="eliminar_numero_modal($(this).attr('data'),'eliminado')" ><img src="assets/img/delete.png" style="height:14px"></button>
+                        <button class="btn btn3" data="${b.uid1}" onclick="eliminar_numero_modal($(this).attr('data'),'eliminado')" ><img src="assets/img/delete.png" style="height:14px"></button>
                         <button class="btn btn3" data="${b.uid}" onclick="editar_numero($(this).attr('data'))" ><img src="assets/img/settings.png" style="height:15px"></button>
                         <div style="display:${b.session=='close' || b.session=='qr'?'block':'none'}">
                             <h3 style="margin:5px 0px;font-size:.7em"><a style="color:#5AE4A8">ID</a> ${b.uid || "No name"} <a style="color:#5AE4A8">Name</a> ${b.name || "No name"}</h3>
@@ -828,9 +818,13 @@
                 actualizar_connection(b.nro,b.connection)  
             });
             if(init){
-                setTimeout(()=>{console.log("buscando");buscar_phones(false);},1000)
+                setTimeout(()=>{buscar_phones(false);},1000)
                 
             }
+        },(d)=>{
+            capa(2);
+            analisis_error(d);
+            return true;
         })
     }
 
@@ -840,11 +834,6 @@
         $("#to_textSend").html('')
         ajax("/api/instance/contacts",env,(d)=>{
             const e=d.data;
-            console.log(d)
-            if(d.error){
-                analisis_error(d)
-                return;
-            }
             e.contacts=e.contacts.map( a=> {return {id:a.id,name:a.name?a.name:a.notify}});
             e.contacts.sort((a, b) => {
                 // Convertir ambos nombres a minúsculas para una comparación sin distinción entre mayúsculas y minúsculas
@@ -862,10 +851,12 @@
             });
             e.contacts.forEach(x => {
                 const c=x;
-                //console.log(c)
-                //console.log("+"+c.id.split("@")[0],c.name||"No name")
                 $("#to_textSend").append(`<option value="${c.id}" class="${c.id?.indexOf('@g.us')>-1?"contact_group":"contact_contact"}">${c.name|| c.notify} (${c.id})</option>`)
             });
+        },(d)=>{
+            $('#textModal').modal('hide');
+            analisis_error(d)
+            return;
         })
     }
 
@@ -913,9 +904,7 @@
     function editar_numero(id) {
         $("#phoneModal").modal('show');
         mostrar('create',2);
-        console.log(instancias)
         instancia=instancias.find(a=>a.uid==id)
-        console.log(instancia.name,instancia)
         $("#nuevo_nro_wsp").val(instancia.name);
         $("#nuevo_id_wsp").val(instancia.uid);
         $("#nuevo_webhook_wsp").val(instancia.webhook)
@@ -930,10 +919,11 @@
         mostrar('create',1)
         ajax("/api/instance/edit",env,(d)=>{
             const e=d.data;
-            console.log(e);
-            if(e.error){alert(e.error);return false;}
             $("#phoneModal").modal('hide');
             buscar_phones(true);
+        },(d)=>{
+            analisis_error(d);
+            $("#phoneModal").modal('hide');
         })
     }
 
@@ -944,11 +934,13 @@
         mostrar('create',1)
         ajax("/api/instance/create",env,(d)=>{
             const e=d.data;
-            console.log(e);
-            if(e.error){alert(e.error);return false;}
             $('#form_create_success').val(e.instance.uid);
             mostrar('create',3)
             buscar_phones();
+        },(d)=>{
+            text=analisis_error(d,true);
+            $("#create_problem").html(text);
+            mostrar('create',2)
         })
     }
 
@@ -959,7 +951,6 @@
         $("#div_tokens").html('')
         ajax("/login/users/getapitoken",env,(d)=>{
             const e=d.data;
-            console.log(e.tokens)
             e.tokens.forEach((b,i) => {
                 $("#div_tokens").append(`<div class="col-12" style="padding:4px 0px">
                     <div class="col-12 placa" style="cursor:default">
@@ -987,24 +978,25 @@
         mostrar('token',1)
         ajax("/login/users/apitoken",env,(d)=>{
             const e=d.data;
-            console.log(e);
-            if(e?.error){alert(e.error);return false;}
             $('#form_token_success').val(e.token);
             mostrar('token',3)
             buscar_token();
+        },(d)=>{
+            analisis_error(d);
+            mostrar('token',2)
+            return false;
         })
     }
     
     function edit_token(tokenId,status){
         env={tokenId,status};
         env.token=user.token;
-        console.log(env)
         ajax("/login/users/editapitoken",env,(d)=>{
-            console.log(d);
             const e=d.data;
-            if(e?.error){alert(e.error);return false;}
             buscar_token(true);
-
+        },(d)=>{
+            analisis_error(d);
+            return false;
         })
     }
 
@@ -1020,8 +1012,6 @@
         env.instanceId=idI;env.token=user.token;
         ajax("/api/instance/init",env,(d)=>{
             const e=d.data;
-            console.log(e);
-            if(e.error){alert(e.error);return false;}
             if(e.instance.qr!=""){
                 mostrar('vincular',2)
                 crearQR(e.instance.qr,"qr_wsp");
@@ -1029,6 +1019,9 @@
             }else{
                 setTimeout(()=>{solicitar_qr(idI);},1400)
             }
+        },(d)=>{
+            analisis_error(d);
+            return false;
         })
     }
     
@@ -1039,17 +1032,15 @@
         mostrar('eliminar',1)
         ajax("/api/instance/delete",env,(d)=>{
             const e=d.data;
-            console.log(d)
-            if(e.error){
-                console.log(e)
-               $("#eliminarModal").modal('hide');
-               return false;
-            }
-            console.log(e);
             $("#eliminarModal").modal('hide');
             buscar_phones()            
+        },(e)=>{
+            analisis_error(e)
+            $("#eliminarModal").modal('hide');
+            return false;
         })
     }
+
     function eliminar_numero_modal(idI){
         $("#eliminarModal").modal('show');
         mostrar('eliminar',2)  
@@ -1058,13 +1049,13 @@
 
     
 
-    function ajax(url,json_dat,callback,error=(e)=>{console.log(e)}){
+    function ajax(url,json_dat,callback,error=function(e) {console.log("ERRROR",e)}){
             let token="Bearer"
             if(json_dat?.token){
                  token=`Bearer ${json_dat.token}`
             }
             //console.log("token",token)
-            $.ajax({url,type:"POST",headers: {"Content-Type": "application/json","Authorization": token},dataType : 'json',data: JSON.stringify(json_dat),success: function(data, textStatus, jqXHR){callback(data)},error: function( jqXHR, textStatus, errorThrown ) {error();}});
+            $.ajax({url,type:"POST",headers: {"Content-Type": "application/json","Authorization": token},dataType : 'json',data: JSON.stringify(json_dat),success: function(data, textStatus, jqXHR){callback(data)},error: function( jqXHR, textStatus, errorThrown ) {error(jqXHR.responseJSON);}});
     }
 
     $("#nro").on('keyup',(e)=>{
@@ -1106,7 +1097,6 @@
             checktoken(token)
         }else{
             user=JSON.parse(localStorage.getItem("user")|| "{}")
-            console.log(user)
             if(user.token){
                 checktoken(user.token)
             }else{
@@ -1121,16 +1111,15 @@
         env={token};
         ajax("/login/users/check",env,(d)=>{
             const e=d.data;
-            if(d.error){
-                analisis_error(d)
-                return;
-            }
             localStorage.setItem("user",JSON.stringify(e))
             user=JSON.parse(localStorage.getItem("user")|| "{}")
             //const accion=getParameterByName("accion")
             //if(accion){alertFun({text:'Your email has been successfully validated',btn:"Go to my account",functionModal:()=>{location.href=window.location.pathname;}});setTimeout(()=>{location.href=window.location.pathname},2000);return;}
             //location.href=window.location.pathname
             control_sesion();
+        },(d)=>{
+            analisis_error(d)
+            return;
         })
     }
     
@@ -1190,14 +1179,8 @@
         env={};env["token"]=user.token;
         env.month=$("#consumption_month").val()
         env.year=$("#consumption_year").val()
-        console.log(env)
         ajax("/api/instance/consumptions",env,(d)=>{
             const e=d?.data;
-            console.log(d)
-            if(d.error){
-                problema=analisis_error(d,true)
-                return true;
-            }
             $("#consumptions").html("")
             $("#total_consumptions").html("")
             $("#estimate").remove()
@@ -1207,6 +1190,9 @@
                 `)
             }
             if(!e.instancesData?.future){$("#total_consumptions").html(e?.instancesData?.resume.consumption.toFixed(2)+" Instances")}
+        },(d)=>{
+            problema=analisis_error(d,true)
+            return true;
         })
 
     }
@@ -1253,9 +1239,7 @@
         env["newPassword"]=$("#new_password_1").val();
         env["token"]=user.token;
         capa(0)
-        console.log(env)
         ajax("/login/users/setpassword",env,(d)=>{
-            console.log(d,"Set new pass")
             if(d.status==400){
                 capa(102);
                 $("#new_password_alert").html(d.message)
@@ -1270,7 +1254,6 @@
             chargesSelected=[];
             $("#charges").html(`<center>Loading your pending payments...</center>`)
             ajax('/payment/pendingcharges',{token:user.token},(response)=>{
-                    console.log(response)
                     const {charges:data}=response
                     total=0; 
                     $("#charges").html("")
@@ -1297,8 +1280,10 @@
                             $(".btn_pay_now").hide()
                     }
                     sumSelect()
-                    console.log(chargesSelected)
-            },(e)=>{console.log(e)});
+            },(d)=>{
+                console.log("error:",d);
+                return false;
+            });
         }
 
         async function sumSelect(){
@@ -1306,10 +1291,8 @@
             chargesSelected.forEach(e => {
                if(e.selected) total+=e.amount;
             });
-            console.log(chargesSelected)
             $("#totalAmountPay").html("u$d "+(total/100).toFixed(2))
             const a=chargesSelected.map(a=>{return a.selected?a.id:undefined}).filter(a=>a)
-            console.log(a)
         }
         
 
@@ -1345,7 +1328,6 @@
             $("#payments").html(`<center>Loading your payments...</center>`)
             ajax('/payment/userPayments',{token:user.token},(response)=>{
                     const {payments:data}=response
-                    console.log(data)
                     total=0; 
                     $("#payments").html(``)
                     data.forEach((e,i) => {
@@ -1363,7 +1345,6 @@
                             $("#payments").html(`No registered payments`)
                     }
                     sumSelect()
-                    console.log(chargesSelected)
                 });
         }
         
@@ -1375,7 +1356,6 @@
         env["token"]=user.token;
         capa(0)
         ajax("/login/users/edit",env,(d)=>{
-            console.log(d)
             user.user=d.data.user;
             localStorage.setItem("user",JSON.stringify(user));
             if(initPlan==0){
@@ -1414,7 +1394,6 @@
 
     const analisis_error=(d,reverse)=>{
         text=d.message;
-        console.log(d)
         if(d?.data?.errors){
             if(d.data.errors[0]?.msg.indexOf("Invalid token")>=0){localStorage.clear();location.href="index.html";}
             d.data.errors.forEach((a,i)=>{
@@ -1701,7 +1680,6 @@
     async function getCards(){
         mostrar('cardAdm',1)
         ajax('payment/getcard',{token:user.token},(response)=>{
-            console.log(response)
                     const {paymentMethods:pay}=response;
                     $("#cards").html("")
                     $("#cards_number").html(0)

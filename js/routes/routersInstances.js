@@ -11,6 +11,10 @@ router.post('/instance/edit',checkInstanceEdit,instanceEdit);
 router.post('/instance/init',checkInstanceID,instanceInit);
 router.post('/instance/get',checkInstanceGet,instanceGet);
 router.post('/instance/consumptions',checkUserJWT,instanceConsumption);
+router.post('/',checkUserJWT,()=>{
+    const {user_jwt}=req.body;
+    return res.status(200).json({user:user_jwt})
+});
 
 router.post('/instance/contacts',checkInstanceID,instanceContacts);
 

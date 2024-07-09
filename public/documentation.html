@@ -160,11 +160,12 @@
                           <h2>Authentication</h2>
                           <h3>Base URL: <code>https://api.chatter.com</code></h3>
                           <p>To access our API, you need to authenticate using JSON Web Tokens (JWT). Please include your JWT in the Authorization header for every request.</p>
-                          <pre><code>     curl -X GET \
-                      -H "Authorization: Bearer your-api-token" \
-                      -H "Accept: application/json" \
-                      -H "Content-Type: application/json" \
-                      https://api.chatter.com</code></pre>
+                          <pre><code>     
+  curl --location --request POST 'https://chatter.plus/api' \
+  --header 'Authorization: Bearer YOUR-API-TOKEN-HERE' \
+  --header 'Accept: application/json' \
+  --header 'Content-Type: application/json'
+                          </code></pre>
                     
                           
                       </div>

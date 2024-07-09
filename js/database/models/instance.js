@@ -7,14 +7,17 @@ const instanceSchema=Schema({
     number:{type:Number},
     webhook:{type:String},
     plan:{type:Number},
+    app:{type:String,default:"whatsapp",enum:["whatsapp","instagram","live"]},
+    type:{type:String,default:"full",enum:["trial","free","full"]},
     status:{type:String,default:"active"},
     start:{type:Number},
     end:{type:Number}
 });
+
 instanceSchema.methods.toJSON= function(){
-    const {__v,_id,... campain}=this.toObject();
-    campain.uid=_id;
-    return campain;
+    const {__v,_id,... instance}=this.toObject();
+    instance.uid=_id;
+    return instance;
 }
 
 module.exports=model('Instance',instanceSchema)

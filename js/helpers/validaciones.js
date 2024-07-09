@@ -15,7 +15,7 @@ const checkMongooId=(instanciaId)=>{
 
 const checkValidation=async(req,res,next)=>{
     const error=validationResult(req)
-    if(error.errors.length>0){return res.status(200).json(await jsonAnswer(400,"Body params issues","An error has occurred with the parameters received, please check and try again",{errors:error.errors}));}
+    if(error.errors.length>0){return res.status(400).json(await jsonAnswer(400,"Body params issues","An error has occurred with the parameters received, please check and try again",{errors:error.errors}));}
     next()
 }
 
