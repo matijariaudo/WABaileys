@@ -145,6 +145,34 @@ body{
     font-family: 'Logo';
 
 }
+.btn-black{
+  background-color: #000;
+  color:#FFF;
+  border: 2px solid #000;
+  font-family: 'Logo';
+
+}
+.otto {
+  background: #ffffff;
+  color: rgb(35, 35, 35);
+  text-shadow: 
+  1px 0px 1px #ccc, 0px 1px 1px #eee, 
+  2px 1px 1px #ccc, 1px 2px 1px #eee,
+  3px 2px 1px #ccc, 2px 3px 1px #eee,
+  4px 3px 1px #ccc, 3px 4px 1px #eee,
+  5px 4px 1px #ccc, 4px 5px 1px #eee,
+  6px 5px 1px #ccc, 5px 6px 1px #eee,
+  7px 6px 1px #ccc;
+}
+qs{
+  background-color: #0000004f;
+  color:#FFF;
+  font-family: 'Logo';
+  padding: 0px 6px;
+  border-radius: 100px;
+  margin-left: 5px;
+  cursor: pointer;
+}
 .capa .btn-green{
   border: 0px solid #000;
 }

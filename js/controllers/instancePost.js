@@ -6,9 +6,9 @@ const { Wsp } = require("../models/wspClass");
 
 
 const instanceCreate=async(req,res)=>{
-    const {name,webhook}=req.body;
+    const {name,webhook,type}=req.body;
     try {
-        const instance=new Instance({name,user:req.body.user_jwt._id,webhook,start:Math.floor(Date.now() / 1000)});
+        const instance=new Instance({name,user:req.body.user_jwt._id,webhook,type,start:Math.floor(Date.now() / 1000)});
         await instance.save()
         return res.status(200).json(await jsonAnswer(200,null,'The instance has been created.',{instance}));
     } catch (error) {
@@ -156,7 +156,7 @@ const instanceMedia=async(req,res)=>{
 
 
 const instanceEdit=async(req,res)=>{
-    const {instanceId,name,webhook}=req.body;
+    const {instanceId,name,webhook,type}=req.body;
     try {
         const instance=await Instance.findOne({_id:instanceId,user:req.body.user_jwt,status:"active"});;
         if(!instance){
@@ -164,6 +164,7 @@ const instanceEdit=async(req,res)=>{
         }
         if(name){instance.name=name;}
         if(webhook){instance.webhook=webhook;}
+        if(type){instance.type=type}
         instance.save();
         return res.status(200).json(await jsonAnswer(200,null,"Instance has been modified.",{instance}));
     } catch (error) {

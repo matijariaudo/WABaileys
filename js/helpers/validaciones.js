@@ -140,7 +140,8 @@ const checkUserJWTEmail=[
 
 const checkInstanceCreate=[
     body('name','You must enter a name').notEmpty(),
-    //body('webhook','webhook must to be an URL').if(body('webhook').notEmpty()).isURL({protocols: ['http', 'https'],require_tld: false,require_protocol: true}),
+    body('webhook','webhook must to be an URL').if(body('webhook').notEmpty()).isURL({protocols: ['http', 'https'],require_tld: false,require_protocol: true}),
+    body('type','You must enter a valid email').if(body('type').notEmpty()).isIn(['full','trial','free']),
     header('authorization').notEmpty().custom(APIJWTValidation),
     checkValidation
 ]
@@ -154,6 +155,7 @@ const checkInstanceID=[
 const checkInstanceEdit=[
     body('instanceId','You must enter a valid instance ID').custom(checkID),
     body('webhook','webhook must to be an URL').if(body('webhook').notEmpty()).isURL({protocols: ['http', 'https'],require_tld: false,require_protocol: true}),
+    body('type','You must enter a valid email').if(body('type').notEmpty()).isIn(['full','trial','free']),
     header('authorization').notEmpty().custom(APIJWTValidation),
     checkValidation
 ]

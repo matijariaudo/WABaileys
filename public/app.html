@@ -83,103 +83,45 @@
                 <div class="col-12 m-0" style="color:#FFF;padding: 0px;border-radius: 10px;text-align: center;">
                     <button class="btn btn_back_plan" style="float: left;background-color: #ffffff2c;color:#FFF" onclick="mostrar('user',2);capa(3)"><i class="zmdi zmdi-arrow-left"></i> Go back</button>  
                     <br>  
-                    <h3 style="margin-top: 30px;">Please, choose your plan :)</h3>
-                        <div class="col-12 p-0">
-                            <div class="col-12 p-0">
-                                    <div class="carrusel">
-                                        <div class="col-lg-10 offset-lg-1 carrusel_div d-flex flex-nowrap" style="text-align: center;">
-                                        <div class="card_div col-4">
-                                            <div class="card mb-4 shadow p-0">
-                                            <div class="card-header">
-                                                <h4 class="my-0 font-weight-normal">Free</h4>
-                                            </div>
-                                            <div class="card-body">
-                                                <p style="color: black; position: relative; display: inline-block;margin: 0px;">
-                                                    
-                                                    <span style="position: absolute; left: 0; top: 50%; width: 100%; height: 1px; background-color: red; transform: translateY(-50%);"></span>
-                                                </p>
-                                                <h3 class="card-title pricing-card-title">FREE
-                                                    <p class="text-muted" style="text-align: center;font-size: .47em;font-weight: 100;margin-bottom: 5px;">Per instance / Per month</p>
-                                                </h3>
-                                                <ul class="list-unstyled mt-3 mb-4">
-                                                    <li class="green-txt" style="color:#d24ede;">-</li>
-                                                    <li class="green-txt">3 free & trial intances <a style="background-color: #000;color:#FFF;padding:2px;border-radius: 10px;">?</a></li>
-                                                    <li class="green-txt">Unlimited messages</li>
-                                                    <li class="green-txt">Webhook notifications</li>
-                                                    <li class="red-txt" style="color:#FFCC00">Multimedia download <a style="background-color: #FFcc00;color:#FFF;padding:2px;border-radius: 10px;">?</a></li>
-                                                    <li class="red-txt">No email support</li>
-                                                    <li class="red-txt" style="color:#333;margin-top: 10px;font-size: .8em;">$3.99<p style="margin-top: -4px;color:#959595">Each extra premium instance</p></li>
-                                                    <li class="red-txt" style="color:none;margin-top:20px">-</li>
-                                                </ul>
-                                                <button type="button" data="1" class="btn btn-lg btn-block btn-outline-primary btn_start">Choose Plan</button>
-                                            </div>
-                                            </div>
-                                        </div>
-                                        <div class=" card_div col-4">
-                                            <div class="card mb-4 shadow">
-                                            <div class="card-header">
-                                                <h4 class="my-0 font-weight-normal">Pro</h4>
-                                            </div>
-                                            <div class="card-body">
-                                                <p style="color: black; position: relative; display: inline-block;margin: 0px;">
-                                                    $9.99
-                                                    <span style="position: absolute; left: 0; top: 50%; width: 100%; height: 1px; background-color: red; transform: translateY(-50%);"></span>
-                                                </p>
-                                                <h3 class="card-title pricing-card-title">$ 6.99
-                                                    <p class="text-muted" style="text-align: center;font-size: .47em;font-weight: 100;margin-bottom: 5px;">Per month</p>
-                                                </h3>
-                                                <ul class="list-unstyled mt-3 mb-4">
-                                                <li class="green-txt" style="color:#d24ede;">3 premium instances. <a style="background-color: #000;color:#FFF;padding:2px;border-radius: 10px;">?</a></li>
-                                                <li class="green-txt">3 free & trial intances</li>
-                                                <li class="green-txt">Unlimited messages</li>
-                                                <li class="green-txt">Webhook notifications</li>
-                                                <li class="green-txt">Multimedia download</li>
-                                                <li class="green-txt">Email support</li>
-                                                <li class="red-txt" style="color:#333;margin-top: 10px;font-size: .8em;">$2.99<p style="margin-top: -4px;color:#959595">Each extra premium instance</p></li>
-                                                <li class="sombra_btn" style="border:0px solid #000;border-radius: 3px;width: 75%;margin-left: 12.5%;background: #d25ae4;color:#FFF;margin-top:20px">Get 1 month <b style="color:#FFCC00;font-weight: 700;">FREE</b></li>
-                                                </ul>
-                                                <button type="button" data="2" class="btn btn-lg btn-block btn-primary  btn_start">Choose Plan</button>
-                                            </div>
-                                            </div>
-                                        </div>
-                                        <div class="card_div col-4">
-                                            <div class="card mb-4 shadow">
-                                            <div class="card-header">
-                                                <h4 class="my-0 font-weight-normal">Enterprise</h4>
-                                            </div>
-                                            <div class="card-body">
-                                                <p style="color: black; position: relative; display: inline-block;margin: 0px;">
-                                                    $29.99
-                                                    <span style="position: absolute; left: 0; top: 50%; width: 100%; height: 1px; background-color: red; transform: translateY(-50%);"></span>
-                                                </p>
-                                                <h3 class="card-title pricing-card-title">$ 19.99
-                                                    <p class="text-muted" style="text-align: center;font-size: .47em;font-weight: 100;margin-bottom: 5px;">Per month</p>
-                                                </h3>
-                                                <ul class="list-unstyled mt-3 mb-4">
-                                                    <li class="green-txt" style="color:#d24ede;">15 premium instances. <a style="background-color: #000;color:#FFF;padding:2px;border-radius: 10px;">?</a></li>
-                                                    <li class="green-txt">3 free & trial intances</li>
-                                                    <li class="green-txt">Unlimited messages</li>
-                                                    <li class="green-txt">Webhook notifications</li>
-                                                    <li class="green-txt">Multimedia download</li>
-                                                    <li class="green-txt">Email support</li>
-                                                    <li class="red-txt" style="color:#333;margin-top: 10px;font-size: .8em;">$1.99<p style="margin-top: -4px;color:#959595">Each extra premium instance</p></li>
-                                                    <li class="sombra_btn" style="border:0px solid #000;border-radius: 3px;width: 75%;margin-left: 12.5%;background: #d25ae4;color:#FFF;margin-top:20px">Get 1 month <b style="color:#FFCC00;font-weight: 700;">FREE</b></li>
-                                                </ul>
-                                                <button type="button"  data="3" class="btn btn-lg btn-block btn-primary btn_start">Choose Plan</button>
-                                            </div>
-                                            </div>
-                                        </div>
-                                        </div>
-                                      </div>
-                                
-                            </div>    
+                    <h2 style="margin-top: 30px;font-family: Sans;">Please, choose your plan :)</h2>
+                        <div class="row col-12 col-lg-10 offset-lg-1">
+                        <div class="carrusel">
+                            <div class="col-lg-10 offset-lg-1 carrusel_div d-flex flex-nowrap" style="text-align: center;">
+                                <div class="col-9 col-lg-6"  style="padding: 0px 3px;">
+                                <div class="col-12 sombra" style="font-family: Sans;background-color: #FFF;border-radius: 10px;padding: 10px;color:#000;">
+                                    <h2 style="margin-top: 10px;border:1px solid #d1d1d1;border-width: 0px 0px 1px 0px;">Free</h2>
+                                    <h1 style="font-size: 4em;font-family: Sans;color:#000">$0</h1>
+                                    <p style="margin: -10px 0px 10px 0px;color:#afafaf00">.</p>
+                                    <p style="margin: 0px;">3 Free and trial instances.<qs data="Free instance:<br>Limit 1000 message/Month or 40 message/day<br><br><br>Trial instance:<br>All features (Automatic restart every 7 days).">?</qs></p>
+                                    <p style="margin: 0px;">Unlimited messages.</p>
+                                    <p style="margin: 0px;">WebHook Notifications.</p>
+                                    <p style="margin: 0px;">Media Download.<qs data="Low Quality (20% of real one)">*</qs></p>
+                                    <p style="margin: 0px;">No email support.</p>
+                                    <p style="margin: 0px;font-family: Logo;color:#00000000">.</p>
+                                    <button class="btn btn-black btn_start" data="1" style="margin-top: 10px;width: 100%;">Choose Plan</button>
+                                </div>
+                                </div>
+                                <div class="col-9 col-lg-6" style="padding: 0px 3px;">
+                                    <div class="col-12 sombra" style="font-family: Sans;background-color: #FFF;border-radius: 10px;padding: 10px;color:#000;">
+                                        <h2 style="margin-top: 10px;border:1px solid #d1d1d1;border-width: 0px 0px 1px 0px;">Premium</h2>
+                                        <h1 style="font-size: 4em;font-family: Sans;color:#000">$1.99</h1>
+                                        <p style="margin: -10px 0px 12px 0px;color:#afafaf">Per intance / month.</p>
+                                        <p style="margin: 0px;">3 Free or trial instances.</p>
+                                        <p style="margin: 0px;">Unlimited messages.</p>
+                                        <p style="margin: 0px;">WebHook Notifications.</p>
+                                        <p style="margin: 0px;">Media Download.</p>
+                                        <p style="margin: 0px;">Email support.</p>
+                                        <p style="margin: 0px;font-family: Logo;color:#519c78;font-weight: 600;">FIRST MONTH FREE</p>
+                                        <button class="btn btn-black btn_start" data="2" style="margin-top: 10px;width: 100%;">Choose Plan</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>               
+                        </div>
                 </div>
             </div>
-            
-        </div>
-    </div>  
-  
+        </div>  
+  </div>
   <div class="user user_2 container-fluid p-0 m-0" style="display: none ">
     <div class="fixed-top p-0 capa capa_2 capa_3 capa_4 capa_5 capa_6 capa_0 sombra" style="z-index:4;background:#FFF;border: 0px">
         <div class="container-fluid p-0 m-0">
@@ -214,7 +156,7 @@
                     </li>
                     <li class="p-0" style="" onclick="capa(4)">
                         <b href="#" class="menu menu_4 "  >
-                            API Tokens
+                            API KEYS
                         </b>
                     </li>
                     <li onclick="capa(5)" class="p-0"  >
@@ -257,7 +199,7 @@
                         <button class="btn btn-green" onclick="buscar_phones()" style="float:right;font-size:.8em;margin-right: 3px;"> 
                             <img src="assets/img/refresh.png" style="width: 16px;"> </button>
                         <h2>Instances</h2>
-                        <p>Get your API token <a style="color: #5AE4A8;cursor: pointer;" onclick="capa(4)">Here</a> to interact with your API instance.</p>
+                        <p>Get your API KEY <a style="color: #5AE4A8;cursor: pointer;" onclick="capa(4)">Here</a> to interact with your API instance.</p>
                         <button id="toggleSidebarBtn" style="display: none;">Toggle Sidebar</button>
                         <div class="col-12 p-0" id="div_phones" style="padding: 10px 0px;">
                         </div>
@@ -265,12 +207,12 @@
                 </div>
                 <div class="  row  capa capa_4 m-0" style="padding: 30px 15px 0px 15px;">
                     <div class="col-lg-10 col-md-10 col-12 offset-lg-1 offset-md-1" style="padding: 0px;">
-                        <button class="btn btn-green d-none d-sm-block" id="btn_new_intance" onclick="mostrar('token',2);$('#tokenModal').modal('show');$('.nuevo_token').val('')" style="float:right;font-size:.8em">NEW API TOKEN</button>
+                        <button class="btn btn-green d-none d-sm-block" id="btn_new_intance" onclick="mostrar('token',2);$('#tokenModal').modal('show');$('.nuevo_token').val('')" style="float:right;font-size:.8em">NEW API KEY</button>
                         <button class="btn btn-green d-block d-sm-none" id="btn_new_intance_xs" onclick="mostrar('token',2);$('#tokenModal').modal('show');$('.nuevo_token').val('')" style="float:right;font-size:.8em">+</button>
                         <button class="btn btn-green" onclick="buscar_token(true)" style="float:right;font-size:.8em;margin-right: 3px;"> 
                             <img src="assets/img/refresh.png" style="width: 16px;"> </button>
-                        <h2>API Tokens</h2>
-                        <p>Create here your API token to interact with your API instance.</p>
+                        <h2>API KEYS</h2>
+                        <p>Create here your API Key to interact with your API instance.</p>
                         <button id="toggleSidebarBtn" style="display: none;">Toggle Sidebar</button>
                         <div class="col-12 p-0" id="div_tokens" style="padding: 10px 0px;">
                         </div>
@@ -326,13 +268,9 @@
                                 <div class="col-12" style="padding: 0px;border-radius: 10px;">
                                 <h3>Account</h3>
                                 <hr>
-                                <h5>Plan</h5>
-                                Current Plan: 
-                                <select name="" id="plan_form_user" disabled>
-                                    <option value="1" style="background-color: #333333;">Free</option>
-                                    <option value="2" style="background-color: #333333;">Pro</option>
-                                    <option value="3" style="background-color: #333333;">Enterprise</option>
-                                </select>
+                                <h5>Your Plan</h5>
+                                <h1 class="plan_form_user plan_form_user_1" style="font-size: Sans;">Free Plan</h1>
+                                <h1 class="plan_form_user plan_form_user_2" style="font-size: Sans;"><b style="color: #5AE4A8;">Premium</b> Plan</h1>
                                 <button class="btn btn-green" style="background:#4e9bde;color:#FFF" onclick="mostrar('user',1);capa(101);">Change you plan</button>
                                 <button class="btn btn-green" onclick="mostrar('user',1);capa(101);">Admin you plan</button>
                                 <hr>
@@ -439,11 +377,30 @@
                 <center><div class="lds-ring"><div></div><div></div><div></div><div></div></div></center>
             </div>
             <div class="modal-body create create_2">
-                <input class="nuevo_wsp" type="hidden" placeholder="Choose a name for your intance.." id="nuevo_id_wsp"> 
+                <input class="nuevo_wsp" type="hidden" placeholder="Choose a name for your intance.." id="nuevo_id_wsp" autocomplete="off"> 
                 <p>Instance name:</p>
-                <input class="nuevo_wsp" type="text" placeholder="Choose a name for your intance.." id="nuevo_nro_wsp"> 
-                <p>Webhooks URL:</p>
-                <input class="nuevo_wsp" type="text" placeholder="Ej: https://mysite.com" id="nuevo_webhook_wsp"> 
+                <input class="nuevo_wsp" type="text" placeholder="Choose a name for your intance.." id="nuevo_nro_wsp"  autocomplete="off"> 
+                <p>Instance type:</p>
+                <div class="form-check" style="padding-left: 0px;">
+                    <input type="radio" name="nuevo_type_wsp" id="nuevo_type_wsp_1" style="width: 20px;margin: 0px;">
+                    <label class="form-check-label" for="flexRadioDefault1" >
+                        <b style="font-weight: 900;">Full:</b> All features
+                    </label>
+                  </div>
+                  <div class="form-check" style="padding-left: 0px;">
+                    <input type="radio" name="nuevo_type_wsp" id="nuevo_type_wsp_2" style="width: 20px;margin: 0px;">
+                    <label class="form-check-label" for="flexRadioDefault1" >
+                        <b style="font-weight: 900;">Trial:</b> All features (Automatic restart every 7 days)
+                    </label>
+                  </div>
+                  <div class="form-check" style="padding-left: 0px;">
+                    <input type="radio" name="nuevo_type_wsp" id="nuevo_type_wsp_3" style="width: 20px;margin: 0px;" checked>
+                    <label class="form-check-label" for="flexRadioDefault1" >
+                        <b style="font-weight: 900;">Free:</b> Limit features
+                    </label>
+                  </div>
+                <p style="margin-top:20px">Webhooks URL:</p>
+                <input class="nuevo_wsp" type="text" placeholder="Ej: https://mysite.com" id="nuevo_webhook_wsp"  autocomplete="off"> 
                 <p style="font-size:.8em;margin: 0px;color:rgb(107, 107, 107);font-style: oblique;">*Optional: Each time you'll receive a text we sent a notification to this url in a POST request.</p>
                 <p id="create_problem"></p>
             </div>
@@ -456,7 +413,7 @@
                     To do this you must go to your <b>WhatsApp > Settings > Linked devices > Link</b> new and scan the QR that we will show you.</p>
                 <button class="btn btn-green" onclick="solicitar_qr_init()">Connect now <i class="zmdi zmdi-arrow-right"></i></button>
             </div>
-            <div class="modal-footer create create_2 style="border:0px">
+            <div class="modal-footer create create_2" style="border:0px">
               <button type="button" class="btn" onclick="$('#nuevo_id_wsp').val()==''?agregar_numero_tel():editar_numero_tel()">Send</button>
             </div>
           </div>
@@ -467,19 +424,19 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header" style="border:0px">
-              <h5 class="modal-title">API TOKEN</h5>
+              <h5 class="modal-title">API KEY</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body token token_1">
                 <center><div class="lds-ring"><div></div><div></div><div></div><div></div></div></center>
             </div>
             <div class="modal-body token token_2"> 
-                <p>API Token name:</p>
+                <p>API KEY name:</p>
                 <input class="nuevo_token" type="text" placeholder="Choose a name for your intance.." id="nuevo_name_token"> 
                 <p style="font-size:.8em;margin: 0px;color:rgb(107, 107, 107);font-style: oblique;">*Optional: Each time you'll receive a text we sent a notification to this url in a POST request.</p>
             </div>
             <div class="modal-body token token_3"> 
-                <b><i class="zmdi zmdi-check-all" style="color: #26D367;"></i> Your API token was created.</b>
+                <b><i class="zmdi zmdi-check-all" style="color: #26D367;"></i> Your API KEY was created.</b>
                 <br>
                 <input type="text"id="form_token_success" disabled autocomplete="false" style="border:1px solid #5AE4A8;margin:10px 0px"> 
                 <button class="btn btn-green"id="copy_token" style="float: right;">Copy token</button>
@@ -624,6 +581,9 @@
   <!-- Bootstrap JS (optional) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   <script>
+    $("qs").on("click",function (e) {
+        alertFun({text:$(this).attr("data")})
+    })
     instancias=[];capa_actual=0
     function capa(i){
         $(".capa").hide();
@@ -908,6 +868,9 @@
         $("#nuevo_nro_wsp").val(instancia.name);
         $("#nuevo_id_wsp").val(instancia.uid);
         $("#nuevo_webhook_wsp").val(instancia.webhook)
+        type=["full","trial","free"];
+        s=type.findIndex(a=>a==instancia.type)+1
+        $("#nuevo_type_wsp_"+s).prop("checked",true)
     }
 
     function editar_numero_tel(){
@@ -915,6 +878,9 @@
         env.name=$("#nuevo_nro_wsp").val();
         env.webhook=$("#nuevo_webhook_wsp").val();
         env.instanceId=$("#nuevo_id_wsp").val();
+        s=$("input[type='radio']:checked").prop("id").split("_")[3];
+        type=["full","trial","free"];
+        env.type=type[s-1]
         env.token=user.token;
         mostrar('create',1)
         ajax("/api/instance/edit",env,(d)=>{
@@ -931,6 +897,9 @@
         nro=$("#nuevo_nro_wsp").val()
         env={}
         env.name=nro;env.token=user.token;
+        s=$("input[type='radio']:checked").prop("id").split("_")[3];
+        type=["full","trial","free"];
+        env.type=type[s-1]
         mostrar('create',1)
         ajax("/api/instance/create",env,(d)=>{
             const e=d.data;
@@ -956,7 +925,7 @@
                     <div class="col-12 placa" style="cursor:default">
                         <button class="btn btn3" data="${b.id}" onclick="edit_token($(this).attr('data'),'deleted')" ><img src="assets/img/delete.png" style="height:14px"></button>
                         <div>
-                            <h3 style="margin:5px 0px;font-size:.7em"><a style="color:#5AE4A8">API Token: </a> ${b.name || "No name"}</h3>
+                            <h3 style="margin:5px 0px;font-size:.7em"><a style="color:#5AE4A8">API KEY NAME: </a> ${b.name || "No name"}</h3>
                             <h3 style="margin:5px 0px;font-size:.7em"><a style="color:#5AE4A8">Status: </a> ${b.status=="active"?'working':'pause'}</h3>
                             <button class="btn btn-green" style="padding:0px 12px;float:left;border:1px solid ${b.status=="active"?' #5AE4A8':'#333'};background:#535353" data="${b.id}" onclick="edit_token($(this).attr('data'),'active')" ><i class='zmdi zmdi-play' style="color:#FFF"></i></button>
                             <button class="btn btn-green" style="padding:0px 12px;float:left;border:1px solid ${b.status!="active"?' #5AE4A8':'#333'};background:#535353" data="${b.id}" onclick="edit_token($(this).attr('data'),'paused')" ><i class="zmdi zmdi-pause" style="color:#FFF"></i></button>
@@ -1113,9 +1082,6 @@
             const e=d.data;
             localStorage.setItem("user",JSON.stringify(e))
             user=JSON.parse(localStorage.getItem("user")|| "{}")
-            //const accion=getParameterByName("accion")
-            //if(accion){alertFun({text:'Your email has been successfully validated',btn:"Go to my account",functionModal:()=>{location.href=window.location.pathname;}});setTimeout(()=>{location.href=window.location.pathname},2000);return;}
-            //location.href=window.location.pathname
             control_sesion();
         },(d)=>{
             analisis_error(d)
@@ -1149,7 +1115,8 @@
                 return true;
             }
             $(".user").css("background","none")
-            $("#plan_form_user").val(user.user.plan)
+            $(".plan_form_user").hide()
+            $(".plan_form_user_"+user.user.plan).show()
             mostrar('user',2)
             capa(2)
             if(buscar){
@@ -1347,6 +1314,8 @@
                     sumSelect()
                 });
         }
+
+      
         
     $(".btn_start").on("click",function(){
         env={};
@@ -1380,7 +1349,7 @@
         return decodeURIComponent(results[2].replace(/\+/g, ' '));
     }
 
-    function alertFun({text,btn,functionModal=()=>{$("#alertModal").modal('hide');}}) {
+    function alertFun({text,btn="OK",functionModal=()=>{$("#alertModal").modal('hide');}}) {
         $("#alertModal").modal('show')
         $("#alertModal_body").html(text);
         if(btn){
