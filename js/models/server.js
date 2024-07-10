@@ -18,7 +18,7 @@ class Server{
         this.app.use(express.json());// Configuración del rate limiter
         this.limiter = rateLimit({
           windowMs: 1 * 60 * 1000, // 1 minuto
-          max: 60, // Limita a 20 solicitudes por IP en el intervalo de tiempo establecido
+          max: 75, // Limita a 20 solicitudes por IP en el intervalo de tiempo establecido
           message: 'Too many requests from this IP, please try again after 1 minute'
         });
         // Aplicar el rate limiter
