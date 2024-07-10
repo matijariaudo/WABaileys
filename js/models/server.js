@@ -17,12 +17,15 @@ class Server{
     async middlewares(){
         this.app.use(express.json());// Configuración del rate limiter
         this.limiter = rateLimit({
-          windowMs: 1 * 60 * 1000, // 1 minuto
-          max: 75, // Limita a 20 solicitudes por IP en el intervalo de tiempo establecido
+          windowMs: 2 * 60 * 1000, // 1 minuto
+          max: 125, // Limita a 20 solicitudes por IP en el intervalo de tiempo establecido
           message: 'Too many requests from this IP, please try again after 1 minute'
         });
         // Aplicar el rate limiter
-        this.app.use(this.limiter);
+        this.app.use('/api', this.limiter);
+        this.app.use('/login', this.limiter);
+        this.app.use('/payment', this.limiter);
+
     }
     
     async dbConnect(){
@@ -30,7 +33,19 @@ class Server{
     }
 
     routes(){
-        let id=""
+        // Rutas de archivos estáticos
+        this.staticLimiter = rateLimit({
+        windowMs: 1 * 60 * 1000, // 1 minuto
+        max: 500, // Limita a 500 solicitudes por IP en el intervalo de tiempo establecido
+        message: 'Too many requests for static resources from this IP, please try again after 1 minute'
+        });
+
+        // Middleware para aplicar el rate limiter a archivos estáticos
+        this.app.use(express.static('public', {
+        setHeaders: (res, path, stat) => {
+            this.staticLimiter(res.req, res, () => {});
+            }
+        }));
         this.app.use(express.static(path.join(__dirname, "js")));
         this.app.use('/login',require('../routes/routersUser.js'));
         this.app.use('/api',require('../routes/routersInstances.js'));    // Ruta para servir index.html cuando la URL esté vacía
@@ -50,14 +65,9 @@ class Server{
             res.sendFile(path.join(__dirname, '../../public', 'documentation.html'));
         });
 
-        this.app.use(express.static('public'));
         // Ruta para capturar todas las demás y servir index.html (para aplicaciones SPA)
         this.app.get('/*', (req, res) => {
             res.sendFile(path.join(__dirname, '../../public', 'index.html'));
-        });
-        // Middleware para manejar rutas no encontradas y mostrar página de error
-        this.app.get((req, res, next) => {
-            res.status(404).sendFile(path.join(__dirname, '../../public', 'error.html'));
         });
     }
 
