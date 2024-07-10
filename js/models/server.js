@@ -3,8 +3,6 @@ const { dbConnection } = require('../database/DBconfig.js')
 require('dotenv').config()
 const path=require('path');
 const rateLimit = require('express-rate-limit');
-const mongoSanitize = require('express-mongo-sanitize');
-
 class Server{
     constructor(){
         this.app=express();
@@ -50,6 +48,8 @@ class Server{
             this.staticLimiter(res.req, res, () => {});
             }
         }));
+
+        
 
         this.app.use(express.static(path.join(__dirname, "js")));
         this.app.use('/login',require('../routes/routersUser.js'));
