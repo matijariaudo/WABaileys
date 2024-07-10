@@ -100,8 +100,8 @@ const APIJWTValidation=async(tokenBase,{req})=>{
 }
 
 const checkUserCreate=[
-    body('name','You must enter a name').not().isEmpty(),
-    body('email','You must enter an email').not().isEmpty(),
+    body('name','You must enter a name').not().isEmpty().escape(),
+    body('email','You must enter an email').not().isEmpty().isEmail().normalizeEmail().escape(),
     checkValidation
 ];
 
@@ -112,19 +112,21 @@ const checkUserUpdatePassword=[
 ];
 
 const checkUserUpdate=[
-    body('name','You must enter a name').if(body('nombre').notEmpty()).isLength({min:4}),
-    body('email','You must enter a valid email').if(body('correo').notEmpty()).isEmail(),
+    body('name','You must enter a name').if(body('nombre').notEmpty()).isLength({min:4}).escape(),
+    body('email','You must enter a valid email').if(body('correo').notEmpty()).isEmail().normalizeEmail().escape(),
     body('state','You must enter a valid new state').if(body('estado').notEmpty()).isBoolean(),
     body('plan','You must enter a valid plan').if(body('plan').notEmpty()).isNumeric(),
-    body('password','You must enter a valid password (at least 6 characters)').if(body('clave').notEmpty()).isLength({min:6}),
+    body('password','You must enter a valid password (at least 6 characters)').if(body('clave').notEmpty()).isLength({min:6}).escape(),
     header('authorization').notEmpty().custom(JWTValidation),
     body('uid','You must enter a valid user Id').isMongoId(),
     checkValidation
 ];
 
 const checkUserLogin=[
-    body('correo','You must enter an email').isEmail(),
-    body('clave','You must enter a valid password (at least 6 characters)').isLength({min:6}),
+    body('correo','You must enter an email')
+    .isEmail(),
+    body('clave','You must enter a valid password (at least 6 characters)').isLength({min:6}).not().isEmpty()
+    .trim(),
     checkValidation,
 ];
 
@@ -139,7 +141,7 @@ const checkUserJWTEmail=[
 ]
 
 const checkInstanceCreate=[
-    body('name','You must enter a name').notEmpty(),
+    body('name','You must enter a name').notEmpty().escape(),
     body('webhook','webhook must to be an URL').if(body('webhook').notEmpty()).isURL({protocols: ['http', 'https'],require_tld: false,require_protocol: true}),
     body('type','You must enter a valid email').if(body('type').notEmpty()).isIn(['full','trial','free']),
     header('authorization').notEmpty().custom(APIJWTValidation),

@@ -75,15 +75,15 @@ const userUpdate=async(req,res)=>{
 
 const userLogin=async(req,res)=>{
     const {correo,clave}=req.body;
-    let error=false;
-    const user=await User.findOne({correo});
-    if(!user){error=true;}
-    const rta=await bcryptjs.compare(clave,user.clave);
-    if(!rta){error=true;}
-    if(!error){
+    try {
+        const user=await User.findOne({correo});
+        console.log(correo,clave)
+        if(!user){throw new Error('Password/clave');}
+        const rta=await bcryptjs.compare(clave,user.clave);
+        if(!rta){throw new Error('Password/clave');}
         const token=jwt.sign({ uid: user.id }, process.env.SEED,{expiresIn:'12h'})
         return res.status(200).json(await jsonAnswer(200,null,`Login success: The user has been correctly loged in`,{user,token}));
-    }else{
+    } catch (error) {
         return res.status(200).json(await jsonAnswer(400,"The operation has failed","The email or password are incorrect.",null));
     }
 }

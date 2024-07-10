@@ -3,6 +3,7 @@ const { dbConnection } = require('../database/DBconfig.js')
 require('dotenv').config()
 const path=require('path');
 const rateLimit = require('express-rate-limit');
+const mongoSanitize = require('express-mongo-sanitize');
 
 class Server{
     constructor(){
@@ -17,14 +18,17 @@ class Server{
     async middlewares(){
         this.app.use(express.json());// Configuración del rate limiter
         this.limiter = rateLimit({
-          windowMs: 2 * 60 * 1000, // 1 minuto
-          max: 125, // Limita a 20 solicitudes por IP en el intervalo de tiempo establecido
+          windowMs: 1 * 60 * 1000, // 1 minuto
+          max: 60, // Limita a 20 solicitudes por IP en el intervalo de tiempo establecido
           message: 'Too many requests from this IP, please try again after 1 minute'
         });
+        
         // Aplicar el rate limiter
         this.app.use('/api', this.limiter);
         this.app.use('/login', this.limiter);
         this.app.use('/payment', this.limiter);
+        // Middleware para sanitizar todas las entradas
+        
 
     }
     
@@ -46,6 +50,7 @@ class Server{
             this.staticLimiter(res.req, res, () => {});
             }
         }));
+
         this.app.use(express.static(path.join(__dirname, "js")));
         this.app.use('/login',require('../routes/routersUser.js'));
         this.app.use('/api',require('../routes/routersInstances.js'));    // Ruta para servir index.html cuando la URL esté vacía
@@ -87,3 +92,4 @@ class Server{
 
 
 module.exports={Server}
+
