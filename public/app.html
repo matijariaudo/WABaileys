@@ -97,6 +97,7 @@
                                     <p style="margin: 0px;">WebHook Notifications.</p>
                                     <p style="margin: 0px;">Media Download.<qs data="Low Quality (20% of real one)">*</qs></p>
                                     <p style="margin: 0px;">No email support.</p>
+                                    <hr style="border: 0px;color:#00000000;background-color: #00000000;">
                                     <p style="margin: 0px;font-family: Logo;color:#00000000">.</p>
                                     <button class="btn btn-black btn_start" data="1" style="margin-top: 10px;width: 100%;">Choose Plan</button>
                                 </div>
@@ -105,13 +106,14 @@
                                     <div class="col-12 sombra" style="font-family: Sans;background-color: #FFF;border-radius: 10px;padding: 10px;color:#000;">
                                         <h2 style="margin-top: 10px;border:1px solid #d1d1d1;border-width: 0px 0px 1px 0px;">Premium</h2>
                                         <h1 style="font-size: 4em;font-family: Sans;color:#000">$1.99</h1>
-                                        <p style="margin: -10px 0px 12px 0px;color:#afafaf">Per intance / month.</p>
+                                        <p style="margin: -10px 0px 10px 0px;color:#afafaf">Per intance / month.</p>
                                         <p style="margin: 0px;">3 Free or trial instances.</p>
                                         <p style="margin: 0px;">Unlimited messages.</p>
                                         <p style="margin: 0px;">WebHook Notifications.</p>
                                         <p style="margin: 0px;">Media Download.</p>
                                         <p style="margin: 0px;">Email support.</p>
-                                        <p style="margin: 0px;font-family: Logo;color:#519c78;font-weight: 600;">FIRST MONTH FREE</p>
+                                        <hr>
+                                        <p style="margin: 0px;font-family: Logo;color:#519c78;font-weight: 600;"><img src="https://static-00.iconduck.com/assets.00/gift-icon-1947x2048-6pyurw96.png" style="width: 25px;margin-right: 5px;">Get $10 as a gift!</p>
                                         <button class="btn btn-black btn_start" data="2" style="margin-top: 10px;width: 100%;">Choose Plan</button>
                                     </div>
                                 </div>
@@ -194,7 +196,7 @@
                 </div>
                 <div class="  row  capa capa_2 m-0" style="padding: 30px 15px 0px 15px;">
                     <div class="col-lg-10 col-md-10 col-12 offset-lg-1 offset-md-1" style="padding: 0px;">
-                        <button class="btn btn-green d-none d-sm-block" id="btn_new_intance" onclick="mostrar('create',2);$('#phoneModal').modal('show');$('.nuevo_wsp').val('')" style="float:right;font-size:.8em">NEW INSTANCE</button>
+                        <button class="btn btn-green d-none d-sm-block" id="btn_new_intance" onclick="open_phone_modal()" style="float:right;font-size:.8em">NEW INSTANCE</button>
                         <button class="btn btn-green d-block d-sm-none" id="btn_new_intance_xs" onclick="mostrar('create',2);$('#phoneModal').modal('show');$('.nuevo_wsp').val('')" style="float:right;font-size:.8em">+</button>
                         <button class="btn btn-green" onclick="buscar_phones()" style="float:right;font-size:.8em;margin-right: 3px;"> 
                             <img src="assets/img/refresh.png" style="width: 16px;"> </button>
@@ -380,21 +382,21 @@
                 <input class="nuevo_wsp" type="hidden" placeholder="Choose a name for your intance.." id="nuevo_id_wsp" autocomplete="off"> 
                 <p>Instance name:</p>
                 <input class="nuevo_wsp" type="text" placeholder="Choose a name for your intance.." id="nuevo_nro_wsp"  autocomplete="off"> 
-                <p>Instance type:</p>
-                <div class="form-check" style="padding-left: 0px;">
-                    <input type="radio" name="nuevo_type_wsp" id="nuevo_type_wsp_1" style="width: 20px;margin: 0px;">
+                <p>Instance type (You won't be able to change it after it is created):</p>
+                <div class="form-check radio_input_div" style="padding-left: 0px;">
+                    <input type="radio" class="radio_input" name="nuevo_type_wsp" id="nuevo_type_wsp_1" style="width: 20px;margin: 0px;">
                     <label class="form-check-label" for="flexRadioDefault1" >
                         <b style="font-weight: 900;">Full:</b> All features
                     </label>
                   </div>
-                  <div class="form-check" style="padding-left: 0px;">
-                    <input type="radio" name="nuevo_type_wsp" id="nuevo_type_wsp_2" style="width: 20px;margin: 0px;">
+                  <div class="form-check radio_input_div" style="padding-left: 0px;">
+                    <input type="radio" class="radio_input" name="nuevo_type_wsp" id="nuevo_type_wsp_2" style="width: 20px;margin: 0px;">
                     <label class="form-check-label" for="flexRadioDefault1" >
                         <b style="font-weight: 900;">Trial:</b> All features (Automatic restart every 7 days)
                     </label>
                   </div>
-                  <div class="form-check" style="padding-left: 0px;">
-                    <input type="radio" name="nuevo_type_wsp" id="nuevo_type_wsp_3" style="width: 20px;margin: 0px;" checked>
+                  <div class="form-check radio_input_div" style="padding-left: 0px;">
+                    <input type="radio" class="radio_input" name="nuevo_type_wsp" id="nuevo_type_wsp_3" style="width: 20px;margin: 0px;" checked>
                     <label class="form-check-label" for="flexRadioDefault1" >
                         <b style="font-weight: 900;">Free:</b> Limit features
                     </label>
@@ -483,7 +485,8 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header" style="border:0px">
-              <h5 class="modal-title">Alert</h5>
+              <h5 class="modal-title"><a class="nav-link" style="font-size:1em;margin-top: 0px;font-family: Square;">
+                <b style="color:#f8f8f8">chAtter</b><b style="color: #5AE4A8">+</b></a></h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="alertModal_body" style="font-weight:100;">
@@ -764,7 +767,6 @@
                             <p style="font-size:.8em;margin:0px"><img src="./assets/img/check.png" style="width:14px"> Connected</p>
                             <div style="height:30px;margin-top:10px">
                                 <button class="btn btn3" data="${b.uid}" style="font-size:.7em;float:left" onclick="$('#textModal').modal('show');$('#tipo_textSend').val('NO');$('#btn_contact').click();$('#btn_no_media').click();mostrar('textSend',2);$('#id_textSend').val($(this).attr('data'));checkContacts()" ><img src="assets/img/send.png" style="height:12px;margin-top:-2px"> Send text</button>
-                                <button class="btn btn3" data="${b.uid}" style="font-size:.7em;float:left" onclick="$('#textModal').modal('show');$('#tipo_textSend').val('NO');$('#btn_contact').click();$('#btn_no_media').click();mostrar('textSend',2);$('#id_textSend').val($(this).attr('data'));checkContacts()" ><img src="assets/img/contact.png" style="height:14px;margin-top:-2px"> See contacts</button>
                             </div>
                         </div>
                         <div style="font-size:.8em;display:${b.session=='initializing'?'block':'none'}"">
@@ -859,6 +861,19 @@
         $('#'+divId).html(`<input type="hidden" id="qr_value" value="${data}">`)
         qrCode.append(document.getElementById(divId));
     }
+
+    function open_phone_modal(){
+        mostrar('create',2);
+        $('.radio_input').prop('disabled',false);
+        $("#nuevo_type_wsp_"+1).prop('checked',true);
+        $('.radio_input_div').css('color','#FFF');
+        $('#phoneModal').modal('show');
+        $('.nuevo_wsp').val('')
+        if(user.user.plan==2)return true;
+        $("#nuevo_type_wsp_"+1).parent().css("color","#333")
+        $("#nuevo_type_wsp_"+1).prop('disabled',true);
+        $("#nuevo_type_wsp_"+3).prop('checked',true);
+    }
     
 
     function editar_numero(id) {
@@ -871,6 +886,9 @@
         type=["full","trial","free"];
         s=type.findIndex(a=>a==instancia.type)+1
         $("#nuevo_type_wsp_"+s).prop("checked",true)
+        $(".radio_input").prop("disabled",true)
+        $(".radio_input_div").css("color","#333")
+        $("#nuevo_type_wsp_"+s).parent().css("color","#FFF")
     }
 
     function editar_numero_tel(){
@@ -878,10 +896,6 @@
         env.name=$("#nuevo_nro_wsp").val();
         env.webhook=$("#nuevo_webhook_wsp").val();
         env.instanceId=$("#nuevo_id_wsp").val();
-        s=$("input[type='radio']:checked").prop("id").split("_")[3];
-        type=["full","trial","free"];
-        env.type=type[s-1]
-        env.token=user.token;
         mostrar('create',1)
         ajax("/api/instance/edit",env,(d)=>{
             const e=d.data;

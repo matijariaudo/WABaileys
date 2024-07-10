@@ -169,6 +169,7 @@ class Instances {
     async receiveMessages(messages) {
         const m = messages[0];
         const db = await Instance.findById(this.id);
+        if(!db.webhook){return true}
         sendWebhook(msgFormat(m),db.webhook)
     }
 

@@ -31,6 +31,7 @@
     <script src="assets/js/jquery.mtr-panel.js"></script>
     <link rel="stylesheet" href="assets/css/checkanimationBlack.css">
     <link rel="stylesheet" href="./assets/css/base.css">
+    <link rel="stylesheet" href="./assets/css/scroll.css">
     <style>
         .seccion{
             min-height: 80vh;
@@ -191,7 +192,7 @@
             <div class="col-lg-3 offset-lg-0 d-lg-block d-none p-2s " style="padding: 10px 0px;font-family: Logo;letter-spacing: 0.1em;">
                 <div class="row" style="text-align: center;color:#000">
                 <div class="col" style="padding: 8px 0px 0px 0px;">
-                    <button class="btn btn-green" onclick="$('#ConnectModal').modal('show');mostrar('log',4);$('#plan_1').click()" style="background-color: #5AE4A8;border: 2px solid #000;color:#000">Start now!</button>
+                    <button class="btn btn-green btn_start" data="0" style="background-color: #5AE4A8;border: 2px solid #000;color:#000">Start now!</button>
                     <button class="btn btn-green" onclick="$('#ConnectModal').modal('show');mostrar('log',2);"  style="background-color: #FFF;border: 2px solid #000;color:#000">Log In</button></div>
                 </div>            
             </div>
@@ -244,7 +245,7 @@
                                         <p style="width: 100%;font-family: Logo;">
                                             Discover the Best Free Alternative WhatsApp API Solution for Enhanced Communication. Create your chatbot, automate customer service, and expand messaging capabilities with our API.
                                         </p>
-                                        <button class="btn btn-green"  style="background-color: #5AE4A8;border: 2px solid #000;color:#000" onclick="$('#ConnectModal').modal('show');mostrar('log',4);$('#plan_1').click()" >Start now for <b style="color: rgb(0, 0, 0);">Free</b></button>
+                                        <button class="btn btn-green btn_start"  data="0"  style="background-color: #5AE4A8;border: 2px solid #000;color:#000">Start now for <b style="color: rgb(0, 0, 0);">Free</b></button>
                                         <p style="margin-top: 10px;font-size: .8em;font-style: italic;"><img src="assets/img/No-card-icon.svg" alt="No card required icon" style="width: 20px;margin-left: 5px;"> No credit card required</p>
                                         
                                 </div>
@@ -304,91 +305,36 @@
                             <div id="seccion2" class="seccion" style="text-align: center;">
                                 <h2>Our Prices</h2>
                                 <p class="m-0">Select the option that best suits your needs and start using our services.</p>
-                                <div class="carrusel">
-                                    <div class="col-lg-10 offset-lg-1 carrusel_div d-flex flex-nowrap" style="text-align: center;">
-                                    <div class="card_div col-4">
-                                        <div class="card mb-4 shadow p-0">
-                                        <div class="card-header">
-                                            <h4 class="my-0 font-weight-normal">Free</h4>
-                                        </div>
-                                        <div class="card-body">
-                                            <p style="color: black; position: relative; display: inline-block;margin: 0px;">
-                                                    
-                                                <span style="position: absolute; left: 0; top: 50%; width: 100%; height: 1px; background-color: red; transform: translateY(-50%);"></span>
-                                            </p>
-                                            <h3 class="card-title pricing-card-title">FREE
-                                                <p class="text-muted" style="text-align: center;font-size: .47em;font-weight: 100;margin-bottom: 5px;">Per instance / Per month</p>
-                                            </h3>
-                                            <ul class="list-unstyled mt-3 mb-4">
-                                                <li class="green-txt" style="color:#d24ede;">-</li>
-                                                <li class="green-txt">3 free & trial intances <a style="background-color: #000;color:#FFF;padding:2px;border-radius: 10px;">?</a></li>
-                                                <li class="green-txt">Unlimited messages</li>
-                                                <li class="green-txt">Webhook notifications</li>
-                                                <li class="green-txt">Multimedia download <a style="background-color: #55be91;color:#FFF;padding:2px;border-radius: 10px;">*</a></li>
-                                                <li class="red-txt">No email support</li>
-                                                <li class="red-txt" style="color:#333;margin-top: 10px;font-size: .8em;">$3.99<p style="margin-top: -4px;color:#959595">Each extra premium instance</p></li>
-                                                <li class="red-txt" style="color:none;margin-top:20px">-</li>
-                                            </ul>
-                                            <button type="button" data="1" class="btn btn-lg btn-block btn-outline-primary btn_start" onclick="$('#ConnectModal').modal('show');mostrar('log',4);$('#plan_0').click()">Sign up for free</button>
+                                <div class="carrusel" style="padding-bottom: 120px;">
+                                    <div class="col-lg-8 offset-lg-2 carrusel_div d-flex flex-nowrap" style="text-align: center;">
+                                        <div class="col-9 col-lg-6"  style="padding: 0px 3px;">
+                                        <div class="col-12 sombra" style="font-family: Sans;background-color: #FFF;border-radius: 10px;padding: 10px;color:#000;">
+                                            <h2 style="margin-top: 10px;border:1px solid #d1d1d1;border-width: 0px 0px 1px 0px;">Free</h2>
+                                            <h1 style="font-size: 4em;font-family: Sans;color:#000">$0</h1>
+                                            <p style="margin: -10px 0px 10px 0px;color:#afafaf00">.</p>
+                                            <p style="margin: 0px;">3 Free and trial instances.<qs data="Free instance:<br>Limit 1000 message/Month or 40 message/day<br><br><br>Trial instance:<br>All features (Automatic restart every 7 days).">?</qs></p>
+                                            <p style="margin: 0px;">Unlimited messages.</p>
+                                            <p style="margin: 0px;">WebHook Notifications.</p>
+                                            <p style="margin: 0px;">Media Download.<qs data="Low Quality (20% of real one)">*</qs></p>
+                                            <p style="margin: 0px 0px 10px 0px;">No Email support.</p>
+                                            <button class="btn btn-green btn_start" data="1" style="background-color: #000000;border: 2px solid #000;color:#ffffff;width: 100%;">Start Now</button>
                                         </div>
                                         </div>
-                                    </div>
-                                    <div class=" card_div col-4">
-                                        <div class="card mb-4 shadow">
-                                        <div class="card-header">
-                                            <h4 class="my-0 font-weight-normal">Pro</h4>
-                                        </div>
-                                        <div class="card-body">
-                                            <p style="color: black; position: relative; display: inline-block;margin: 0px;">
-                                                $9.99
-                                                <span style="position: absolute; left: 0; top: 50%; width: 100%; height: 1px; background-color: red; transform: translateY(-50%);"></span>
-                                            </p>
-                                            <h3 class="card-title pricing-card-title">$ 6.99
-                                                <p class="text-muted" style="text-align: center;font-size: .47em;font-weight: 100;margin-bottom: 5px;">Per month</p>
-                                            </h3>
-                                            <ul class="list-unstyled mt-3 mb-4">
-                                            <li class="green-txt" style="color:#d24ede;">3 premium instances. <a style="background-color: #000;color:#FFF;padding:2px;border-radius: 10px;">?</a></li>
-                                            <li class="green-txt">3 free & trial intances</li>
-                                            <li class="green-txt">Unlimited messages</li>
-                                            <li class="green-txt">Webhook notifications</li>
-                                            <li class="green-txt">Multimedia download</li>
-                                            <li class="green-txt">Email support</li>
-                                            <li class="red-txt" style="color:#333;margin-top: 10px;font-size: .8em;">$2.99<p style="margin-top: -4px;color:#959595">Each extra premium instance</p></li>
-                                            <li class="sombra_btn" style="border:0px solid #000;border-radius: 3px;width: 75%;margin-left: 12.5%;background: #d25ae4;color:#FFF;margin-top:20px">Get 1 month <b style="color:#FFCC00;font-weight: 700;">FREE</b></li>
-                                            </ul>
-                                            <button type="button" data="2" class="btn btn-lg btn-block btn-primary  btn_start" onclick="$('#ConnectModal').modal('show');mostrar('log',4);$('#plan_1').click()">Get started</button>
-                                        </div>
+                                        <div class="col-9 col-lg-6" style="padding: 0px 3px;">
+                                            <div class="col-12 sombra" style="font-family: Sans;background-color: #FFF;border-radius: 10px;padding: 10px;color:#000;">
+                                                <h2 style="margin-top: 10px;border:1px solid #d1d1d1;border-width: 0px 0px 1px 0px;">Premium</h2>
+                                                <h1 style="font-size: 4em;font-family: Sans;color:#000">$1.99</h1>
+                                                <p style="margin: -10px 0px 10px 0px;color:#afafaf">Per full intance / month.</p>
+                                                <p style="margin: 0px;">3 Free or trial instances.</p>
+                                                <p style="margin: 0px;">Unlimited messages.</p>
+                                                <p style="margin: 0px;">WebHook Notifications.</p>
+                                                <p style="margin: 0px;">Media Download.</p>
+                                                <p style="margin: 0px 0px 10px 0px;">Email support.</p>
+                                                <button class="btn btn-green btn_start" data="2" style="background-color: #5AE4A8;border: 2px solid #000;color:#000;width: 100%;"><img src="https://static-00.iconduck.com/assets.00/gift-icon-1947x2048-6pyurw96.png" style="width: 22px;margin-right: 5px;margin-top: -4px;">Get $10 as a gift!</button>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="card_div col-4">
-                                        <div class="card mb-4 shadow">
-                                        <div class="card-header">
-                                            <h4 class="my-0 font-weight-normal">Enterprise</h4>
-                                        </div>
-                                        <div class="card-body">
-                                            <p style="color: black; position: relative; display: inline-block;margin: 0px;">
-                                                $29.99
-                                                <span style="position: absolute; left: 0; top: 50%; width: 100%; height: 1px; background-color: red; transform: translateY(-50%);"></span>
-                                            </p>
-                                            <h3 class="card-title pricing-card-title">$ 19.99
-                                                <p class="text-muted" style="text-align: center;font-size: .47em;font-weight: 100;margin-bottom: 5px;">Per month</p>
-                                            </h3>
-                                            <ul class="list-unstyled mt-3 mb-4">
-                                                <li class="green-txt" style="color:#d24ede;">15 premium instances. <a style="background-color: #000;color:#FFF;padding:2px;border-radius: 10px;">?</a></li>
-                                                <li class="green-txt">3 free & trial intances</li>
-                                                <li class="green-txt">Unlimited messages</li>
-                                                <li class="green-txt">Webhook notifications</li>
-                                                <li class="green-txt">Multimedia download</li>
-                                                <li class="green-txt">Email support</li>
-                                                <li class="red-txt" style="color:#333;margin-top: 10px;font-size: .8em;">$1.99<p style="margin-top: -4px;color:#959595">Each extra premium instance</p></li>
-                                                <li class="sombra_btn" style="border:0px solid #000;border-radius: 3px;width: 75%;margin-left: 12.5%;background: #d25ae4;color:#FFF;margin-top:20px">Get 1 month <b style="color:#FFCC00;font-weight: 700;">FREE</b></li>
-                                            </ul>
-                                            <button type="button"  data="3" class="btn btn-lg btn-block btn-primary btn_start" onclick="$('#ConnectModal').modal('show');mostrar('log',4);$('#plan_2').click()">Get Started</button>
-                                        </div>
-                                        </div>
-                                    </div>
-                                    </div>
-                                  </div>
+                                </div> 
                             </div>
                         </div>    
                     </div>
@@ -427,6 +373,7 @@
                 <h1 style="font-weight: 900;font-size:1.5em">Create an account</h1>
                 <input type="text" placeholder="Name" id="new_name" class="form_login_input" autocomplete="off" style="color:#000">
                 <input type="text" placeholder="Email" id="new_email" class="form_login_input" autocomplete="off" style="color:#000">
+                <input type="hidden" id="new_plan" class="form_login_input" autocomplete="off" style="color:#000">
                 <button class="btn btn-log" id="btn_create" onclick="">Create your account</button>
                 <br>
                 <p id="new_txt" style="margin-top: 20px;"></p>
@@ -461,7 +408,8 @@
         <div class="modal-dialog">
           <div class="modal-content" style="background: #FFF;color:#000">
             <div class="modal-header" style="border:0px">
-              <h5 class="modal-title">Alert</h5>
+              <h5 class="modal-title"><a class="nav-link" style="font-size:1em;margin-top: 0px;font-family: Square;">
+                <b style="color:#171717">chAtter</b><b style="color: #5AE4A8">+</b></a></h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="alertModal_body" style="font-weight:100;">
@@ -488,6 +436,14 @@
         $("."+capa).hide();
         $("."+capa+"_"+i).show();
     }
+    $(".btn_start").on("click",function(){
+        env={};
+        $("#new_name").val("");
+        $("#new_email").val("");
+        $("#new_plan").val($(this).attr("data"));
+        $('#ConnectModal').modal('show');
+        mostrar('log',4);
+    })
     
     $('.plan').click(function(){
         $(".plan").css('background','#FFF');
@@ -501,6 +457,9 @@
         mostrar('log',1)
         iniciar_sesion();
     });
+    $("qs").on("click",function (e) {
+        alertFun({text:$(this).attr("data")})
+    })
     const iniciar_sesion=()=>{
         env={};
         env["correo"]= $("#login_correo").val();
@@ -582,7 +541,7 @@
             $.ajax({url,type:"POST",headers: {"Content-Type": "application/json","Authorization": token},dataType : 'json',data: JSON.stringify(json_dat),success: function(data, textStatus, jqXHR){callback(data)},error: function( jqXHR, textStatus, errorThrown ) {error();}});
     }
 
-    function alertFun({text,btn,functionModal=()=>{$("#alertModal").modal('hide');}}) {
+    function alertFun({text,btn="OK",functionModal=()=>{$("#alertModal").modal('hide');}}) {
         $("#alertModal").modal('show')
         $("#alertModal_body").html(text);
         if(btn){
