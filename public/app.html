@@ -674,7 +674,7 @@
                     console.log("buscando", eventQr,e.instances[0].session,e)
                     if(eventQr && newStatus=='qr')
                     {
-                        newQr=e.instances[0].sessionStatus.qr;
+                        newQr=e.instances[0].qr;
                         if(newQr!=$("#qr_value").val()){
                             mostrar('vincular',1);
                             setTimeout(() => {
@@ -790,7 +790,7 @@
                 b.session=='initializing'?init=true:false;
                 html=`<div class="col-12" style="padding:4px 0px">
                     <div class="col-12 placa" style="cursor:default">
-                        <button class="btn btn3" data="${b.uid1}" onclick="eliminar_numero_modal($(this).attr('data'),'eliminado')" ><img src="assets/img/delete.png" style="height:14px"></button>
+                        <button class="btn btn3" data="${b.uid}" onclick="eliminar_numero_modal($(this).attr('data'),'eliminado')" ><img src="assets/img/delete.png" style="height:14px"></button>
                         <button class="btn btn3" data="${b.uid}" onclick="editar_numero($(this).attr('data'))" ><img src="assets/img/settings.png" style="height:15px"></button>
                         <div style="display:${b.session=='close' || b.session=='qr'?'block':'none'}">
                             <h3 style="margin:5px 0px;font-size:.7em"><a style="color:#5AE4A8">ID</a> ${b.uid || "No name"} <a style="color:#5AE4A8">Name</a> ${b.name || "No name"}</h3>

@@ -22,6 +22,12 @@ const instanceGet=async(req,res)=>{
     try {
         if(instanceId){
             instances=await Instance.find({user:user_jwt.id,status:"active",_id:instanceId});
+            if(instances.length>=1){
+                const wsp=new Wsp();
+                const instanceStart=await wsp.getInstance(instanceId);
+                instances[0]={...instances[0].toJSON(),qr:instanceStart.data.qr};
+                console.log(instances[0],instanceStart.data.qr)
+            }
             }else{
             instances=await Instance.find({user:user_jwt.id,status:"active"});
         } 
