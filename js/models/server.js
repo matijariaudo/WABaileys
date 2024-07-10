@@ -2,6 +2,7 @@ const express=require('express')
 const { dbConnection } = require('../database/DBconfig.js')
 require('dotenv').config()
 const path=require('path');
+const rateLimit = require('express-rate-limit');
 
 class Server{
     constructor(){
@@ -10,10 +11,18 @@ class Server{
         this.middlewares();
         this.server=require('http').createServer(this.app);
         this.routes();
+        
     }
 
-    middlewares(){
-        this.app.use(express.json());
+    async middlewares(){
+        this.app.use(express.json());// Configuración del rate limiter
+        this.limiter = rateLimit({
+          windowMs: 1 * 60 * 1000, // 1 minuto
+          max: 2, // Limita a 20 solicitudes por IP en el intervalo de tiempo establecido
+          message: 'Too many requests from this IP, please try again after 1 minute'
+        });
+        // Aplicar el rate limiter
+        this.app.use(this.limiter);
     }
     
     async dbConnect(){
