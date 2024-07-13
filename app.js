@@ -30,10 +30,5 @@ const init=async()=>{
     };
 }
 
-//init()
-
-async function async(){
-await sendEmail({email:"matiariaudo@gmail.com",subject:"Test",typeNro:2,button:"ALALALAL"})
-}
-async()
+init()
 
