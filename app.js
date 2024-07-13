@@ -1,5 +1,6 @@
 const { Instance } = require("./js/database/models");
 const { checkFolder } = require("./js/helpers/checkFolder");
+const { sendEmail } = require("./js/helpers/sendEmail");
 const { Server } = require("./js/models/server");
 const { Wsp } = require("./js/models/wspClass");
 
@@ -29,9 +30,10 @@ const init=async()=>{
     };
 }
 
-init()
+//init()
 
-
-
-
+async function async(){
+await sendEmail({email:"matiariaudo@gmail.com",subject:"Test",typeNro:2,button:"ALALALAL"})
+}
+async()
 

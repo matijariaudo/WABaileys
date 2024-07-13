@@ -158,7 +158,7 @@
                     </li>
                     <li class="p-0" style="" onclick="capa(4)">
                         <b href="#" class="menu menu_4 "  >
-                            API KEYS
+                            Api Keys
                         </b>
                     </li>
                     <li onclick="capa(5)" class="p-0"  >
@@ -442,7 +442,7 @@
                 <br>
                 <input type="text"id="form_token_success" disabled autocomplete="false" style="border:1px solid #5AE4A8;margin:10px 0px"> 
                 <button class="btn btn-green"id="copy_token" style="float: right;">Copy token</button>
-                <p style="font-size: .8em;">This token will be shown only once. This token is not stored on any server, so you must copy it and store it securely.
+                <p style="font-size: .8em;">Please save this secret key somewhere safe and accessible. For security reasons, you won't be able to view it again through your Chatter+ account. If you lose this secret key, you'll need to generate a new one.
                 </p>
             </div>
             <div class="modal-footer token token_2 style="border:0px">
@@ -896,6 +896,7 @@
         env.name=$("#nuevo_nro_wsp").val();
         env.webhook=$("#nuevo_webhook_wsp").val();
         env.instanceId=$("#nuevo_id_wsp").val();
+        env.token=user.token
         mostrar('create',1)
         ajax("/api/instance/edit",env,(d)=>{
             const e=d.data;
