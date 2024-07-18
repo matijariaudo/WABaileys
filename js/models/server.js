@@ -3,6 +3,7 @@ const { dbConnection } = require('../database/DBconfig.js')
 require('dotenv').config()
 const path=require('path');
 const rateLimit = require('express-rate-limit');
+const cors = require('cors');
 class Server{
     constructor(){
         this.app=express();
@@ -14,6 +15,7 @@ class Server{
     }
 
     async middlewares(){
+        this.app.use(cors())
         this.app.use(express.json());// Configuración del rate limiter
         this.limiter = rateLimit({
           windowMs: 1 * 60 * 1000, // 1 minuto
