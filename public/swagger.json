@@ -1,0 +1,512 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Chatter.plus API",
+    "description": "Introduction:\n-------------\n\nWelcome to our WhatsApp API documentation. This guide will walk you through the available endpoints and authentication process to interact with WhatsApp using our API.\n\nInstances:\n-------------\n\nOur API is based on instances, each equivalent to a WhatsApp account. From our webApp or from the API you can create, modify and delete instances. Once created, you must do the \"Init\", where you will receive a QR code which will allow you to link the instance to your WhatsApp account by scanning it. Ready! You can now search for contacts, chats, view messages, download multimedia, and send text and multimedia messages.\n\nSummary:\n-------------\n-Create your instance.(from the api or the web)\n\n-Perform the init (from the api or the web)\n\n-Send messages, search for contacts, read messages, download multimedia files and much more. (from the api).\n\nGrades:\n-------------\n To test our API from this documentation. You must click on the \"Authorize\" button and enter your API Key. Then at each end point you will have the possibility to send requests to the API by clicking on \"Try it now\" and modifying the body parameters.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://chatter.plus/api"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/instance/create": {
+      "post": {
+        "summary": "Create an Instance",
+        "description": "Create a WhatsApp instance.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/instance_create_body"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Instance created successfully"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/instance/delete": {
+      "post": {
+        "summary": "Delete an Instance",
+        "description": "Delete a WhatsApp instance.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/instance_delete_body"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Instance deleted successfully"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/instance/edit": {
+      "post": {
+        "summary": "Edit an Instance",
+        "description": "Edit a WhatsApp instance.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/instance_edit_body"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Instance edited successfully"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/instance/init": {
+      "post": {
+        "summary": "Init an Instance",
+        "description": "Init a WhatsApp instance and get a QR code.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/instance_init_body"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Instance initialized successfully"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/instance/contacts": {
+      "post": {
+        "summary": "Get your contacts",
+        "description": "Get your contact list.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/instance_contacts_body"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Contacts retrieved successfully"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/instance/chat": {
+      "post": {
+        "summary": "Get chat messages",
+        "description": "Get your conversation with a user or group.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/instance_chat_body"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Chat messages retrieved successfully"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/instance/message": {
+      "post": {
+        "summary": "Get message",
+        "description": "Get message information.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/instance_message_body"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Message retrieved successfully"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/instance/media": {
+      "post": {
+        "summary": "Get message media",
+        "description": "Download message media.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/instance_media_body"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Media downloaded successfully"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/instance/send": {
+      "post": {
+        "summary": "Send Message",
+        "description": "Send a message through an active WhatsApp instance.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/instance_send_body"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Message sent successfully"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/instance/sendmedia": {
+      "post": {
+        "summary": "Send Media Message",
+        "description": "Send a media message through an active WhatsApp instance.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/instance_sendmedia_body"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Media message sent successfully"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Schema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "instance_create_body": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "ID of the instance"
+          },
+          "webhook": {
+            "type": "string",
+            "description": "URL for message notifications"
+          }
+        }
+      },
+      "instance_delete_body": {
+        "required": [
+          "instanceId"
+        ],
+        "type": "object",
+        "properties": {
+          "instanceId": {
+            "type": "string",
+            "description": "ID of the instance"
+          }
+        }
+      },
+      "instance_edit_body": {
+        "required": [
+          "instanceId"
+        ],
+        "type": "object",
+        "properties": {
+          "instanceId": {
+            "type": "string",
+            "description": "ID of the instance"
+          },
+          "name": {
+            "type": "string",
+            "description": "ID of the instance"
+          },
+          "webhook": {
+            "type": "string",
+            "description": "URL for message notifications"
+          }
+        }
+      },
+      "instance_init_body": {
+        "required": [
+          "instanceId"
+        ],
+        "type": "object",
+        "properties": {
+          "instanceId": {
+            "type": "string",
+            "description": "ID of the instance"
+          }
+        }
+      },
+      "instance_contacts_body": {
+        "required": [
+          "instanceId"
+        ],
+        "type": "object",
+        "properties": {
+          "instanceId": {
+            "type": "string",
+            "description": "ID of the instance"
+          }
+        }
+      },
+      "instance_chat_body": {
+        "required": [
+          "instanceId",
+          "remoteJid"
+        ],
+        "type": "object",
+        "properties": {
+          "instanceId": {
+            "type": "string",
+            "description": "ID of the instance"
+          },
+          "remoteJid": {
+            "type": "string",
+            "description": "ID of user or group"
+          },
+          "qty": {
+            "type": "integer",
+            "description": "Quantity of messages"
+          }
+        }
+      },
+      "instance_message_body": {
+        "required": [
+          "instanceId",
+          "messageId",
+          "remoteJid"
+        ],
+        "type": "object",
+        "properties": {
+          "instanceId": {
+            "type": "string",
+            "description": "ID of the instance"
+          },
+          "remoteJid": {
+            "type": "string",
+            "description": "ID of user or group"
+          },
+          "messageId": {
+            "type": "string",
+            "description": "ID of message"
+          }
+        }
+      },
+      "instance_media_body": {
+        "required": [
+          "instanceId",
+          "messageId",
+          "remoteJid"
+        ],
+        "type": "object",
+        "properties": {
+          "instanceId": {
+            "type": "string",
+            "description": "ID of the instance"
+          },
+          "remoteJid": {
+            "type": "string",
+            "description": "ID of user or group"
+          },
+          "messageId": {
+            "type": "string",
+            "description": "ID of message"
+          }
+        }
+      },
+      "instance_send_body": {
+        "required": [
+          "instanceId",
+          "message",
+          "remoteJid"
+        ],
+        "type": "object",
+        "properties": {
+          "instanceId": {
+            "type": "string",
+            "description": "ID of the instance"
+          },
+          "remoteJid": {
+            "type": "string",
+            "description": "ID of user or group"
+          },
+          "message": {
+            "type": "string",
+            "description": "Message to send"
+          }
+        }
+      },
+      "instance_sendmedia_body": {
+        "required": [
+          "caption",
+          "fileUrl",
+          "instanceId",
+          "mimetype",
+          "remoteJid",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "instanceId": {
+            "type": "string",
+            "description": "ID of the instance"
+          },
+          "remoteJid": {
+            "type": "string",
+            "description": "ID of user or group"
+          },
+          "fileUrl": {
+            "type": "string",
+            "description": "URL of your media"
+          },
+          "caption": {
+            "type": "string",
+            "description": "Caption for your media"
+          },
+          "type": {
+            "type": "string",
+            "description": "Type of your media",
+            "enum": [
+              "document",
+              "image",
+              "audio",
+              "video"
+            ]
+          },
+          "mimetype": {
+            "type": "string",
+            "description": "MIME type of your file",
+            "example": "image/png"
+          },
+          "document": {
+            "type": "boolean",
+            "description": "Send as a file",
+            "default": false
+          },
+          "fileName": {
+            "type": "string",
+            "description": "Name of your file when 'document' is true"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
