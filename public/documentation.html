@@ -9,20 +9,24 @@
     <style>
         /* Tu CSS personalizado */
         .swagger-ui .topbar {
-            background-color: #FFF!important;
+            
+            color:#FFF;
         }
 
         .swagger-ui .info {
-            background-color: none !important;
+            
+            color:#FFF;
         }
 
         .swagger-ui .scheme-container {
-            background-color: none !important;
+            background-color: #535353;
             border: 0px;
+            color:#FFF;
         }
 
         .swagger-ui .topbar-wrapper .link span {
             color: hotpink !important;
+            color:#FFF;
         }
 
         .custom-logo {
@@ -53,15 +57,26 @@
 
             logo_src = "https://chatter.plus/assets/img/favicon.png"
             $(".topbar").remove()
-            setTimeout(() => {
+            setInterval(() => {
                 $('.scheme-container').find("button").eq(0).css("background","#5AE4A8").css("color","#FFF")
                 $('.scheme-container').find("button").eq(0).find('span').eq(0).html("Set your API key")
                 $('.scheme-container').find("select").eq(0).css("background","#000").css("color","#FFF")
                 $(".servers-title").html("Basic Url")
                 $(".title").html("")
-                $(".title").prepend(`<img src="${logo_src}" style="width:25px;margin:0px 20px">Chatter<b style="color:#5AE4A8">+</b> API`)
+                $(".title").prepend(`<img src="${logo_src}" style="width:25px;margin:0px 20px;display:none">Chatter<b style="color:#5AE4A8">+</b> API`)
                 // $(".info").html("") 
-            }, 500);
+                $("body").css("background","#535353")
+                $("p").css("color","#FFF")
+                $("h2").css("color","#FFF")
+                $("h4").css("color","#FFF")
+                $("h3").css("color","#FFF")
+                $("h5").css("color","#FFF")
+                $("span").css("color","#FFF")
+                $("td").css("color","#FFF")
+                $(".tablinks").css("color","#FFF")
+                $(".opblock-summary-description").css("color","#FFF")
+                $(".opblock-section-header").css("background","#5AE4A8")
+            }, 100);
             
         }
     </script>
