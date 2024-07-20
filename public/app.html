@@ -717,15 +717,7 @@
     const sent_edit_user=()=>{
         env={};
         env["token"]=user.token;
-        env["uid"]=user.user<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-K17RP1YVV3"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-K17RP1YVV3');
-</script>;
+        env["uid"]=user.user.uid;
         env["name"]=$("#name_form_user").val();
         env["email"]=$("#email_form_user").val();
         capa(0)
