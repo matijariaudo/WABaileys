@@ -16,7 +16,7 @@ const instanceSchema=Schema({
 
 instanceSchema.methods.toJSON= function(){
     const {__v,_id,... instance}=this.toObject();
-    instance.uid=_id;
+    instance.instanceId=_id;
     return instance;
 }
 

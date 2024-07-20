@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K17RP1YVV3"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-K17RP1YVV3');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.png">
@@ -708,7 +717,15 @@
     const sent_edit_user=()=>{
         env={};
         env["token"]=user.token;
-        env["uid"]=user.user.uid;
+        env["uid"]=user.user<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-K17RP1YVV3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-K17RP1YVV3');
+</script>;
         env["name"]=$("#name_form_user").val();
         env["email"]=$("#email_form_user").val();
         capa(0)
@@ -753,20 +770,20 @@
                 b.session=='initializing'?init=true:false;
                 html=`<div class="col-12" style="padding:4px 0px">
                     <div class="col-12 placa" style="cursor:default">
-                        <button class="btn btn3" data="${b.uid}" onclick="eliminar_numero_modal($(this).attr('data'),'eliminado')" ><img src="assets/img/delete.png" style="height:14px"></button>
-                        <button class="btn btn3" data="${b.uid}" onclick="editar_numero($(this).attr('data'))" ><img src="assets/img/settings.png" style="height:15px"></button>
+                        <button class="btn btn3" data="${b.instanceId}" onclick="eliminar_numero_modal($(this).attr('data'),'eliminado')" ><img src="assets/img/delete.png" style="height:14px"></button>
+                        <button class="btn btn3" data="${b.instanceId}" onclick="editar_numero($(this).attr('data'))" ><img src="assets/img/settings.png" style="height:15px"></button>
                         <div style="display:${b.session=='close' || b.session=='qr'?'block':'none'}">
-                            <h3 style="margin:5px 0px;font-size:.7em"><a style="color:#5AE4A8">ID</a> ${b.uid || "No name"} <a style="color:#5AE4A8">Name</a> ${b.name || "No name"}</h3>
+                            <h3 style="margin:5px 0px;font-size:.7em"><a style="color:#5AE4A8">ID</a> ${b.instanceId || "No name"} <a style="color:#5AE4A8">Name</a> ${b.name || "No name"}</h3>
                             <p style="font-size:.8em;margin:0px 0px 0px 0px"><i class="zmdi zmdi-alert-triangle" style="color:#FFCC00"></i>
-                                Disconnected. <button class="btn btn3" data="${b.uid}" style="font-size:.8em;float:inherit;background:#5AE4A8;color:#000;padding:2px 7px"  onclick="solicitar_qr('${b.uid}')"><img src="assets/img/qr.png" style="height:12px;margin-top:-2px;filter:invert(0)"> Connect now</button>
+                                Disconnected. <button class="btn btn3" data="${b.instanceId}" style="font-size:.8em;float:inherit;background:#5AE4A8;color:#000;padding:2px 7px"  onclick="solicitar_qr('${b.instanceId}')"><img src="assets/img/qr.png" style="height:12px;margin-top:-2px;filter:invert(0)"> Connect now</button>
                             </p>
                         </div>
                         <div style="display:${b.session=='connected'?'block':'none'}"">
-                            <h3 style="margin:5px 0px;font-size:.7em"><a style="color:#5AE4A8">ID</a> ${b.uid || "No name"} <a style="color:#5AE4A8">Name</a> ${b.name || "No name"}</h3>
+                            <h3 style="margin:5px 0px;font-size:.7em"><a style="color:#5AE4A8">ID</a> ${b.instanceId || "No name"} <a style="color:#5AE4A8">Name</a> ${b.name || "No name"}</h3>
                             <h5 style='margin:0px 0px 0px 0px;font-weight:100;display:${b.session=='connected'?'block':'none'}'>${b.number||""}</h5>
                             <p style="font-size:.8em;margin:0px"><img src="./assets/img/check.png" style="width:14px"> Connected</p>
                             <div style="height:30px;margin-top:10px">
-                                <button class="btn btn3" data="${b.uid}" style="font-size:.7em;float:left" onclick="$('#textModal').modal('show');$('#tipo_textSend').val('NO');$('#btn_contact').click();$('#btn_no_media').click();mostrar('textSend',2);$('#id_textSend').val($(this).attr('data'));checkContacts()" ><img src="assets/img/send.png" style="height:12px;margin-top:-2px"> Send text</button>
+                                <button class="btn btn3" data="${b.instanceId}" style="font-size:.7em;float:left" onclick="$('#textModal').modal('show');$('#tipo_textSend').val('NO');$('#btn_contact').click();$('#btn_no_media').click();mostrar('textSend',2);$('#id_textSend').val($(this).attr('data'));checkContacts()" ><img src="assets/img/send.png" style="height:12px;margin-top:-2px"> Send text</button>
                             </div>
                         </div>
                         <div style="font-size:.8em;display:${b.session=='initializing'?'block':'none'}"">
@@ -879,9 +896,9 @@
     function editar_numero(id) {
         $("#phoneModal").modal('show');
         mostrar('create',2);
-        instancia=instancias.find(a=>a.uid==id)
+        instancia=instancias.find(a=>a.instanceId==id)
         $("#nuevo_nro_wsp").val(instancia.name);
-        $("#nuevo_id_wsp").val(instancia.uid);
+        $("#nuevo_id_wsp").val(instancia.instanceId);
         $("#nuevo_webhook_wsp").val(instancia.webhook)
         type=["full","trial","free"];
         s=type.findIndex(a=>a==instancia.type)+1
@@ -918,7 +935,7 @@
         mostrar('create',1)
         ajax("/api/instance/create",env,(d)=>{
             const e=d.data;
-            $('#form_create_success').val(e.instance.uid);
+            $('#form_create_success').val(e.instance.instanceId);
             mostrar('create',3)
             buscar_phones();
         },(d)=>{

@@ -5,6 +5,20 @@
     "description": "Introduction:\n-------------\n\nWelcome to our WhatsApp API documentation. This guide will walk you through the available endpoints and authentication process to interact with WhatsApp using our API.\n\nInstances:\n-------------\n\nOur API is based on instances, each equivalent to a WhatsApp account. From our webApp or from the API you can create, modify and delete instances. Once created, you must do the \"Init\", where you will receive a QR code which will allow you to link the instance to your WhatsApp account by scanning it. Ready! You can now search for contacts, chats, view messages, download multimedia, and send text and multimedia messages.\n\nSummary:\n-------------\n-Create your instance.(from the api or the web)\n\n-Perform the init (from the api or the web)\n\n-Send messages, search for contacts, read messages, download multimedia files and much more. (from the api).\n\nGrades:\n-------------\n To test our API from this documentation. You must click on the \"Authorize\" button and enter your API Key. Then at each end point you will have the possibility to send requests to the API by clicking on \"Try it now\" and modifying the body parameters.",
     "version": "1.0.0"
   },
+  "tags": [
+    {
+      "name": "Instances",
+      "description": "Get the listing, create, modify or delete an instance. Each instance is equivalent to a connection with WhatsApp"
+    },
+    {
+      "name": "Instances - Init",
+      "description": "Get the QR needed to link your WhatsApp account and your instance. It is necessary to make this link to later be able to send and receive WhatsApp messages."
+    },
+    {
+      "name": "Instances - Actions",
+      "description": "Operations with your WhatsApp account. You will be able to view your contacts, view your chats, view your chat messages, send messages, send multimedia (images, audio, video, gift, stickers) and download received multimedia files."
+    }
+  ],
   "servers": [
     {
       "url": "https://chatter.plus/api"
@@ -16,8 +30,29 @@
     }
   ],
   "paths": {
+    "/instance/get": {
+      "post": {
+        "tags": ["Instances"],
+        "summary": "Get list of instances",
+        "description": "Receive the list of all instances of the user.",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/instance/create": {
       "post": {
+        "tags": ["Instances"],
         "summary": "Create an Instance",
         "description": "Create a WhatsApp instance.",
         "requestBody": {
@@ -32,7 +67,10 @@
         },
         "responses": {
           "200": {
-            "description": "Instance created successfully"
+            "description": "Success"
+          },
+          "400": {
+            "description": "Error"
           }
         },
         "security": [
@@ -44,6 +82,7 @@
     },
     "/instance/delete": {
       "post": {
+        "tags": ["Instances"],
         "summary": "Delete an Instance",
         "description": "Delete a WhatsApp instance.",
         "requestBody": {
@@ -58,7 +97,10 @@
         },
         "responses": {
           "200": {
-            "description": "Instance deleted successfully"
+            "description": "Success"
+          },
+          "400": {
+            "description": "Error"
           }
         },
         "security": [
@@ -70,6 +112,7 @@
     },
     "/instance/edit": {
       "post": {
+        "tags": ["Instances"],
         "summary": "Edit an Instance",
         "description": "Edit a WhatsApp instance.",
         "requestBody": {
@@ -84,7 +127,10 @@
         },
         "responses": {
           "200": {
-            "description": "Instance edited successfully"
+            "description": "Success"
+          },
+          "400": {
+            "description": "Error"
           }
         },
         "security": [
@@ -96,6 +142,7 @@
     },
     "/instance/init": {
       "post": {
+        "tags":["Instances - Init"],
         "summary": "Init an Instance",
         "description": "Init a WhatsApp instance and get a QR code.",
         "requestBody": {
@@ -110,7 +157,10 @@
         },
         "responses": {
           "200": {
-            "description": "Instance initialized successfully"
+            "description": "Success"
+          },
+          "400": {
+            "description": "Error"
           }
         },
         "security": [
@@ -122,6 +172,7 @@
     },
     "/instance/contacts": {
       "post": {
+        "tags":["Instances - Actions"],
         "summary": "Get your contacts",
         "description": "Get your contact list.",
         "requestBody": {
@@ -136,7 +187,10 @@
         },
         "responses": {
           "200": {
-            "description": "Contacts retrieved successfully"
+            "description": "Success"
+          },
+          "400": {
+            "description": "Error"
           }
         },
         "security": [
@@ -148,6 +202,7 @@
     },
     "/instance/chat": {
       "post": {
+        "tags":["Instances - Actions"],
         "summary": "Get chat messages",
         "description": "Get your conversation with a user or group.",
         "requestBody": {
@@ -162,7 +217,10 @@
         },
         "responses": {
           "200": {
-            "description": "Chat messages retrieved successfully"
+            "description": "Success"
+          },
+          "400": {
+            "description": "Error"
           }
         },
         "security": [
@@ -174,7 +232,8 @@
     },
     "/instance/message": {
       "post": {
-        "summary": "Get message",
+        "tags":["Instances - Actions"],
+        "summary": "Get message information",
         "description": "Get message information.",
         "requestBody": {
           "content": {
@@ -188,7 +247,10 @@
         },
         "responses": {
           "200": {
-            "description": "Message retrieved successfully"
+            "description": "Success"
+          },
+          "400": {
+            "description": "Error"
           }
         },
         "security": [
@@ -200,7 +262,8 @@
     },
     "/instance/media": {
       "post": {
-        "summary": "Get message media",
+        "tags":["Instances - Actions"],
+        "summary": "Get media from a message",
         "description": "Download message media.",
         "requestBody": {
           "content": {
@@ -214,7 +277,10 @@
         },
         "responses": {
           "200": {
-            "description": "Media downloaded successfully"
+            "description": "Success"
+          },
+          "400": {
+            "description": "Error"
           }
         },
         "security": [
@@ -226,6 +292,7 @@
     },
     "/instance/send": {
       "post": {
+        "tags":["Instances - Actions"],
         "summary": "Send Message",
         "description": "Send a message through an active WhatsApp instance.",
         "requestBody": {
@@ -240,7 +307,10 @@
         },
         "responses": {
           "200": {
-            "description": "Message sent successfully"
+            "description": "Success"
+          },
+          "400": {
+            "description": "Error"
           }
         },
         "security": [
@@ -252,6 +322,7 @@
     },
     "/instance/sendmedia": {
       "post": {
+        "tags":["Instances - Actions"],
         "summary": "Send Media Message",
         "description": "Send a media message through an active WhatsApp instance.",
         "requestBody": {
@@ -266,7 +337,10 @@
         },
         "responses": {
           "200": {
-            "description": "Media message sent successfully"
+            "description": "Success"
+          },
+          "400": {
+            "description": "Error"
           }
         },
         "security": [
@@ -279,16 +353,8 @@
   },
   "components": {
     "schemas": {
-      "Schema": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          }
-        }
-      },
       "instance_create_body": {
+        "name":"Instance create : Body params",
         "required": [
           "name"
         ],
