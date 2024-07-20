@@ -76,6 +76,25 @@
                 $(".tablinks").css("color","#FFF")
                 $(".opblock-summary-description").css("color","#FFF")
                 $(".opblock-section-header").css("background","#5AE4A8")
+                $(".auth-container").find("h4").eq(0).css("color","#000")
+                a=$("#msg").html()
+                console.log(a)
+                if(!a){$(".auth-container").find("label").eq(0).before(`<p id="msg" style="color:#000;margin-bottom:20px">Set API Key here. You will then be able to test each <b>"End point"</b> from the documentation by clicking "Try it now" and modifying the request body parameters.</p>`)}
+                if(a){$("#msg").css("color","#000");}
+                $(".auth-container").css("padding","0px")
+                $(".modal-ux-content").css("padding","0px 20px 10px 20px")
+                $(".modal-ux").css("background","#5AE4A8")
+                $(".modal-ux-header").css("border","0px")
+                $(".modal-ux-header").css("border","0px")
+                $(".auth-container").find("input").eq(0).css("width","100%")
+                $(".auth-container").find("input").eq(0).css("background","none")
+                $(".auth-container").find("input").eq(0).css("border","1px solid #000")
+                $(".auth-container").find(".modal-btn").css("border","1px solid #000")
+                $(".auth-container").find(".authorize").eq(0).css("background","#000").css("color","#5AE4A8")
+                $(".auth-container").find("input").eq(0).attr("placeholder","Insert your API Key here")
+                $(".auth-container").find("label").eq(0).html("Your API Key")
+                $(".modal-ux-header").find("h3").eq(0).css("color","#000")
+                $(".modal-ux-header").find("h3").eq(0).html("Set your API key")
             }, 100);
             
         }
