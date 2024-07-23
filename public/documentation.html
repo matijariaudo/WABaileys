@@ -28,7 +28,7 @@
         }
 
         .swagger-ui .scheme-container {
-            background-color: #535353;
+            background-color: #353535;
             border: 0px;
             color:#FFF;
         }
@@ -42,6 +42,21 @@
             height: 40px;
             margin-right: 10px;
         }
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+            }
+
+            ::-webkit-scrollbar-thumb {
+            background: #ffffff32;
+            border: 1px solid #dddddd00;
+            border-radius: 5px;
+            }
+
+            ::-webkit-scrollbar-track {
+            background-color: #383737 ;
+            border: 1px solid none;
+            }
     </style>
 </head>
 <body>
@@ -74,7 +89,7 @@
                 $(".title").html("")
                 $(".title").prepend(`<img src="${logo_src}" style="width:25px;margin:0px 20px;display:none">Chatter<b style="color:#5AE4A8">+</b> API`)
                 // $(".info").html("") 
-                $("body").css("background","#535353")
+                $("body").css("background","#353535")
                 $("p").css("color","#FFF")
                 $("h2").css("color","#FFF")
                 $("h4").css("color","#FFF")
